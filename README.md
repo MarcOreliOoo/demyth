@@ -18,3 +18,11 @@ At the root:
 # Start frontend
 
 -   `yarn workspace @demyth/frontend dev`
+
+# Deploying frontend on Vercel
+
+-   https://demyth-frontend.vercel.app/
+
+# Deploying backend on Render
+
+-   https://demyth-render-test.onrender.com
