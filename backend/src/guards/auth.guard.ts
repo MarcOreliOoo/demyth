@@ -20,7 +20,7 @@ export class AuthGuard implements CanActivate {
         // 3) Get the user id in db
         // 4) Determine if the user has permission
         const userTypes = this.reflector.getAllAndOverride("userTypes", [context.getHandler(), context.getClass()]);
-        log("can activate userTypes > ", { userTypes });
+        //log("can activate userTypes > ", { userTypes });
 
         if (userTypes?.length) {
             const request = context.switchToHttp().getRequest();
