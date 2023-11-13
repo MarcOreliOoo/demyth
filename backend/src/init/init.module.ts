@@ -1,10 +1,9 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
-import { Mythology, MythologySchema } from "../Features/mythology/mythologies.schema";
+import { Mythology, MythologySchema } from "../features/mythology/mythologies.schema";
 import { InitDbService } from "./init.service";
-import { God, GodSchema } from "../Features/god/gods.schema";
-import { Role, RoleSchema } from "../Features/role/roles.schema";
-import { CreateRoleDto } from "../features/role/dto/create-role.dto";
+import { God, GodSchema } from "../features/god/gods.schema";
+import { Role, RoleSchema } from "../features/role/roles.schema";
 
 @Module({
     imports: [
@@ -13,7 +12,6 @@ import { CreateRoleDto } from "../features/role/dto/create-role.dto";
             { name: God.name, schema: GodSchema },
             { name: Role.name, schema: RoleSchema },
         ]),
-        CreateRoleDto,
     ],
     providers: [InitDbService],
     exports: [InitDbService],

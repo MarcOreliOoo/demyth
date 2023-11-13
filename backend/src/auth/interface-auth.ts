@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { UserType } from "../Features/user/enum";
+import { UserType } from "../features/user/enum";
 
 export interface JWTPayload {
     sub: string;

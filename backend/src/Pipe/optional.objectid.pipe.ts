@@ -4,7 +4,6 @@ import { Types } from "mongoose";
 @Injectable()
 export class OptionalParseObjectIdPipe implements PipeTransform<string, Types.ObjectId> {
     transform(value: string): Types.ObjectId {
-        console.log(value);
         if (!value) {
             return undefined;
         }

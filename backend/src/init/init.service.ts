@@ -2,11 +2,11 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model, ObjectId } from "mongoose";
-import { Mythology, MythologyDocument } from "../Features/mythology/mythologies.schema";
-import { God, GodDocument } from "../Features/god/gods.schema";
+import { Mythology, MythologyDocument } from "../features/mythology/mythologies.schema";
+import { God, GodDocument } from "../features/god/gods.schema";
 import { log } from "../utils/debug.utils";
 import { eGods, eMythologies } from "../enums";
-import { Role, RoleDocument } from "../Features/role/roles.schema";
+import { Role, RoleDocument } from "../features/role/roles.schema";
 import { greekUnitsList } from "./rolesList";
 import { CreateRoleDto } from "../features/role/dto/create-role.dto";
 

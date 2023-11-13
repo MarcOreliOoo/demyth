@@ -1,9 +1,9 @@
 import { ConflictException, Injectable, BadRequestException, UnauthorizedException } from "@nestjs/common";
 import { SignInDto, SignUpDto } from "./dto/auth.dto";
 import * as bcrypt from "bcrypt";
-import { UserService } from "../Features/user/user.service";
+import { UserService } from "../features/user/user.service";
 import { JwtService } from "@nestjs/jwt";
-import { UserType } from "../Features/user/enum";
+import { UserType } from "../features/user/enum";
 import { Types } from "mongoose";
 import { JWTPayload } from "./interface-auth";
 

@@ -2,7 +2,7 @@ import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from
 import { Reflector } from "@nestjs/core";
 import { JwtService } from "@nestjs/jwt";
 import { Request } from "express";
-import { UserService } from "../Features/user/user.service";
+import { UserService } from "../features/user/user.service";
 import { error } from "console";
 import { log } from "../utils/debug.utils";
 
