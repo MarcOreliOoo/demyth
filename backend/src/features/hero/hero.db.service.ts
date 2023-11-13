@@ -1,7 +1,7 @@
 import { Model } from "mongoose";
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Hero, HeroDocument } from "./Heros.schema";
+import { Hero, HeroDocument } from "./heroes.schema";
 
 export interface FindHeroParams {
     user?: string;

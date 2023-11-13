@@ -1,7 +1,7 @@
 import { Model, Types } from "mongoose";
 import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Hero, HeroDocument } from "./heros.schema";
+import { Hero, HeroDocument } from "./heroes.schema";
 import { CreateHeroDto } from "./dto/create-hero.dto";
 import { plainToClass } from "class-transformer";
 import { ResponseHeroDto } from "./dto/response-hero.dto";

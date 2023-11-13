@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { HeroController } from "./hero.controller";
-import { Hero, HeroSchema } from "./heros.schema";
+import { Hero, HeroSchema } from "./heroes.schema";
 import { HeroService } from "./hero.service";
 import { HeroDbService } from "./hero.db.service";
 
