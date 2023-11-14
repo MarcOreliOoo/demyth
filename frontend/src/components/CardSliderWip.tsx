@@ -117,8 +117,10 @@ const CardSlider = ({ mythologies }: { mythologies: ResponseMythologyDto[] }) =>
 const Card = ({ myth }: { myth: ResponseMythologyDto }) => {
     let iconPath,
         mainPath = undefined;
-    if (myth.images?.icon) iconPath = `/images/mythologies/${myth.name}/${myth.images?.icon}`;
-    if (myth.images?.main) mainPath = `/images/mythologies/${myth.name}/${myth.images?.main}`;
+    if (myth.images?.icon)
+        iconPath = `/images/mythologies/${myth.name.toLowerCase()}/${myth.images?.icon.toLowerCase()}`;
+    if (myth.images?.main)
+        mainPath = `/images/mythologies/${myth.name.toLowerCase()}/${myth.images?.main.toLowerCase()}`;
 
     return (
         <div
