@@ -55,7 +55,7 @@ const Header = () => {
                         ))}
                     </ul>
 
-                    <ButtonBorder href="#features" label="Login" />
+                    <ButtonBorder href="/auth" label="Login" />
                     <ButtonBg href="/about" label="Sign Up" />
                 </div>
 
