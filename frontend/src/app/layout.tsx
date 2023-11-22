@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { blanka, spaceGrotesk } from "./fonts/fonts";
 import "./globals.css";
 import React from "react";
-import { Web3ModalProvider } from "../context/Web3Modal";
+import { Web3Modal } from "../context/Web3Modal";
 
 export const metadata: Metadata = {
     title: "Demyth",
@@ -13,7 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html lang="en" className={`${spaceGrotesk.variable} ${blanka.variable}`}>
             <body className={`h-my-screen bg-shark font-spaceGrotesk text-shark-50`}>
-                <Web3ModalProvider>{children}</Web3ModalProvider>
+                <Web3Modal>{children}</Web3Modal>
             </body>
         </html>
     );
