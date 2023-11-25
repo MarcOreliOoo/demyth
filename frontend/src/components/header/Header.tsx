@@ -7,7 +7,7 @@ import { useState } from "react";
 import { links } from "../../lib/AboutHeaderMenu";
 import Demyth from "./Demyth";
 import ToggleMenu from "./ToggleMenu";
-import { useWeb3Modal } from "@web3modal/wagmi/react";
+/* import { useWeb3Modal } from "@web3modal/wagmi/react"; */
 
 /*flex-1 = 
 	flex-grow=1 =>  default=0 (else allow the children to take the extra overspace of the parent containing the flex => fit the parent width container but can still overflow the container even with shrink=1 because there is a min intrinsic size of children)
@@ -69,16 +69,16 @@ const Header = () => {
 };
 
 const ButtonBorder = ({ href, label }: { href: string; label: string }) => {
-    // 4. Use modal hook
+    /* // 4. Use modal hook
     const { open } = useWeb3Modal();
-
+ */
     /* return <w3m-button />; */
 
     return (
         <Link href={href}>
             <button
                 type="button"
-                onClick={() => open()}
+                /* onClick={() => open()} */
                 className={clsx(
                     "hidden w-[9rem] justify-center rounded-lg border border-gold-600 py-2 sm:flex",
                     "text-center text-lg font-semibold leading-normal text-gold-600",

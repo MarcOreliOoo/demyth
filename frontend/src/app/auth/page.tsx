@@ -1,37 +1,39 @@
-/* "use client";
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { SiweMessage } from "siwe";
 import { polygonMumbai } from "viem/chains";
 import { useAccount, useSignMessage } from "wagmi";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
-import { signIn } from "next-auth/react";
+import { signIn, getCsrfToken } from "next-auth/react";
 
 const AuthPage = () => {
-    const [mounted, setMounted] = React.useState(false);
+    const [mounted, setMounted] = useState(false);
     const { address, isConnected } = useAccount();
     const { open } = useWeb3Modal();
     const { signMessageAsync } = useSignMessage();
-    const [hasSigned, setHasSigned] = React.useState(false);
+    const [hasSigned, setHasSigned] = useState(false);
 
-    React.useEffect(() => setMounted(true), []);
+    useEffect(() => setMounted(true), []);
     if (!mounted) return <></>;
 
     const handleSign = async () => {
         if (!isConnected) open();
         try {
-            const nonce = "1"; //await getCsrfToken();
             const message = new SiweMessage({
                 domain: window.location.host,
                 uri: window.location.origin,
                 version: "1",
                 address: address,
                 statement: process.env.NEXT_PUBLIC_SIGNIN_MESSAGE,
-                nonce: nonce,
+                nonce: await getCsrfToken(),
                 chainId: polygonMumbai.id,
             });
 
+            console.log(JSON.stringify(message));
+
             const signedMessage = await signMessageAsync({
-                message: message.prepareMessage(),
+                message: message?.prepareMessage(),
             });
 
             setHasSigned(true);
@@ -40,7 +42,7 @@ const AuthPage = () => {
                 message: JSON.stringify(message),
                 signedMessage,
                 redirect: true,
-                callbackUrl: "/hidden",
+                callbackUrl: "/home",
             });
             if (response?.error) {
                 console.log("Error occured:", response.error);
@@ -89,4 +91,3 @@ const AuthPage = () => {
 };
 
 export default AuthPage;
- */
