@@ -6,7 +6,7 @@ import { useDisconnect } from "wagmi";
 const Home = () => {
     const { disconnectAsync } = useDisconnect();
     const handleSignout = async () => {
-        disconnectAsync();
+        await disconnectAsync();
         signOut({ callbackUrl: "/about" });
     };
     return (
