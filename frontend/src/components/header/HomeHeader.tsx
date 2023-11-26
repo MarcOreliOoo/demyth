@@ -3,19 +3,25 @@
 import { clsx } from "clsx";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect, ComponentProps } from "react";
 import { links } from "../../lib/AboutHeaderMenu";
 import Demyth from "./Demyth";
 import ToggleMenu from "./ToggleMenu";
-/* import { useWeb3Modal } from "@web3modal/wagmi/react"; */
+import { useAccount, useDisconnect } from "wagmi";
+import { signOut } from "next-auth/react";
 
-/*flex-1 = 
-	flex-grow=1 =>  default=0 (else allow the children to take the extra overspace of the parent containing the flex => fit the parent width container but can still overflow the container even with shrink=1 because there is a min intrinsic size of children)
-	flex-shrink=1 => default=1 (else i.e. 0, when reducing the size of the pareint containing the flex, children will overflow and flex is hence useless)
-	flex basis = 0 = width but with 0 no fixed px*/
-
-const Header = () => {
+const HomeHeader = () => {
+    const [mounted, setMounted] = useState(false);
     const [activeSection, setActiveSection] = useState("About");
+    const { address, isConnected } = useAccount();
+    const { disconnectAsync } = useDisconnect();
+    const handleSignout = async () => {
+        await disconnectAsync();
+        signOut({ callbackUrl: "/" });
+    };
+
+    useEffect(() => setMounted(true), []);
+    if (!mounted) return <></>;
 
     return (
         <header className="relative z-[999]">
@@ -56,8 +62,21 @@ const Header = () => {
                         ))}
                     </ul>
 
-                    <ButtonBorder href="/auth" label="Login" />
-                    <ButtonBg href="/about" label="Sign Up" />
+                    {isConnected && address && (
+                        <div className="flex items-center justify-center gap-4">
+                            <span className="text-lg font-semibold text-gray-300">
+                                {`${address.substring(0, 5)}...${address.substring(address.length - 3)}`}
+                            </span>
+                            <ButtonBorder href="/" label="Sign Out" onClick={handleSignout} />
+                        </div>
+                    )}
+
+                    {!isConnected && (
+                        <div className="flex items-center justify-center gap-4">
+                            <ButtonBorder href="/auth" label="Login" />
+                            <ButtonBg href="/about" label="Sign Up" />
+                        </div>
+                    )}
                 </div>
 
                 <div className="block lg:hidden">
@@ -67,18 +86,16 @@ const Header = () => {
         </header>
     );
 };
+type ButtonProps = {
+    href: string;
+    label: string;
+};
 
-const ButtonBorder = ({ href, label }: { href: string; label: string }) => {
-    /* // 4. Use modal hook
-    const { open } = useWeb3Modal();
- */
-    /* return <w3m-button />; */
-
+const ButtonBorder = ({ href, label, ...props }: ButtonProps & ComponentProps<"button">) => {
     return (
         <Link href={href}>
             <button
                 type="button"
-                /* onClick={() => open()} */
                 className={clsx(
                     "hidden w-[9rem] justify-center rounded-lg border border-gold-600 py-2 sm:flex",
                     "text-center text-lg font-semibold leading-normal text-gold-600",
@@ -87,6 +104,7 @@ const ButtonBorder = ({ href, label }: { href: string; label: string }) => {
                     "focus:bg-shark-900 focus:outline-none focus:ring-0",
                     "active:bg-shark-800 active:text-astral",
                 )}
+                onClick={props.onClick}
             >
                 {label}
             </button>
@@ -115,4 +133,4 @@ const ButtonBg = ({ href, label }: { href: string; label: string }) => {
     );
 };
 
-export default Header;
+export default HomeHeader;

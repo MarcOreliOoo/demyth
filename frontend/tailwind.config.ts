@@ -8,6 +8,9 @@ const config: Config = {
     ],
     theme: {
         extend: {
+            backgroundImage: {
+                egyptian: "url('/images/about/egyptian_1.jpg')",
+            },
             screens: {
                 widescreen: { raw: "(min-aspect-ratio: 23/20)" },
                 tallscreen: { raw: "(max-aspect-ratio: 13/20)" },

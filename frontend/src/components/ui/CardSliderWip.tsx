@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useState, useRef } from "react";
 import { FiArrowLeftCircle, FiArrowRightCircle } from "react-icons/fi";
 import { motion } from "framer-motion";
-import { ResponseMythologyDto } from "../lib/codex/Mythologies";
+import { ResponseMythologyDto } from "../../lib/codex/Mythologies";
 
 // TODO: adapt for more than 5 items
 // TODO: adapt for cards and not only images
