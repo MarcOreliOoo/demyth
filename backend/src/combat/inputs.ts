@@ -1,10 +1,10 @@
-import { eClassSubType, eClassType } from "../enums";
+import { EClassSubType, EClassType } from "../enums";
 
 export const UnitListV1 = [
     {
         name: "Spartan Hoplites",
-        roleType: eClassType.Melee,
-        roleSubType: eClassSubType.HeavyMelee,
+        roleType: EClassType.Melee,
+        roleSubType: EClassSubType.HeavyMelee,
         strength: 7,
         dexterity: 3,
         intelligence: 12,
@@ -16,8 +16,8 @@ export const UnitListV1 = [
     },
     {
         name: "Athenian Archers",
-        roleType: eClassType.Ranged,
-        roleSubType: eClassSubType.Archers,
+        roleType: EClassType.Ranged,
+        roleSubType: EClassSubType.Archers,
         strength: 11,
         dexterity: 8,
         intelligence: 5,
@@ -29,8 +29,8 @@ export const UnitListV1 = [
     },
     {
         name: "Delphic Oracles",
-        roleType: eClassType.Mage,
-        roleSubType: eClassSubType.Diviners,
+        roleType: EClassType.Mage,
+        roleSubType: EClassSubType.Diviners,
         strength: 1,
         dexterity: 1,
         intelligence: 10,
@@ -42,8 +42,8 @@ export const UnitListV1 = [
     },
     {
         name: "Nereid Guardians",
-        roleType: eClassType.Melee,
-        roleSubType: eClassSubType.LightMelee,
+        roleType: EClassType.Melee,
+        roleSubType: EClassSubType.LightMelee,
         strength: 6,
         dexterity: 8,
         intelligence: 4,
@@ -55,7 +55,7 @@ export const UnitListV1 = [
     },
     {
         name: "Trident Warriors",
-        roleType: eClassType.Melee,
+        roleType: EClassType.Melee,
         roleSubType: "Specialized Melee",
         strength: 8,
         dexterity: 7,
@@ -68,7 +68,7 @@ export const UnitListV1 = [
     },
     {
         name: "Oceanic Mystics",
-        roleType: eClassType.Mage,
+        roleType: EClassType.Mage,
         roleSubType: "Elementalists",
         strength: 3,
         dexterity: 5,
@@ -81,8 +81,8 @@ export const UnitListV1 = [
     },
     {
         name: "Argive Protectors",
-        roleType: eClassType.Melee,
-        roleSubType: eClassSubType.HeavyMelee,
+        roleType: EClassType.Melee,
+        roleSubType: EClassSubType.HeavyMelee,
         strength: 9,
         dexterity: 4,
         intelligence: 2,
@@ -94,8 +94,8 @@ export const UnitListV1 = [
     },
     {
         name: "Olympian Archers",
-        roleType: eClassType.Ranged,
-        roleSubType: eClassSubType.Archers,
+        roleType: EClassType.Ranged,
+        roleSubType: EClassSubType.Archers,
         strength: 1,
         dexterity: 8,
         intelligence: 4,
@@ -107,8 +107,8 @@ export const UnitListV1 = [
     },
     {
         name: "Divine Oracles",
-        roleType: eClassType.Mage,
-        roleSubType: eClassSubType.Diviners,
+        roleType: EClassType.Mage,
+        roleSubType: EClassSubType.Diviners,
         strength: 2,
         dexterity: 3,
         intelligence: 10,
@@ -120,8 +120,8 @@ export const UnitListV1 = [
     },
     {
         name: "Jovian Centurion",
-        roleType: eClassType.Melee,
-        roleSubType: eClassSubType.HeavyMelee,
+        roleType: EClassType.Melee,
+        roleSubType: EClassSubType.HeavyMelee,
         strength: 9,
         dexterity: 6,
         intelligence: 4,
@@ -136,8 +136,8 @@ export const UnitListV1 = [
 export const UnitListV2 = [
     {
         name: "Spartan Hoplites",
-        roleType: eClassType.Melee,
-        roleSubType: eClassSubType.HeavyMelee,
+        roleType: EClassType.Melee,
+        roleSubType: EClassSubType.HeavyMelee,
         level: 1,
         stats: { vigor: 7, dexterity: 3, mind: 12, energy: 45, initiative: 5 },
         mythology: "6516d7771dfb2de0637500a4",
@@ -145,8 +145,8 @@ export const UnitListV2 = [
     },
     {
         name: "Athenian Archers",
-        roleType: eClassType.Ranged,
-        roleSubType: eClassSubType.Archers,
+        roleType: EClassType.Ranged,
+        roleSubType: EClassSubType.Archers,
         level: 1,
         stats: { vigor: 3, dexterity: 7, mind: 12, energy: 45, initiative: 6 },
         mythology: "6516d7771dfb2de0637500a4",
@@ -154,8 +154,8 @@ export const UnitListV2 = [
     },
     {
         name: "Delphic Oracles",
-        roleType: eClassType.Mage,
-        roleSubType: eClassSubType.Diviners,
+        roleType: EClassType.Mage,
+        roleSubType: EClassSubType.Diviners,
         level: 1,
         stats: { vigor: 5, dexterity: 4, mind: 17, energy: 36, initiative: 8 },
         mythology: "6516d7771dfb2de0637500a4",
@@ -163,8 +163,8 @@ export const UnitListV2 = [
     },
     {
         name: "Nereid Guardians",
-        roleType: eClassType.Melee,
-        roleSubType: eClassSubType.LightMelee,
+        roleType: EClassType.Melee,
+        roleSubType: EClassSubType.LightMelee,
         level: 1,
         stats: { vigor: 6, dexterity: 8, mind: 4, energy: 6, initiative: 0 },
         mythology: "6516d7771dfb2de0637500a4",
@@ -172,8 +172,8 @@ export const UnitListV2 = [
     },
     {
         name: "Trident Warriors",
-        roleType: eClassType.Melee,
-        roleSubType: eClassSubType.SpecializedMelee,
+        roleType: EClassType.Melee,
+        roleSubType: EClassSubType.SpecializedMelee,
         level: 1,
         stats: { vigor: 8, dexterity: 7, mind: 2, energy: 7, initiative: 0 },
         mythology: "6516d7771dfb2de0637500a4",
@@ -181,8 +181,8 @@ export const UnitListV2 = [
     },
     {
         name: "Oceanic Mystics",
-        roleType: eClassType.Mage,
-        roleSubType: eClassSubType.Elementalists,
+        roleType: EClassType.Mage,
+        roleSubType: EClassSubType.Elementalists,
         level: 1,
         stats: { vigor: 3, dexterity: 5, mind: 9, energy: 4, initiative: 7 },
         mythology: "6516d7771dfb2de0637500a4",
@@ -190,8 +190,8 @@ export const UnitListV2 = [
     },
     {
         name: "Argive Protectors",
-        roleType: eClassType.Melee,
-        roleSubType: eClassSubType.HeavyMelee,
+        roleType: EClassType.Melee,
+        roleSubType: EClassSubType.HeavyMelee,
         level: 1,
         stats: { vigor: 9, dexterity: 4, mind: 2, energy: 8, initiative: 0 },
         mythology: "6516d7771dfb2de0637500a4",
@@ -199,8 +199,8 @@ export const UnitListV2 = [
     },
     {
         name: "Olympian Archers",
-        roleType: eClassType.Ranged,
-        roleSubType: eClassSubType.Archers,
+        roleType: EClassType.Ranged,
+        roleSubType: EClassSubType.Archers,
         level: 1,
         stats: { vigor: 1, dexterity: 8, mind: 4, energy: 3, initiative: 0 },
         mythology: "6516d7771dfb2de0637500a4",
@@ -208,8 +208,8 @@ export const UnitListV2 = [
     },
     {
         name: "Divine Oracles",
-        roleType: eClassType.Mage,
-        roleSubType: eClassSubType.Diviners,
+        roleType: EClassType.Mage,
+        roleSubType: EClassSubType.Diviners,
         level: 1,
         stats: { vigor: 2, dexterity: 3, mind: 10, energy: 5, initiative: 8 },
         mythology: "6516d7771dfb2de0637500a4",
@@ -217,8 +217,8 @@ export const UnitListV2 = [
     },
     {
         name: "Jovian Centurion",
-        roleType: eClassType.Melee,
-        roleSubType: eClassSubType.HeavyMelee,
+        roleType: EClassType.Melee,
+        roleSubType: EClassSubType.HeavyMelee,
         level: 1,
         stats: { vigor: 9, dexterity: 6, mind: 4, energy: 8, initiative: 5 },
         mythology: "651ae98f3c3bf0ce27aecddc",
@@ -273,8 +273,8 @@ export type tDerivedBaseStats = {
 
 export type tUnitProfileV2 = {
     name: string;
-    roleType: eClassType;
-    roleSubType: eClassSubType;
+    roleType: EClassType;
+    roleSubType: EClassSubType;
     level: number;
     stats: tBaseStats;
     mythology: string;
@@ -298,8 +298,8 @@ export type DamageResult = {
 };
 export type DuelResult = {
     fight: string;
-    attackingUnit: { name: string; classType: eClassType; baseStats: tBaseStats; derivedStats: tDerivedBaseStats };
-    defendingUnit: { name: string; classType: eClassType; baseStats: tBaseStats; derivedStats: tDerivedBaseStats };
+    attackingUnit: { name: string; classType: EClassType; baseStats: tBaseStats; derivedStats: tDerivedBaseStats };
+    defendingUnit: { name: string; classType: EClassType; baseStats: tBaseStats; derivedStats: tDerivedBaseStats };
     output: DamageResult;
 };
 export type RoundResult = {
@@ -342,14 +342,14 @@ export type TCalculateDamage = {
 };
 
 export const classModifierBonus = {
-    [eClassType.Melee]: {
-        [eClassType.Ranged]: CLASS_MODIFIER_BONUS,
+    [EClassType.Melee]: {
+        [EClassType.Ranged]: CLASS_MODIFIER_BONUS,
     },
-    [eClassType.Ranged]: {
-        [eClassType.Mage]: CLASS_MODIFIER_BONUS,
+    [EClassType.Ranged]: {
+        [EClassType.Mage]: CLASS_MODIFIER_BONUS,
     },
-    [eClassType.Mage]: {
-        [eClassType.Melee]: CLASS_MODIFIER_BONUS,
+    [EClassType.Mage]: {
+        [EClassType.Melee]: CLASS_MODIFIER_BONUS,
     },
 };
 

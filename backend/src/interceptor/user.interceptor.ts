@@ -1,6 +1,6 @@
 import { CallHandler, ExecutionContext, Inject, NestInterceptor, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { JWTPayload } from "../auth/interface-auth";
+import { JWTPayload } from "../auth/interface.auth";
 
 export class UserInterceptor implements NestInterceptor {
     constructor(@Inject(JwtService) private readonly jwtService: JwtService) {}

@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
-import { UserType } from "./enum";
+import { EUserType } from "../../enums/usertype";
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -15,8 +15,8 @@ export class User {
     @Prop({ unique: true, trim: true, index: true, sparse: true })
     address: string;
 
-    @Prop({ required: true, type: String, enum: UserType })
-    userType: UserType;
+    @Prop({ required: true, type: String, enum: EUserType })
+    userType: EUserType;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

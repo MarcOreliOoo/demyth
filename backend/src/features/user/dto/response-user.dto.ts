@@ -1,4 +1,4 @@
-import { UserType } from "../enum";
+import { EUserType } from "../../../enums/usertype";
 import { Transform } from "class-transformer";
 import { ObjectId } from "mongoose";
 
@@ -8,7 +8,7 @@ export class ResponseUserDto {
     email: string;
     password: string;
     address: string;
-    userType: UserType;
+    userType: EUserType;
     createdAt: Date;
     updatedAt: Date;
 }

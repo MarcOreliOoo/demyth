@@ -2,7 +2,7 @@ import { Model, ObjectId, Types } from "mongoose";
 import { ConflictException, Injectable, NotFoundException, UnprocessableEntityException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { User, UserDocument } from "./users.schema";
-import { UserType } from "./enum";
+import { EUserType } from "../../enums/usertype";
 import { plainToClass } from "class-transformer";
 import { SignUpDto } from "../../auth/dto/auth.dto";
 
@@ -35,7 +35,7 @@ export class UserService {
     }
 
     async createUser(signUpDto: SignUpDto): Promise<UserDocument> {
-        const newUser = new this.userModel({ ...signUpDto, userType: UserType.Player });
+        const newUser = new this.userModel({ ...signUpDto, userType: EUserType.Player });
         return await newUser.save({ timestamps: true });
     }
 }

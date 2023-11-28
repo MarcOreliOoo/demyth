@@ -1,8 +1,8 @@
 import { Types } from "mongoose";
-import { UserType } from "../features/user/enum";
+import { EUserType } from "../enums/usertype";
 
 export interface JWTPayload {
     sub: string;
     email: string;
-    role: UserType;
+    role: EUserType;
 }

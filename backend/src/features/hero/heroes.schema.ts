@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory, raw } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
-import { eHeroGender } from "../../enums";
+import { EHeroGender } from "../../enums";
 import { User } from "../user/users.schema";
 
 export type HeroDocument = HydratedDocument<Hero>;
@@ -13,8 +13,8 @@ export class Hero {
     @Prop({ required: true, unique: true, trim: true })
     name: string;
 
-    @Prop({ required: true, type: String, enum: eHeroGender, default: eHeroGender.N })
-    sex: eHeroGender;
+    @Prop({ required: true, type: String, enum: EHeroGender, default: EHeroGender.N })
+    sex: EHeroGender;
 
     @Prop(
         raw({

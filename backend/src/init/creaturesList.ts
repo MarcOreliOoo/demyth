@@ -1,13 +1,13 @@
-import { eGods } from "../enums";
-import { eMythologies } from "../enums";
+import { EGods } from "../enums";
+import { EMythologies } from "../enums";
 import { CreateCreatureDto } from "../features/creature/dto/create-creature.dto";
-import { eClassSubType, eClassType } from "../enums";
+import { EClassSubType, EClassType } from "../enums";
 
 const greekZeusCreatureList: CreateCreatureDto[] = [
     {
         name: "blabla name",
-        unitType: eClassType.Melee,
-        subUnitType: eClassSubType.HeavyMelee,
+        unitType: EClassType.Melee,
+        subUnitType: EClassSubType.HeavyMelee,
         shortDesc: "blabla short",
         longDesc: "blabla long",
         image: "ipfs://main-image.png",
@@ -18,8 +18,8 @@ const greekZeusCreatureList: CreateCreatureDto[] = [
         luck: 0,
         armor: 50,
         fatigue: 2,
-        mythology: eMythologies.Greek,
-        god: eGods.Zeus,
+        mythology: EMythologies.Greek,
+        god: EGods.Zeus,
     },
 ];
 

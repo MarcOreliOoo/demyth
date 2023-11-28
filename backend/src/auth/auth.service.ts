@@ -3,9 +3,9 @@ import { SignInDto, SignUpDto } from "./dto/auth.dto";
 import * as bcrypt from "bcrypt";
 import { UserService } from "../features/user/user.service";
 import { JwtService } from "@nestjs/jwt";
-import { UserType } from "../features/user/enum";
+import { EUserType } from "../enums/usertype";
 import { Types } from "mongoose";
-import { JWTPayload } from "./interface-auth";
+import { JWTPayload } from "./interface.auth";
 
 @Injectable()
 export class AuthService {

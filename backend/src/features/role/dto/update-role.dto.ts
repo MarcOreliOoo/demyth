@@ -8,7 +8,7 @@ import {
     IsNumber,
     IsPositive,
 } from "class-validator";
-import { eClassSubType, eClassType } from "../../../enums";
+import { EClassSubType, EClassType } from "../../../enums";
 import { Type } from "class-transformer";
 import { ImagesDto } from "./images-role.dto";
 
@@ -18,12 +18,12 @@ export class UpdateRoleDto {
     name?: string;
 
     @IsOptional()
-    @IsEnum(eClassType)
-    roleType?: eClassType;
+    @IsEnum(EClassType)
+    roleType?: EClassType;
 
     @IsOptional()
-    @IsEnum(eClassSubType)
-    roleSubType?: eClassSubType;
+    @IsEnum(EClassSubType)
+    roleSubType?: EClassSubType;
 
     @IsOptional()
     @IsString()

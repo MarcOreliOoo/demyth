@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Post, Put, Delete, HttpCode, ParseEnumPip
 import { UserService } from "./user.service";
 import { User } from "./users.schema";
 import { log } from "../../utils/debug.utils";
-import { UserType } from "./enum";
+import { EUserType } from "../../enums/usertype";
 import { ParseObjectIdPipe } from "../../pipe/objectid.pipe";
 
 @Controller("v0/users")

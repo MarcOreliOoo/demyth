@@ -2,10 +2,10 @@ import { Model } from "mongoose";
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Mythology, MythologyDocument } from "./mythologies.schema";
-import { eMythologies } from "../../enums";
+import { EMythologies } from "../../enums";
 
 export interface FindMythParams {
-    name?: eMythologies;
+    name?: EMythologies;
     _id?: string;
 }
 
@@ -21,7 +21,7 @@ export class MythologyDbService {
         return await this.mythologyModel.findByIdAndDelete(id).exec();
     }
 
-    async findOneByName(myth: eMythologies): Promise<MythologyDocument | null> {
+    async findOneByName(myth: EMythologies): Promise<MythologyDocument | null> {
         return await this.mythologyModel.findOne({ name: myth }).exec();
     }
 

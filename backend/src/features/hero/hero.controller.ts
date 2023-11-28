@@ -7,7 +7,7 @@ import { CreateHeroDto } from "./dto/create-hero.dto";
 import { ResponseHeroDto } from "./dto/response-hero.dto";
 import { UpdateHeroDto } from "./dto/update-hero.dto";
 import { User } from "../../decorators/user.decorators";
-import { JWTPayload } from "../../auth/interface-auth";
+import { JWTPayload } from "../../auth/interface.auth";
 
 @Controller("v0/heroes")
 export class HeroController {

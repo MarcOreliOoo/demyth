@@ -1,5 +1,5 @@
 import { IsOptional, IsString, IsEnum, IsMongoId, IsNumber, IsPositive } from "class-validator";
-import { eClassSubType, eClassType } from "../../../enums";
+import { EClassSubType, EClassType } from "../../../enums";
 
 export class UpdateCreatureDto {
     @IsOptional()
@@ -7,12 +7,12 @@ export class UpdateCreatureDto {
     name?: string;
 
     @IsOptional()
-    @IsEnum(eClassType)
-    unitType?: eClassType;
+    @IsEnum(EClassType)
+    unitType?: EClassType;
 
     @IsOptional()
-    @IsEnum(eClassSubType)
-    subUnitType?: eClassSubType;
+    @IsEnum(EClassSubType)
+    subUnitType?: EClassSubType;
 
     @IsOptional()
     @IsString()
