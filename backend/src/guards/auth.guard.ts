@@ -3,8 +3,6 @@ import { Reflector } from "@nestjs/core";
 import { JwtService } from "@nestjs/jwt";
 import { Request } from "express";
 import { UserService } from "../features/user/user.service";
-import { error } from "console";
-import { log } from "../utils/debug.utils";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -20,7 +18,6 @@ export class AuthGuard implements CanActivate {
         // 3) Get the user id in db
         // 4) Determine if the user has permission
         const userTypes = this.reflector.getAllAndOverride("userTypes", [context.getHandler(), context.getClass()]);
-        //log("can activate userTypes > ", { userTypes });
 
         if (userTypes?.length) {
             const request = context.switchToHttp().getRequest();
@@ -39,7 +36,7 @@ export class AuthGuard implements CanActivate {
                 throw new UnauthorizedException();
             }
 
-            const user = await this.userService.findOneById(request.user.sub);
+            const user = await this.userService.findOneById(request.user.sub._id);
             if (user && userTypes.includes(user.userType)) return true;
             return false;
         }

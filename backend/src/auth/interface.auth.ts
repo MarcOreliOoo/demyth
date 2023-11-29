@@ -2,7 +2,7 @@ import { Types } from "mongoose";
 import { EUserType } from "../enums/usertype";
 
 export interface JWTPayload {
-    sub: string;
-    email: string;
+    sub: { _id: string; name: string };
+    username: string;
     role: EUserType;
 }

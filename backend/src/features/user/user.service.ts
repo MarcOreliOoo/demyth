@@ -10,31 +10,23 @@ import { SignUpDto } from "../../auth/dto/auth.dto";
 export class UserService {
     constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-    async userExist(
-        email: string,
-        address: string,
-    ): Promise<{
-        _id: Types.ObjectId;
-    } | null> {
-        return await this.userModel.exists({
-            $or: [
-                {
-                    email: email ?? "",
-                },
-                { address: address ?? "" },
-            ],
-        });
+    async findOneByEmail(email: string): Promise<UserDocument | null> {
+        return await this.userModel.findOne({ email: email.toLowerCase() }).lean().exec();
     }
 
-    async findOneByEmail(email: string): Promise<UserDocument | null> {
-        return await this.userModel.findOne({ email }).exec();
+    async findOneByAddress(address: string): Promise<UserDocument | null> {
+        return await this.userModel.findOne({ address }).lean().exec();
     }
 
     async findOneById(id: string): Promise<UserDocument | null> {
-        return await this.userModel.findById(id).exec();
+        return await this.userModel.findById(id).lean().exec();
     }
 
     async createUser(signUpDto: SignUpDto): Promise<UserDocument> {
+        if (signUpDto.address) {
+            delete signUpDto.email;
+            delete signUpDto.password;
+        }
         const newUser = new this.userModel({ ...signUpDto, userType: EUserType.Player });
         return await newUser.save({ timestamps: true });
     }
