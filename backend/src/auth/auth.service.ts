@@ -89,14 +89,14 @@ export class AuthService {
         };
     }
 
-    async refreshToken(user: JWTPayload) {
+    async refreshToken(usertoken: any) {
         const payload = {
-            username: user.username,
-            role: user.role,
-            sub: user.sub,
+            username: usertoken.username,
+            role: usertoken.role,
+            sub: usertoken.sub,
         };
 
-        // TODO: remove this - do I need sub: {...user.sub} ?
+        // TODO: remove this - do I need sub: {...usertoken.sub} ?
         console.log("payload", payload);
 
         return await this.getBackendTokens(payload);

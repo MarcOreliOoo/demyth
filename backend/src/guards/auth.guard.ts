@@ -40,6 +40,8 @@ export class AuthGuard implements CanActivate {
             if (user && userTypes.includes(user.userType)) return true;
             return false;
         }
+
+        console.log("AuthGuard > canActivate > userTypes");
         return true;
     }
 
