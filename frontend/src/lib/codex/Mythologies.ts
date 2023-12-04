@@ -25,7 +25,7 @@ async function getMyths(): Promise<ResponseMythologyDto[] | null> {
     let res: Response;
     try {
         //res = await fetch("http://localhost:3001/v0/mythologies?mythId=6516d7771dfb2de0637500a6");
-        res = await fetch(`${process.env.HOST}v0/mythologies`);
+        res = await fetch(`${process.env.HOST}/mythologies`);
     } catch (e) {
         console.log("here");
         return null; // new Error("Failed to fetch");

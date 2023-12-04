@@ -7,6 +7,7 @@ import { useState } from "react";
 import { links } from "../../lib/AboutHeaderMenu";
 import Demyth from "./Demyth";
 import ToggleMenu from "./ToggleMenu";
+import { Button } from "../ui/Button";
 
 /*flex-1 = 
 	flex-grow=1 =>  default=0 (else allow the children to take the extra overspace of the parent containing the flex => fit the parent width container but can still overflow the container even with shrink=1 because there is a min intrinsic size of children)
@@ -53,9 +54,8 @@ const AboutHeader = () => {
                             </li>
                         ))}
                     </ul>
-
-                    <ButtonBorder href="/auth" label="Login" />
-                    <ButtonBg href="/about" label="Sign Up" />
+                    <Button href="/auth" label="Login" />
+                    <ButtonBg href="/auth" label="Sign Up" />
                 </div>
 
                 <div className="block lg:hidden">
@@ -63,26 +63,6 @@ const AboutHeader = () => {
                 </div>
             </nav>
         </header>
-    );
-};
-
-const ButtonBorder = ({ href, label }: { href: string; label: string }) => {
-    return (
-        <Link href={href}>
-            <button
-                type="button"
-                className={clsx(
-                    "hidden w-[9rem] justify-center rounded-lg border border-gold-600 py-2 sm:flex",
-                    "text-center text-lg font-semibold leading-normal text-gold-600",
-                    "transition duration-150 ease-in-out",
-                    "hover:border-astral hover:text-astral",
-                    "focus:bg-shark-900 focus:outline-none focus:ring-0",
-                    "active:bg-shark-800 active:text-astral",
-                )}
-            >
-                {label}
-            </button>
-        </Link>
     );
 };
 

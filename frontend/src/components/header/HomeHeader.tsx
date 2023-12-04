@@ -9,12 +9,16 @@ import Demyth from "./Demyth";
 import ToggleMenu from "./ToggleMenu";
 import { useAccount, useDisconnect } from "wagmi";
 import { signOut } from "next-auth/react";
+import { FiLogOut } from "react-icons/fi";
+import { Button } from "../ui/Button";
+import { printAddress } from "../../lib/utils/address";
 
 const HomeHeader = () => {
     const [mounted, setMounted] = useState(false);
     const [activeSection, setActiveSection] = useState("About");
     const { address, isConnected } = useAccount();
     const { disconnectAsync } = useDisconnect();
+
     const handleSignout = async () => {
         await disconnectAsync();
         signOut({ callbackUrl: "/" });
@@ -62,21 +66,23 @@ const HomeHeader = () => {
                         ))}
                     </ul>
 
-                    {isConnected && address && (
-                        <div className="flex items-center justify-center gap-4">
-                            <span className="text-lg font-semibold text-gray-300">
-                                {`${address.substring(0, 5)}...${address.substring(address.length - 3)}`}
-                            </span>
-                            <ButtonBorder href="/" label="Sign Out" onClick={handleSignout} />
-                        </div>
-                    )}
-
-                    {!isConnected && (
-                        <div className="flex items-center justify-center gap-4">
-                            <ButtonBorder href="/auth" label="Login" />
-                            <ButtonBg href="/about" label="Sign Up" />
-                        </div>
-                    )}
+                    <div className="flex items-center justify-center gap-4">
+                        {isConnected && address ? (
+                            <>
+                                <span className="text-base font-semibold text-gray-300">{printAddress(address)}</span>
+                                <Button variant={"borders"} onClick={handleSignout}>
+                                    <FiLogOut />
+                                    LogOut
+                                </Button>
+                            </>
+                        ) : (
+                            <div className="flex items-center justify-center gap-4">
+                                <Link href="/auth">
+                                    <Button variant={"filled"}>LogIn</Button>
+                                </Link>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 <div className="block lg:hidden">
@@ -84,52 +90,6 @@ const HomeHeader = () => {
                 </div>
             </nav>
         </header>
-    );
-};
-type ButtonProps = {
-    href: string;
-    label: string;
-};
-
-const ButtonBorder = ({ href, label, ...props }: ButtonProps & ComponentProps<"button">) => {
-    return (
-        <Link href={href}>
-            <button
-                type="button"
-                className={clsx(
-                    "hidden w-[9rem] justify-center rounded-lg border border-gold-600 py-2 sm:flex",
-                    "text-center text-lg font-semibold leading-normal text-gold-600",
-                    "transition duration-150 ease-in-out",
-                    "hover:border-astral hover:text-astral",
-                    "focus:bg-shark-900 focus:outline-none focus:ring-0",
-                    "active:bg-shark-800 active:text-astral",
-                )}
-                onClick={props.onClick}
-            >
-                {label}
-            </button>
-        </Link>
-    );
-};
-
-const ButtonBg = ({ href, label }: { href: string; label: string }) => {
-    return (
-        <Link href={href}>
-            <button
-                type="button"
-                className={clsx(
-                    "hidden w-[9rem] justify-center rounded-lg border border-shark-900 py-2 sm:flex",
-                    "bg-gradient-to-r from-gold-400 to-gold-600",
-                    "text-center text-lg font-semibold leading-normal text-shark-900",
-                    "transition duration-150 ease-in-out",
-                    "hover:bg-gradient-to-r hover:from-astral-300 hover:to-astral-500",
-                    "focus:border-astral-600 focus:bg-gradient-to-r focus:from-astral focus:to-astral-600 focus:outline-none focus:ring-0",
-                    "active:border-astral active:bg-astral",
-                )}
-            >
-                {label}
-            </button>
-        </Link>
     );
 };
 
