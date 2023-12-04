@@ -6,7 +6,7 @@ import Providers from "../providers/Providers";
 
 export const metadata: Metadata = {
     title: "Demyth",
-    description: "Play Demyth, a Web3 strategy card game based on mythology",
+    description: "Play Demyth, a Web3 strategy game based on mythology, play & earn NFTs",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
