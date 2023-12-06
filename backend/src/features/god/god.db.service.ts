@@ -19,7 +19,7 @@ export class GodDbService {
         return await aGod.save();
     }
 
-    async delete(id: string): Promise<GodDocument> {
+    async delete(id: string) {
         return await this.godModel.findByIdAndDelete(id).exec();
     }
 

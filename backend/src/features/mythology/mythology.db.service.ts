@@ -17,7 +17,7 @@ export class MythologyDbService {
         return await aMyth.save();
     }
 
-    async delete(id: string): Promise<MythologyDocument> {
+    async delete(id: string) {
         return await this.mythologyModel.findByIdAndDelete(id).exec();
     }
 

@@ -1,8 +1,26 @@
 import { AuthOptions } from "next-auth";
+import { JWT } from "next-auth/jwt";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getCsrfToken } from "next-auth/react";
 import { SiweMessage } from "siwe";
+
+async function refreshToken(token: JWT): Promise<JWT> {
+    const res = await fetch(`${process.env.HOST}/auth/refresh`, {
+        method: "POST",
+        headers: {
+            authorization: `Refresh ${token.backendTokens.refreshToken}`,
+        },
+    });
+    console.log("nextauth > refreshToken > refreshed");
+
+    const response = await res.json();
+
+    return {
+        ...token,
+        backendTokens: response,
+    };
+}
 
 export const authOptions: AuthOptions = {
     providers: [
@@ -11,10 +29,10 @@ export const authOptions: AuthOptions = {
             name: "web3",
             credentials: {
                 message: { label: "Message", type: "text" },
-                signedMessage: { label: "Signed Message", type: "text" }, // aka signature
+                signedMessage: { label: "Signed Message", type: "text" }, //signature
             },
             async authorize(credentials, req) {
-                console.log("\n\nHIT", credentials);
+                console.log("authorize > credentials: ", credentials);
 
                 if (!credentials?.signedMessage || !credentials?.message) {
                     return null;
@@ -32,11 +50,20 @@ export const authOptions: AuthOptions = {
                     if (result.data.statement !== process.env.NEXT_PUBLIC_SIGNIN_MESSAGE)
                         throw new Error("Statement Mismatch");
 
-                    console.log("Returning");
+                    const res = await fetch(`${process.env.HOST}/auth/signin`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ address: siwe.address }),
+                    });
 
-                    return {
-                        id: siwe.address,
-                    };
+                    if (res.status != 200) {
+                        console.log("Error: ", await res.text());
+                        return null;
+                    }
+                    const user = await res.json();
+                    return user;
                 } catch (error) {
                     console.log(error);
                     return null;
@@ -44,18 +71,25 @@ export const authOptions: AuthOptions = {
             },
         }),
     ],
-    session: { strategy: "jwt" },
-
-    debug: process.env.NODE_ENV === "development",
-
-    secret: process.env.NEXTAUTH_SECRET,
+    //session: { strategy: "jwt" },
+    //debug: process.env.NODE_ENV === "development",
+    //secret: process.env.NEXTAUTH_SECRET,
 
     callbacks: {
+        async jwt({ token, user }) {
+            if (user) return { ...token, ...user };
+            if (new Date().getTime() < token.backendTokens.expiresIn) return token;
+            try {
+                return await refreshToken(token);
+            } catch (error) {
+                console.error("Error refreshing access token", error);
+                return { ...token, error: "RefreshAccessTokenError" as const };
+            }
+        },
         async session({ session, token }: { session: any; token: any }) {
-            session.user.address = token.sub;
-            session.user.token = token;
-            console.log("token : ", token);
-            console.log("session : ", session);
+            session.user = token.user;
+            session.backendTokens = token.backendTokens;
+            session.error = token.error;
             return session;
         },
     },

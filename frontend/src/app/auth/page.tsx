@@ -5,7 +5,7 @@ import { SiweMessage } from "siwe";
 import { polygonMumbai } from "viem/chains";
 import { useAccount, useSignMessage } from "wagmi";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
-import { signIn, getCsrfToken } from "next-auth/react";
+import { signIn, getCsrfToken, useSession } from "next-auth/react";
 
 const AuthPage = () => {
     const [mounted, setMounted] = useState(false);
@@ -14,9 +14,16 @@ const AuthPage = () => {
     const { signMessageAsync } = useSignMessage();
     const [hasSigned, setHasSigned] = useState(false);
 
+    //new
+    const { data: session } = useSession();
+    console.log("AuthPage > session", session?.user);
+
     useEffect(() => setMounted(true), []);
     if (!mounted) return <></>;
 
+    if (isConnected && hasSigned) {
+        console.log("AuthPage > isConnected && hasSigned", { session });
+    }
     const handleSign = async () => {
         if (!isConnected) open();
         try {
@@ -30,7 +37,7 @@ const AuthPage = () => {
                 chainId: polygonMumbai.id,
             });
 
-            console.log(JSON.stringify(message));
+            console.log("SIWE - message : ", JSON.stringify(message));
 
             const signedMessage = await signMessageAsync({
                 message: message?.prepareMessage(),
@@ -41,8 +48,8 @@ const AuthPage = () => {
             const response = await signIn("web3", {
                 message: JSON.stringify(message),
                 signedMessage,
-                redirect: true,
-                callbackUrl: "/home",
+                redirect: false,
+                //callbackUrl: "/home",
             });
             if (response?.error) {
                 console.log("Error occured:", response.error);
@@ -60,6 +67,7 @@ const AuthPage = () => {
                     <p className="mb-6 mt-2 text-xl text-gray-500">
                         you <span className="font-extrabold text-gray-300">need</span> to
                     </p>
+
                     <button
                         className="rounded-lg bg-blue-700 px-4 py-2 hover:border hover:border-blue-700 hover:bg-transparent"
                         onClick={() => open()}
@@ -70,7 +78,9 @@ const AuthPage = () => {
             )}
             {isConnected && !hasSigned && (
                 <>
-                    <p className="text-xl font-semibold text-gray-400">Welcome {address?.slice(0, 8)}...</p>
+                    <p className="text-xl font-semibold text-gray-400">
+                        Welcome {address?.slice(0, 5)}...{address?.slice(address?.length, -3)}
+                    </p>
                     <button
                         className="mt-2 rounded-lg bg-violet-700 px-4 py-2 hover:border hover:border-violet-700 hover:bg-transparent"
                         onClick={handleSign}
@@ -85,7 +95,19 @@ const AuthPage = () => {
                     </button>
                 </>
             )}
-            {isConnected && hasSigned && <p>You are being authenticated. Please wait...</p>}
+            {isConnected && hasSigned && (
+                <>
+                    <div>
+                        SessionUserName: {session?.user?.address} SessionUserEmail: {session?.user?._id}
+                        <button
+                            className="mt-2 rounded-lg bg-yellow-400 px-4 py-2 hover:border hover:border-orange-700 hover:bg-transparent"
+                            onClick={() => open()}
+                        >
+                            Disconnect Wallet
+                        </button>
+                    </div>
+                </>
+            )}
         </main>
     );
 };

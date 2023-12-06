@@ -21,7 +21,7 @@ export class RoleDbService {
         return await aRole.save();
     }
 
-    async delete(id: string): Promise<RoleDocument> {
+    async delete(id: string) {
         return await this.roleModel.findByIdAndDelete(id).exec();
     }
 

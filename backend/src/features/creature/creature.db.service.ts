@@ -21,7 +21,7 @@ export class CreatureDbService {
         return await aCreature.save();
     }
 
-    async delete(id: string): Promise<CreatureDocument> {
+    async delete(id: string) {
         return await this.creatureModel.findByIdAndDelete(id).exec();
     }
 

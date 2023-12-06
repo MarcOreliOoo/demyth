@@ -1,50 +1,57 @@
-import { VariantProps, cva, cx } from "class-variance-authority";
-import { ComponentProps } from "react";
-import { twMerge } from "tailwind-merge";
+import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
+import { cva, type VariantProps } from "class-variance-authority"
 
-export const commonButtonStyles = cx(
-    "transition duration-150 ease-in-out",
-    "border",
-    "rounded-lg",
-    "font-semibold, leading-normal",
-);
+import { cn } from "@/lib/utils"
 
-export const variantButtonStyles = cva(commonButtonStyles, {
+const buttonVariants = cva(
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+  {
     variants: {
-        variant: {
-            borders: [
-                "border-gold-600",
-                "text-gold-600",
-                "hover:border-astral hover:text-astral",
-                "focus:bg-shark-900 focus:outline-none focus:ring-0",
-                "active:bg-shark-800 active:text-astral",
-            ],
-            filled: [
-                "border-shark-900",
-                "text-shark-900",
-                "bg-gradient-to-r from-gold-400 to-gold-600",
-                "hover:bg-gradient-to-r hover:from-astral-300 hover:to-astral-500",
-                "focus:border-astral-600 focus:bg-gradient-to-r focus:from-astral focus:to-astral-600 focus:outline-none focus:ring-0",
-                "active:border-astral active:bg-astral",
-            ],
-        },
-        size: {
-            header: ["w-[9rem]", "py-2", "text-lg", "justify-center text-center", "hidden sm:flex"],
-            hero: ["px-8 py-4", "text-sm uppercase", "md:px-16 md:py-6 md:text-lg"],
-        },
+      variant: {
+        default:
+          "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+        destructive:
+          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
+        outline:
+          "border border-input bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground",
+        secondary:
+          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground",
+        link: "text-primary underline-offset-4 hover:underline",
+      },
+      size: {
+        default: "h-9 px-4 py-2",
+        sm: "h-8 rounded-md px-3 text-xs",
+        lg: "h-10 rounded-md px-8",
+        icon: "h-9 w-9",
+      },
     },
     defaultVariants: {
-        variant: "borders",
-        size: "header",
+      variant: "default",
+      size: "default",
     },
-});
+  }
+)
 
-type ButtonProps = VariantProps<typeof variantButtonStyles> & ComponentProps<"button">;
-
-export function Button({ variant, size, className, children, ...props }: ButtonProps) {
-    return (
-        <button {...props} className={twMerge(variantButtonStyles({ variant, size }), className)}>
-            {children}
-        </button>
-    );
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean
 }
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button"
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    )
+  }
+)
+Button.displayName = "Button"
+
+export { Button, buttonVariants }
