@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button, buttonVariants } from "../../components/ui/button";
-import { cn } from "../../lib/utils";
+import { Button, buttonVariants } from "../../../components/ui/button";
+import { cn } from "../../../lib/utils";
 import Link from "next/link";
 
 const TestCard = () => {
@@ -79,7 +79,7 @@ const TestCard = () => {
                     link
                 </Button>
             </div>
-            <Card className="bg-glassmorphism text-glassmorphism-foreground blur-saturate-glass hover:bg-glassmorphism-hover absolute top-0">
+            <Card className="blur-saturate-glass absolute top-0 bg-glassmorphism text-glassmorphism-foreground hover:bg-glassmorphism-hover">
                 <CardHeader>
                     <CardTitle>Card Title</CardTitle>
                     <CardDescription>Card Description</CardDescription>

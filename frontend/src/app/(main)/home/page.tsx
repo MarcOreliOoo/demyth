@@ -2,7 +2,7 @@
 import { signOut } from "next-auth/react";
 import React from "react";
 import { useDisconnect } from "wagmi";
-import CardGlassmorphism from "../../components/ui/GlassmorphismEx";
+import CardGlassmorphism from "../../../components/ui/GlassmorphismEx";
 
 const Home = () => {
     const { disconnectAsync } = useDisconnect();

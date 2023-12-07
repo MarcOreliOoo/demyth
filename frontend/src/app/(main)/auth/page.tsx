@@ -13,8 +13,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
-import { Icons } from "../../components/ui/icons";
-import { printAddress } from "../../lib/utils/address";
+import { Icons } from "../../../components/ui/icons";
+import { printAddress } from "../../../lib/utils/address";
 
 const AuthPage = () => {
     const [mounted, setMounted] = useState<boolean>(false);
@@ -80,6 +80,15 @@ const AuthPage = () => {
         }
     };
 
+    const handleDisconnect = async () => {
+        setIsLoading(false);
+        setIsWeb3Auth(false);
+        setHasSigned(false);
+
+        if (!isConnected) return;
+        open();
+    };
+
     async function onSubmit(event: React.SyntheticEvent) {
         event.preventDefault();
         setIsLoading(true);
@@ -112,13 +121,11 @@ const AuthPage = () => {
                             )}
                             <CardContent className="space-y-4">
                                 {!isConnected ? (
-                                    <Button className="w-full" disabled={isLoading} onClick={handleConnect}>
-                                        {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+                                    <Button className="w-full" onClick={handleConnect}>
                                         Connect Wallet
                                     </Button>
                                 ) : (
-                                    <Button className="w-full flex-1" disabled={isLoading} onClick={handleSign}>
-                                        {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+                                    <Button className="w-full flex-1" onClick={handleSign}>
                                         Sign Message
                                     </Button>
                                 )}
@@ -241,7 +248,7 @@ const AuthPage = () => {
                         SessionUserName: {session?.user?.address} SessionUserEmail: {session?.user?._id}
                         <button
                             className="mt-2 rounded-lg bg-yellow-400 px-4 py-2 hover:border hover:border-orange-700 hover:bg-transparent"
-                            onClick={() => open()}
+                            onClick={handleDisconnect}
                         >
                             Disconnect Wallet
                         </button>
