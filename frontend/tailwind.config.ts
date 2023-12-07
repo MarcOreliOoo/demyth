@@ -132,6 +132,11 @@ const config: Config = {
                     DEFAULT: "hsl(var(--card))",
                     foreground: "hsl(var(--card-foreground))",
                 },
+                glassmorphism: {
+                    DEFAULT: "hsla(var(--glassmorphism))",
+                    hover: "hsla(var(--glassmorphism-hover))",
+                    foreground: "hsl(var(--glassmorphism-foreground))",
+                },
             },
         },
     },

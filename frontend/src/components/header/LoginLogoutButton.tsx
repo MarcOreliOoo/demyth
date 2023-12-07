@@ -7,8 +7,8 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 
 import { FiLogOut } from "react-icons/fi";
-import { DemythButton } from "../ui/DemythButton";
 import { printAddress } from "../../lib/utils/address";
+import { Button } from "../ui/button";
 
 const LoginLogoutButton = () => {
     const [mounted, setMounted] = useState(false);
@@ -27,16 +27,16 @@ const LoginLogoutButton = () => {
         <div className="flex items-center justify-center gap-4">
             {isConnected && address ? (
                 <>
-                    <span className="text-base font-semibold text-gray-300">{printAddress(address)}</span>
-                    <DemythButton variant={"borders"} onClick={handleSignout}>
+                    <span className="font-base text-base text-gray-300">{printAddress(address)}</span>
+                    <Button variant="outline" size="default" onClick={handleSignout} className="flex flex-row gap-2">
                         <FiLogOut />
-                        LogOut
-                    </DemythButton>
+                        <span>Log Out</span>
+                    </Button>
                 </>
             ) : (
                 <div className="flex items-center justify-center gap-4">
                     <Link href="/auth">
-                        <DemythButton variant={"filled"}>LogIn</DemythButton>
+                        <Button>Get Started</Button>
                     </Link>
                 </div>
             )}

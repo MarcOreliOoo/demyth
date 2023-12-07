@@ -4,9 +4,10 @@ import { useState } from "react";
 
 import Link from "next/link";
 
-import { clsx } from "clsx";
 import { motion } from "framer-motion";
 import { TLinks } from "../../lib/AboutHeaderMenu";
+import { buttonVariants } from "../ui/button";
+import { cn } from "../../lib/utils";
 
 const Menu = ({ links }: { links: TLinks }) => {
     const [activeSection, setActiveSection] = useState("About");
@@ -17,14 +18,15 @@ const Menu = ({ links }: { links: TLinks }) => {
                     <Link
                         href={link.hash}
                         onClick={() => setActiveSection(link.name)}
-                        className={clsx(
-                            "flex flex-col text-lg leading-normal transition duration-300 ease-in-out hover:text-astral",
+                        className={cn(
+                            buttonVariants({ variant: "link", size: "default" }),
+                            "flex flex-col text-base leading-normal transition duration-300 ease-in-out hover:no-underline",
                         )}
                     >
                         {link.name}
                         {link.name === activeSection && (
                             <motion.span
-                                className="absolute inset-0 -z-10 border-b border-astral pt-[1px] text-astral"
+                                className="absolute inset-0 -z-10 border-b border-primary pt-[1px] text-primary"
                                 layoutId="activeSection"
                                 transition={{
                                     type: "spring",

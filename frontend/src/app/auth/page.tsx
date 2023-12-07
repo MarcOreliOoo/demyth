@@ -7,14 +7,26 @@ import { useAccount, useSignMessage } from "wagmi";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { signIn, getCsrfToken, useSession } from "next-auth/react";
 
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Link from "next/link";
+import { Icons } from "../../components/ui/icons";
+import { printAddress } from "../../lib/utils/address";
+
 const AuthPage = () => {
-    const [mounted, setMounted] = useState(false);
+    const [mounted, setMounted] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [hasSigned, setHasSigned] = useState<boolean>(false);
+    const [isLogguedIn, setIsLogguedIn] = useState<boolean>(false);
+    const [isWeb3Auth, setIsWeb3Auth] = useState<boolean>(false);
     const { address, isConnected } = useAccount();
     const { open } = useWeb3Modal();
     const { signMessageAsync } = useSignMessage();
-    const [hasSigned, setHasSigned] = useState(false);
 
-    //new
+    //newv
     const { data: session } = useSession();
     console.log("AuthPage > session", session?.user);
 
@@ -24,7 +36,16 @@ const AuthPage = () => {
     if (isConnected && hasSigned) {
         console.log("AuthPage > isConnected && hasSigned", { session });
     }
+
+    const handleConnect = async () => {
+        setIsLoading(true);
+        setIsWeb3Auth(true);
+        if (!isConnected) open();
+    };
+
     const handleSign = async () => {
+        setIsLoading(true);
+        setIsWeb3Auth(true);
         if (!isConnected) open();
         try {
             const message = new SiweMessage({
@@ -59,34 +80,153 @@ const AuthPage = () => {
         }
     };
 
-    return (
-        <main className="flex min-h-screen flex-col items-center justify-center">
-            {!isConnected && (
-                <>
-                    <h2 className="text-5xl font-semibold text-gray-400">Firstly,</h2>
-                    <p className="mb-6 mt-2 text-xl text-gray-500">
-                        you <span className="font-extrabold text-gray-300">need</span> to
-                    </p>
+    async function onSubmit(event: React.SyntheticEvent) {
+        event.preventDefault();
+        setIsLoading(true);
 
-                    <button
-                        className="rounded-lg bg-blue-700 px-4 py-2 hover:border hover:border-blue-700 hover:bg-transparent"
-                        onClick={() => open()}
-                    >
-                        Connect Wallet
-                    </button>
-                </>
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 3000);
+    }
+
+    return (
+        <main className="mt-24 flex scroll-mt-24 flex-col items-center justify-center">
+            {(!isConnected || (isConnected && !hasSigned)) && (
+                <Tabs defaultValue="signin" className="w-[400px]">
+                    <TabsList className="grid w-full grid-cols-2">
+                        <TabsTrigger value="signin">Sign In</TabsTrigger>
+                        <TabsTrigger value="signup">Sign Up</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="signin">
+                        <Card>
+                            {isConnected && !hasSigned ? (
+                                <CardHeader>
+                                    <CardTitle>{printAddress(address ?? "")}</CardTitle>
+                                    <CardDescription>Sign a message to finish login</CardDescription>
+                                </CardHeader>
+                            ) : (
+                                <CardHeader>
+                                    <CardTitle>Sign In</CardTitle>
+                                    <CardDescription>Sign in by connecting your web3 wallet</CardDescription>
+                                </CardHeader>
+                            )}
+                            <CardContent className="space-y-4">
+                                {!isConnected ? (
+                                    <Button className="w-full" disabled={isLoading} onClick={handleConnect}>
+                                        {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+                                        Connect Wallet
+                                    </Button>
+                                ) : (
+                                    <Button className="w-full flex-1" disabled={isLoading} onClick={handleSign}>
+                                        {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+                                        Sign Message
+                                    </Button>
+                                )}
+                                {!isWeb3Auth && (
+                                    <div>
+                                        <div className="relative">
+                                            <div className="absolute inset-0 flex items-center">
+                                                <span className="w-full border-t" />
+                                            </div>
+                                            <div className="relative flex justify-center text-xs uppercase">
+                                                <span className="bg-background px-2 text-muted-foreground">Or</span>
+                                            </div>
+                                        </div>
+                                        <div className="grid grid-cols-3 gap-2">
+                                            <Button variant="outline" type="button" disabled={isLoading}>
+                                                {isLoading ? (
+                                                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                                                ) : (
+                                                    <Icons.gitHub className="mr-2 h-4 w-4" />
+                                                )}{" "}
+                                                Github
+                                            </Button>
+                                            <Button variant="outline" type="button" disabled={isLoading}>
+                                                {isLoading ? (
+                                                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                                                ) : (
+                                                    <Icons.google className="mr-2 h-4 w-4" />
+                                                )}{" "}
+                                                Google
+                                            </Button>
+                                            <Button variant="outline" type="button" disabled={isLoading}>
+                                                {isLoading ? (
+                                                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                                                ) : (
+                                                    <Icons.twitter className="mr-2 h-4 w-4" />
+                                                )}{" "}
+                                                Twitter
+                                            </Button>
+                                        </div>
+                                        <div className="relative">
+                                            <div className="absolute inset-0 flex items-center">
+                                                <span className="w-full border-t" />
+                                            </div>
+                                            <div className="relative flex justify-center text-xs uppercase">
+                                                <span className="bg-background px-2 text-muted-foreground">Or</span>
+                                            </div>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label className="sr-only" htmlFor="email">
+                                                Email
+                                            </Label>
+                                            <Input
+                                                id="email"
+                                                placeholder="name@example.com"
+                                                type="email"
+                                                autoCapitalize="none"
+                                                autoComplete="email"
+                                                autoCorrect="off"
+                                                disabled={isLoading}
+                                            />
+                                            <Button className="w-full" variant="outline" disabled={isLoading}>
+                                                {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+                                                Sign In with Email
+                                            </Button>
+                                        </div>
+                                    </div>
+                                )}
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
+                    <TabsContent value="signup">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Password</CardTitle>
+                                <CardDescription>
+                                    Change your signup here. After saving, youll be logged out.
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-2">
+                                <div className="space-y-1">
+                                    <Label htmlFor="current">Current signup</Label>
+                                    <Input id="current" type="signup" />
+                                </div>
+                                <div className="space-y-1">
+                                    <Label htmlFor="new">New signup</Label>
+                                    <Input id="new" type="signup" />
+                                </div>
+                            </CardContent>
+                            <CardFooter>
+                                <Button>Save signup</Button>
+                                <p className="px-8 text-center text-sm text-muted-foreground">
+                                    By clicking continue, you agree to our{" "}
+                                    <Link href="/terms" className="underline underline-offset-4 hover:text-primary">
+                                        Terms of Service
+                                    </Link>{" "}
+                                    and{" "}
+                                    <Link href="/privacy" className="underline underline-offset-4 hover:text-primary">
+                                        Privacy Policy
+                                    </Link>
+                                    .{" "}
+                                </p>
+                            </CardFooter>
+                        </Card>
+                    </TabsContent>
+                </Tabs>
             )}
             {isConnected && !hasSigned && (
                 <>
-                    <p className="text-xl font-semibold text-gray-400">
-                        Welcome {address?.slice(0, 5)}...{address?.slice(address?.length, -3)}
-                    </p>
-                    <button
-                        className="mt-2 rounded-lg bg-violet-700 px-4 py-2 hover:border hover:border-violet-700 hover:bg-transparent"
-                        onClick={handleSign}
-                    >
-                        Sign Message to Login
-                    </button>
                     <button
                         className="mt-2 rounded-lg bg-yellow-400 px-4 py-2 hover:border hover:border-orange-700 hover:bg-transparent"
                         onClick={() => open()}

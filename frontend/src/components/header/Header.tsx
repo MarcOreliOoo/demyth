@@ -11,7 +11,7 @@ const Header = () => {
             <nav
                 className={clsx(
                     "fixed left-1/2 top-0 flex w-full max-w-10xl -translate-x-1/2 flex-row flex-nowrap items-center justify-between gap-x-6 p-4",
-                    "border-b border-solid border-shark-800/70 bg-shark bg-opacity-95",
+                    "bg-glassmorphism text-glassmorphism-foreground blur-saturate-glass hover:bg-glassmorphism-hover",
                     "md:px-8",
                 )}
             >
