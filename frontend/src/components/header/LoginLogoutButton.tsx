@@ -17,7 +17,7 @@ const LoginLogoutButton = () => {
 
     const handleSignout = async () => {
         await disconnectAsync();
-        signOut({ callbackUrl: "/about" });
+        await signOut({ callbackUrl: "/about" });
     };
 
     useEffect(() => setMounted(true), []);

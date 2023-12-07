@@ -69,8 +69,8 @@ const AuthPage = () => {
             const response = await signIn("web3", {
                 message: JSON.stringify(message),
                 signedMessage,
-                redirect: false,
-                //callbackUrl: "/home",
+                redirect: true,
+                callbackUrl: "/home",
             });
             if (response?.error) {
                 console.log("Error occured:", response.error);
@@ -78,15 +78,6 @@ const AuthPage = () => {
         } catch (error) {
             console.log("Error Occured", error);
         }
-    };
-
-    const handleDisconnect = async () => {
-        setIsLoading(false);
-        setIsWeb3Auth(false);
-        setHasSigned(false);
-
-        if (!isConnected) return;
-        open();
     };
 
     async function onSubmit(event: React.SyntheticEvent) {
@@ -231,29 +222,6 @@ const AuthPage = () => {
                         </Card>
                     </TabsContent>
                 </Tabs>
-            )}
-            {isConnected && !hasSigned && (
-                <>
-                    <button
-                        className="mt-2 rounded-lg bg-yellow-400 px-4 py-2 hover:border hover:border-orange-700 hover:bg-transparent"
-                        onClick={() => open()}
-                    >
-                        Disconnect Wallet
-                    </button>
-                </>
-            )}
-            {isConnected && hasSigned && (
-                <>
-                    <div>
-                        SessionUserName: {session?.user?.address} SessionUserEmail: {session?.user?._id}
-                        <button
-                            className="mt-2 rounded-lg bg-yellow-400 px-4 py-2 hover:border hover:border-orange-700 hover:bg-transparent"
-                            onClick={handleDisconnect}
-                        >
-                            Disconnect Wallet
-                        </button>
-                    </div>
-                </>
             )}
         </main>
     );
