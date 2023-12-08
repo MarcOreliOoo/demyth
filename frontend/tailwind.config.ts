@@ -137,6 +137,10 @@ const config: Config = {
                     hover: "hsla(var(--glassmorphism-hover))",
                     foreground: "hsl(var(--glassmorphism-foreground))",
                 },
+                warning: {
+                    DEFAULT: "hsl(var(--warning))",
+                    foreground: "hsl(var(--warning-foreground))",
+                },
             },
         },
     },

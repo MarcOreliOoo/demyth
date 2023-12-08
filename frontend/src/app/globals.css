@@ -32,6 +32,8 @@
         --ring: 0 0% 83.1%;
 
         --radius: 0.5rem;
+        --warning: 48 96% 89%;
+        --warning-foreground: 38 92% 50%;
         --glassmorphism: 219 40% 11% 0.5;
         --glassmorphism-hover: 219 40% 11% 0.8;
         --glassmorphism-foreground: 0 0% 98%;

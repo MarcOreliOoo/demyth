@@ -15,26 +15,21 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
 import { Icons } from "../../../components/ui/icons";
 import { printAddress } from "../../../lib/utils/address";
+import { redirect } from "next/navigation";
 
 const AuthPage = () => {
-    const [mounted, setMounted] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [hasSigned, setHasSigned] = useState<boolean>(false);
-    const [isLogguedIn, setIsLogguedIn] = useState<boolean>(false);
+
     const [isWeb3Auth, setIsWeb3Auth] = useState<boolean>(false);
     const { address, isConnected } = useAccount();
     const { open } = useWeb3Modal();
     const { signMessageAsync } = useSignMessage();
 
-    //newv
     const { data: session } = useSession();
-    console.log("AuthPage > session", session?.user);
 
-    useEffect(() => setMounted(true), []);
-    if (!mounted) return <></>;
-
-    if (isConnected && hasSigned) {
-        console.log("AuthPage > isConnected && hasSigned", { session });
+    if (session || (isConnected && hasSigned)) {
+        redirect("/home");
     }
 
     const handleConnect = async () => {
@@ -58,8 +53,6 @@ const AuthPage = () => {
                 chainId: polygonMumbai.id,
             });
 
-            console.log("SIWE - message : ", JSON.stringify(message));
-
             const signedMessage = await signMessageAsync({
                 message: message?.prepareMessage(),
             });
@@ -72,25 +65,26 @@ const AuthPage = () => {
                 redirect: true,
                 callbackUrl: "/home",
             });
+
             if (response?.error) {
-                console.log("Error occured:", response.error);
+                throw new Error(response.error);
             }
         } catch (error) {
             console.log("Error Occured", error);
         }
     };
 
-    async function onSubmit(event: React.SyntheticEvent) {
+    /*     async function onSubmit(event: React.SyntheticEvent) {
         event.preventDefault();
         setIsLoading(true);
 
         setTimeout(() => {
             setIsLoading(false);
         }, 3000);
-    }
+    } */
 
     return (
-        <main className="mt-24 flex scroll-mt-24 flex-col items-center justify-center">
+        <main className="section-min-height flex h-full scroll-mt-24 flex-col items-center justify-center">
             {(!isConnected || (isConnected && !hasSigned)) && (
                 <Tabs defaultValue="signin" className="w-[400px]">
                     <TabsList className="grid w-full grid-cols-2">
@@ -110,7 +104,7 @@ const AuthPage = () => {
                                     <CardDescription>Sign in by connecting your web3 wallet</CardDescription>
                                 </CardHeader>
                             )}
-                            <CardContent className="space-y-4">
+                            <CardContent className="space-y-8">
                                 {!isConnected ? (
                                     <Button className="w-full" onClick={handleConnect}>
                                         Connect Wallet
@@ -121,7 +115,7 @@ const AuthPage = () => {
                                     </Button>
                                 )}
                                 {!isWeb3Auth && (
-                                    <div>
+                                    <div className="space-y-4">
                                         <div className="relative">
                                             <div className="absolute inset-0 flex items-center">
                                                 <span className="w-full border-t" />
@@ -192,7 +186,7 @@ const AuthPage = () => {
                             <CardHeader>
                                 <CardTitle>Password</CardTitle>
                                 <CardDescription>
-                                    Change your signup here. After saving, youll be logged out.
+                                    Change your signup here. After saving, you will be logged out.
                                 </CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-2">
@@ -209,11 +203,17 @@ const AuthPage = () => {
                                 <Button>Save signup</Button>
                                 <p className="px-8 text-center text-sm text-muted-foreground">
                                     By clicking continue, you agree to our{" "}
-                                    <Link href="/terms" className="underline underline-offset-4 hover:text-primary">
+                                    <Link
+                                        href="/home/terms"
+                                        className="underline underline-offset-4 hover:text-primary"
+                                    >
                                         Terms of Service
                                     </Link>{" "}
                                     and{" "}
-                                    <Link href="/privacy" className="underline underline-offset-4 hover:text-primary">
+                                    <Link
+                                        href="/home/privacy"
+                                        className="underline underline-offset-4 hover:text-primary"
+                                    >
                                         Privacy Policy
                                     </Link>
                                     .{" "}
