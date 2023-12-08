@@ -1,6 +1,5 @@
 {
     "name": "@demyth/frontend",
-    "packageManager": "yarn@3.2.4",
     "version": "0.0.1",
     "license": "MIT",
     "main": "dist/src/index.js",
