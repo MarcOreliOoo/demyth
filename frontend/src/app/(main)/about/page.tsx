@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { AboutCTA, AboutCodex, AboutContact, AboutFeatures, AboutHero } from "../../components/about";
+import { AboutCTA, AboutCodex, AboutContact, AboutFeatures, AboutHero } from "@/components/about";
 
 const About = () => {
     return (

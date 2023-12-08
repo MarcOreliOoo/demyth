@@ -5,16 +5,16 @@ import { log } from "../../utils/debug.utils";
 import { ParseObjectIdPipe } from "../../pipe/objectid.pipe";
 import { CreateCreatureDto } from "./dto/create-creature.dto";
 import { UpdateCreatureDto } from "./dto/update-creature.dto";
-import { UserType } from "../user/enum";
+import { EUserType } from "../../enums/usertype";
 import { UserTypes } from "../../decorators/userTypes.decorators";
-import { eClassSubType, eClassType } from "../../enums";
+import { EClassSubType, EClassType } from "../../enums";
 
 @Controller("v0/roles")
 export class CreatureController {
     constructor(private readonly creatureService: CreatureService) {}
 
     // WIP - to test
-    @UserTypes(UserType.Admin)
+    @UserTypes(EUserType.Admin)
     @Post()
     async create(@Body() createCreatureDto: CreateCreatureDto): Promise<ResponseCreatureDto> {
         log("CreatureController > create");
@@ -22,7 +22,7 @@ export class CreatureController {
     }
 
     // WIP - to test
-    @UserTypes(UserType.Admin)
+    @UserTypes(EUserType.Admin)
     @Put(":creatureId")
     async update(
         @Param("creatureId", new ParseObjectIdPipe()) creatureId: string,
@@ -33,7 +33,7 @@ export class CreatureController {
     }
 
     // WIP - to test
-    @UserTypes(UserType.Admin)
+    @UserTypes(EUserType.Admin)
     // TODO: add control if id used elsewhere?
     @HttpCode(204)
     @Delete(":creatureId")
@@ -47,8 +47,8 @@ export class CreatureController {
     async getCreatureForParams(
         @Query("creatureId") _id?: string,
         @Query("roleName") name?: string,
-        @Query("creatureType") creatureType?: eClassType,
-        @Query("creatureSubType") creatureSubType?: eClassSubType,
+        @Query("creatureType") creatureType?: EClassType,
+        @Query("creatureSubType") creatureSubType?: EClassSubType,
         @Query("mythId") mythology?: string,
         @Query("godId") god?: string,
     ): Promise<ResponseCreatureDto[]> {

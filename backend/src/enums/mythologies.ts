@@ -1,4 +1,4 @@
-export enum eMythologies {
+export enum EMythologies {
     Greek = "Greek",
     Egyptian = "Egyptian",
     Norse = "Norse",

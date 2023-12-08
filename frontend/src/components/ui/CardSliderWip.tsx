@@ -1,19 +1,9 @@
 "use client";
 import Image from "next/image";
 import { useState, useRef } from "react";
-import city1 from "../../public/images/CardAssets/city1.png";
-import city2 from "../../public/images/CardAssets/city2.png";
-import city3 from "../../public/images/CardAssets/city3.png";
-import planet1 from "../../public/images/CardAssets/planet1.png";
-import planet2 from "../../public/images/CardAssets/planet2.png";
-import space1 from "../../public/images/CardAssets/SpaceCity1.jpg";
-import space2 from "../../public/images/CardAssets/SpaceCity2.jpeg";
-import space3 from "../../public/images/CardAssets/SpaceCity3.jpeg";
-import space4 from "../../public/images/CardAssets/SpaceCity4.jpeg";
-import egyptian_icon from "../../public/images/mythologies/egyptian/egyptian_icon.png";
 import { FiArrowLeftCircle, FiArrowRightCircle } from "react-icons/fi";
-import { motion, useTransform, useScroll } from "framer-motion";
-import { ResponseMythologyDto } from "../lib/codex/Mythologies";
+import { motion } from "framer-motion";
+import { ResponseMythologyDto } from "../../lib/codex/Mythologies";
 
 // TODO: adapt for more than 5 items
 // TODO: adapt for cards and not only images
@@ -132,15 +122,6 @@ const Card = ({ myth }: { myth: ResponseMythologyDto }) => {
                     {iconPath && <Image src={iconPath} width={32} height={32} alt={`${myth.name} Mythology`} />}
                     <h2 className="text-lg text-slate-50">{myth.name}</h2>
                 </div>
-                {mainPath && (
-                    <Image
-                        src={mainPath}
-                        width={512}
-                        height={768}
-                        alt={`${myth.name} Mythology`}
-                        className="aspect-[2/3]"
-                    />
-                )}
                 <p>{myth.shortDesc}</p>
                 <p>{myth.longDesc}</p>
                 <ul>
@@ -157,7 +138,17 @@ const Card = ({ myth }: { myth: ResponseMythologyDto }) => {
                     ))}
                 </ul>
             </div>
-            <div className="flex h-full min-h-full w-[50%] flex-col items-start justify-start gap-4 border border-shark-800 bg-shark"></div>
+            {mainPath ? (
+                <Image
+                    src={mainPath}
+                    width={512}
+                    height={768}
+                    alt={`${myth.name} Mythology`}
+                    className="aspect-[2/3]"
+                />
+            ) : (
+                <div className="flex h-full min-h-full w-[50%] flex-col items-start justify-start gap-4 border border-shark-800 bg-shark"></div>
+            )}
         </div>
     );
 };

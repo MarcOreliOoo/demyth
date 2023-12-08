@@ -10,18 +10,18 @@ import {
 } from "class-validator";
 import { Type } from "class-transformer";
 import { ImagesDto } from "./images-role.dto";
-import { eClassSubType, eClassType, eGods, eMythologies } from "../../../enums";
+import { EClassSubType, EClassType, EGods, EMythologies } from "../../../enums";
 
 export class CreateRoleDto {
     @IsString()
     @IsNotEmpty()
     name: string;
 
-    @IsEnum(eClassType)
-    roleType: eClassType;
+    @IsEnum(EClassType)
+    roleType: EClassType;
 
-    @IsEnum(eClassSubType)
-    roleSubType: eClassSubType;
+    @IsEnum(EClassSubType)
+    roleSubType: EClassSubType;
 
     @IsString()
     shortDesc: string;
@@ -53,9 +53,9 @@ export class CreateRoleDto {
     @IsNumber()
     armor: number;
 
-    @IsEnum(eMythologies)
-    mythology: eMythologies;
+    @IsEnum(EMythologies)
+    mythology: EMythologies;
 
-    @IsEnum(eGods)
-    god: eGods;
+    @IsEnum(EGods)
+    god: EGods;
 }

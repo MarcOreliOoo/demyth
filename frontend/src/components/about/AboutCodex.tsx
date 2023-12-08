@@ -1,6 +1,5 @@
-import getMyths from "../../lib/codex/Mythologies";
-import CardSlider from "../CardSlider";
-import CardSliderWip from "../CardSliderWip";
+import getMyths from "@/lib/codex/Mythologies";
+import CardSliderWip from "../ui/CardSliderWip";
 
 const AboutCodex = async () => {
     const mythologies = await getMyths();

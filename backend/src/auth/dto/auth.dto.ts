@@ -3,31 +3,35 @@ import { Transform } from "class-transformer";
 import { ObjectId } from "mongoose";
 
 export class SignUpDto {
+    @IsOptional()
     @IsNotEmpty()
     @IsEmail()
     email: string;
 
+    @IsOptional()
     @IsString()
     @MinLength(6)
     password: string;
 
-    /*@IsOptional()
+    @IsOptional()
     @IsNotEmpty()
     @IsEthereumAddress()
-    address: string;*/
+    address: string;
 }
 
 export class SignInDto {
+    @IsOptional()
     @IsNotEmpty()
     @IsEmail()
     email: string;
 
+    @IsOptional()
     @IsString()
     @MinLength(6)
     password: string;
 
-    /*@IsOptional()
+    @IsOptional()
     @IsNotEmpty()
     @IsEthereumAddress()
-    address: string;*/
+    address: string;
 }
