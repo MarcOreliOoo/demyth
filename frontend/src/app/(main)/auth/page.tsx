@@ -1,21 +1,22 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+
+import { signIn, getCsrfToken, useSession } from "next-auth/react";
 import { SiweMessage } from "siwe";
 import { polygonMumbai } from "viem/chains";
 import { useAccount, useSignMessage } from "wagmi";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
-import { signIn, getCsrfToken, useSession } from "next-auth/react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Link from "next/link";
-import { Icons } from "../../../components/ui/icons";
-import { printAddress } from "../../../lib/utils/address";
-import { redirect } from "next/navigation";
+import { Icons } from "@/components/ui/icons";
+import { printAddress } from "@/lib/utils/address";
 
 const AuthPage = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
