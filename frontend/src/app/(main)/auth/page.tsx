@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 
 import { signIn, getCsrfToken, useSession } from "next-auth/react";
 import { SiweMessage } from "siwe";
@@ -16,22 +16,30 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Icons } from "@/components/ui/icons";
+import { _Alert, EAlertVariant } from "@/components/ui/shadderivated/_alert";
 import { printAddress } from "@/lib/utils/address";
+import { UserRejectedRequestError } from "viem";
 
 const AuthPage = () => {
+    //Hydratation error
+    const [mounted, setMounted] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [hasSigned, setHasSigned] = useState<boolean>(false);
-
     const [isWeb3Auth, setIsWeb3Auth] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
+
     const { address, isConnected } = useAccount();
     const { open } = useWeb3Modal();
     const { signMessageAsync } = useSignMessage();
 
     const { data: session } = useSession();
+    const searchParams = useSearchParams();
 
-    if (session || (isConnected && hasSigned)) {
-        redirect("/home");
-    }
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+    if (!mounted) return <></>;
+    if (session) redirect("/home");
 
     const handleConnect = async () => {
         setIsLoading(true);
@@ -42,8 +50,10 @@ const AuthPage = () => {
     const handleSign = async () => {
         setIsLoading(true);
         setIsWeb3Auth(true);
-        if (!isConnected) open();
+
         try {
+            if (!isConnected) open();
+
             const message = new SiweMessage({
                 domain: window.location.host,
                 uri: window.location.origin,
@@ -68,10 +78,15 @@ const AuthPage = () => {
             });
 
             if (response?.error) {
+                console.log("response.error: ", response.error);
                 throw new Error(response.error);
             }
         } catch (error) {
-            console.log("Error Occured", error);
+            if (error instanceof UserRejectedRequestError) {
+                setError(error.message);
+            } else {
+                setError("An unknown error occurred: " + error);
+            }
         }
     };
 
@@ -84,103 +99,116 @@ const AuthPage = () => {
         }, 3000);
     } */
 
+    // TODO: handle searchParams.get("Error") and error to update error state. Ad₫ an handler?
+
     return (
         <main className="section-min-height flex h-full scroll-mt-24 flex-col items-center justify-center">
             {(!isConnected || (isConnected && !hasSigned)) && (
-                <Tabs defaultValue="signin" className="w-[400px]">
+                <Tabs defaultValue="signin" className="container sm:w-[480px]">
                     <TabsList className="grid w-full grid-cols-2">
                         <TabsTrigger value="signin">Sign In</TabsTrigger>
                         <TabsTrigger value="signup">Sign Up</TabsTrigger>
                     </TabsList>
                     <TabsContent value="signin">
-                        <Card>
-                            {isConnected && !hasSigned ? (
-                                <CardHeader>
-                                    <CardTitle>{printAddress(address ?? "")}</CardTitle>
-                                    <CardDescription>Sign a message to finish login</CardDescription>
-                                </CardHeader>
-                            ) : (
-                                <CardHeader>
-                                    <CardTitle>Sign In</CardTitle>
-                                    <CardDescription>Sign in by connecting your web3 wallet</CardDescription>
-                                </CardHeader>
-                            )}
-                            <CardContent className="space-y-8">
-                                {!isConnected ? (
-                                    <Button className="w-full" onClick={handleConnect}>
-                                        Connect Wallet
-                                    </Button>
+                        {searchParams.get("Error") || error ? (
+                            <_Alert
+                                evariant={EAlertVariant.DESTRUCTIVE}
+                                content={searchParams.get("Error") ?? error!}
+                                title="Something went wrong!"
+                                link={{ name: "Try again", href: "/auth" }}
+                            />
+                        ) : (
+                            <Card>
+                                {isConnected && !hasSigned ? (
+                                    <CardHeader>
+                                        <CardTitle>{printAddress(address ?? "")}</CardTitle>
+                                        <CardDescription>Sign a message to finish login</CardDescription>
+                                    </CardHeader>
                                 ) : (
-                                    <Button className="w-full flex-1" onClick={handleSign}>
-                                        Sign Message
-                                    </Button>
+                                    <CardHeader>
+                                        <CardTitle>Sign In</CardTitle>
+                                        <CardDescription>Sign in by connecting your web3 wallet</CardDescription>
+                                    </CardHeader>
                                 )}
-                                {!isWeb3Auth && (
-                                    <div className="space-y-4">
-                                        <div className="relative">
-                                            <div className="absolute inset-0 flex items-center">
-                                                <span className="w-full border-t" />
+                                <CardContent className="space-y-8">
+                                    {!isConnected ? (
+                                        <Button className="w-full" onClick={handleConnect}>
+                                            Connect Wallet
+                                        </Button>
+                                    ) : (
+                                        <Button className="w-full flex-1" onClick={handleSign}>
+                                            Sign Message
+                                        </Button>
+                                    )}
+                                    {!isWeb3Auth && (
+                                        <div className="space-y-4">
+                                            <div className="relative">
+                                                <div className="absolute inset-0 flex items-center">
+                                                    <span className="w-full border-t" />
+                                                </div>
+                                                <div className="relative flex justify-center text-xs uppercase">
+                                                    <span className="bg-background px-2 text-muted-foreground">Or</span>
+                                                </div>
                                             </div>
-                                            <div className="relative flex justify-center text-xs uppercase">
-                                                <span className="bg-background px-2 text-muted-foreground">Or</span>
+                                            <div className="grid grid-cols-3 gap-2">
+                                                <Button variant="outline" type="button" disabled={isLoading}>
+                                                    {isLoading ? (
+                                                        <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                                                    ) : (
+                                                        <Icons.gitHub className="mr-2 h-4 w-4" />
+                                                    )}{" "}
+                                                    Github
+                                                </Button>
+                                                <Button variant="outline" type="button" disabled={isLoading}>
+                                                    {isLoading ? (
+                                                        <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                                                    ) : (
+                                                        <Icons.google className="mr-2 h-4 w-4" />
+                                                    )}{" "}
+                                                    Google
+                                                </Button>
+                                                <Button variant="outline" type="button" disabled={isLoading}>
+                                                    {isLoading ? (
+                                                        <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                                                    ) : (
+                                                        <Icons.twitter className="mr-2 h-4 w-4" />
+                                                    )}{" "}
+                                                    Twitter
+                                                </Button>
+                                            </div>
+                                            <div className="relative">
+                                                <div className="absolute inset-0 flex items-center">
+                                                    <span className="w-full border-t" />
+                                                </div>
+                                                <div className="relative flex justify-center text-xs uppercase">
+                                                    <span className="bg-background px-2 text-muted-foreground">Or</span>
+                                                </div>
+                                            </div>
+                                            <div className="space-y-2">
+                                                <Label className="sr-only" htmlFor="email">
+                                                    Email
+                                                </Label>
+                                                <Input
+                                                    id="email"
+                                                    placeholder="name@example.com"
+                                                    type="email"
+                                                    autoCapitalize="none"
+                                                    autoComplete="email"
+                                                    autoCorrect="off"
+                                                    disabled={isLoading}
+                                                />
+                                                <Button className="w-full" variant="outline" disabled={isLoading}>
+                                                    {isLoading && (
+                                                        <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                                                    )}
+                                                    Sign In with Email
+                                                </Button>
                                             </div>
                                         </div>
-                                        <div className="grid grid-cols-3 gap-2">
-                                            <Button variant="outline" type="button" disabled={isLoading}>
-                                                {isLoading ? (
-                                                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                                                ) : (
-                                                    <Icons.gitHub className="mr-2 h-4 w-4" />
-                                                )}{" "}
-                                                Github
-                                            </Button>
-                                            <Button variant="outline" type="button" disabled={isLoading}>
-                                                {isLoading ? (
-                                                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                                                ) : (
-                                                    <Icons.google className="mr-2 h-4 w-4" />
-                                                )}{" "}
-                                                Google
-                                            </Button>
-                                            <Button variant="outline" type="button" disabled={isLoading}>
-                                                {isLoading ? (
-                                                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                                                ) : (
-                                                    <Icons.twitter className="mr-2 h-4 w-4" />
-                                                )}{" "}
-                                                Twitter
-                                            </Button>
-                                        </div>
-                                        <div className="relative">
-                                            <div className="absolute inset-0 flex items-center">
-                                                <span className="w-full border-t" />
-                                            </div>
-                                            <div className="relative flex justify-center text-xs uppercase">
-                                                <span className="bg-background px-2 text-muted-foreground">Or</span>
-                                            </div>
-                                        </div>
-                                        <div className="space-y-2">
-                                            <Label className="sr-only" htmlFor="email">
-                                                Email
-                                            </Label>
-                                            <Input
-                                                id="email"
-                                                placeholder="name@example.com"
-                                                type="email"
-                                                autoCapitalize="none"
-                                                autoComplete="email"
-                                                autoCorrect="off"
-                                                disabled={isLoading}
-                                            />
-                                            <Button className="w-full" variant="outline" disabled={isLoading}>
-                                                {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
-                                                Sign In with Email
-                                            </Button>
-                                        </div>
-                                    </div>
-                                )}
-                            </CardContent>
-                        </Card>
+                                    )}
+                                </CardContent>
+                            </Card>
+                        )}
                     </TabsContent>
                     <TabsContent value="signup">
                         <Card>
