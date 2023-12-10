@@ -3,10 +3,10 @@ import { GodService } from "./god.service";
 import { ResponseGodDto } from "./dto/response-god.dto";
 import { log } from "../../utils/debug.utils";
 import { ParseObjectIdPipe } from "../../pipe/objectid.pipe";
-import { eGods, eMythologies } from "../../enums";
+import { EGods, EMythologies } from "../../enums";
 import { CreateGodDto } from "./dto/create-god.dto";
 import { UpdateGodDto } from "./dto/update-god.dto";
-import { UserType } from "../user/enum";
+import { EUserType } from "../../enums/usertype";
 import { UserTypes } from "../../decorators/userTypes.decorators";
 import { OptionalParseObjectIdPipe } from "../../pipe/optional.objectid.pipe";
 
@@ -14,14 +14,14 @@ import { OptionalParseObjectIdPipe } from "../../pipe/optional.objectid.pipe";
 export class GodController {
     constructor(private readonly godService: GodService) {}
 
-    @UserTypes(UserType.Admin)
+    @UserTypes(EUserType.Admin)
     @Post()
     async create(@Body() createGodDto: CreateGodDto): Promise<ResponseGodDto> {
         log("GodController > create");
         return await this.godService.create(createGodDto);
     }
 
-    @UserTypes(UserType.Admin)
+    @UserTypes(EUserType.Admin)
     @Put(":godId")
     async update(
         @Param("godId", new ParseObjectIdPipe()) godId: string,
@@ -31,7 +31,7 @@ export class GodController {
         return await this.godService.updateById(godId, updateGodDto);
     }
 
-    @UserTypes(UserType.Admin)
+    @UserTypes(EUserType.Admin)
     // TODO: add control if id used elsewhere [today only: in gods]
     @HttpCode(204)
     @Delete(":godId")
@@ -43,9 +43,9 @@ export class GodController {
     @Get()
     async getGodsForParams(
         @Query("godId", new OptionalParseObjectIdPipe()) _id?: string,
-        @Query("godName") name?: eGods,
+        @Query("godName") name?: EGods,
         @Query("mythId", new OptionalParseObjectIdPipe()) mythology?: string,
-        @Query("mythName") mythologyName?: eMythologies,
+        @Query("mythName") mythologyName?: EMythologies,
     ): Promise<ResponseGodDto[]> {
         log("GodController > getGodForParams");
 

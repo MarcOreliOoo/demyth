@@ -2,13 +2,13 @@ import { Model } from "mongoose";
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { God, GodDocument } from "./gods.schema";
-import { eGods, eMythologies } from "../../enums";
+import { EGods, EMythologies } from "../../enums";
 
 export interface FindGodParams {
-    name?: eGods;
+    name?: EGods;
     _id?: string;
     mythology?: string;
-    mythologyName?: eMythologies;
+    mythologyName?: EMythologies;
 }
 
 @Injectable()
@@ -19,11 +19,11 @@ export class GodDbService {
         return await aGod.save();
     }
 
-    async delete(id: string): Promise<GodDocument> {
+    async delete(id: string) {
         return await this.godModel.findByIdAndDelete(id).exec();
     }
 
-    async findOneByName(god: eGods): Promise<GodDocument | null> {
+    async findOneByName(god: EGods): Promise<GodDocument | null> {
         return await this.godModel.findOne({ name: god }).exec();
     }
 

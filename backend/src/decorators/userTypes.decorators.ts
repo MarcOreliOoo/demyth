@@ -1,4 +1,4 @@
 import { ExecutionContext, SetMetadata, createParamDecorator } from "@nestjs/common";
-import { UserType } from "../features/user/enum";
+import { EUserType } from "../enums/usertype";
 
-export const UserTypes = (...userTypes: UserType[]) => SetMetadata("userTypes", userTypes);
+export const UserTypes = (...userTypes: EUserType[]) => SetMetadata("userTypes", userTypes);

@@ -1,9 +1,10 @@
 "use client";
 import { useState } from "react";
 
+import Link from "next/link";
+
 import clsx from "clsx";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { AiOutlineClose } from "react-icons/ai";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { links } from "../../lib/AboutHeaderMenu";

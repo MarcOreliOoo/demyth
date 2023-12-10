@@ -2,13 +2,13 @@ import { Model } from "mongoose";
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Creature, CreatureDocument } from "./creatures.schema";
-import { eClassSubType, eClassType } from "../../enums";
+import { EClassSubType, EClassType } from "../../enums";
 
 export interface FindCreatureParams {
     _Id?: string;
     name?: string;
-    creatureType?: eClassType;
-    creatureSubType?: eClassSubType;
+    creatureType?: EClassType;
+    creatureSubType?: EClassSubType;
     mythology?: string;
     god?: string;
 }
@@ -21,7 +21,7 @@ export class CreatureDbService {
         return await aCreature.save();
     }
 
-    async delete(id: string): Promise<CreatureDocument> {
+    async delete(id: string) {
         return await this.creatureModel.findByIdAndDelete(id).exec();
     }
 

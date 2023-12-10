@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory, raw } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
 import { Mythology } from "../mythology/mythologies.schema";
 import { God } from "../god/gods.schema";
-import { eClassSubType, eClassType, eHeroGender } from "../../enums";
+import { EClassSubType, EClassType, EHeroGender } from "../../enums";
 
 export type RoleDocument = HydratedDocument<Role>;
 
@@ -11,11 +11,11 @@ export class Role {
     @Prop({ required: true, unique: true })
     name: string;
 
-    @Prop({ required: true, type: String, enum: eClassType, default: eClassType.Melee })
-    roleType: eClassType;
+    @Prop({ required: true, type: String, enum: EClassType, default: EClassType.Melee })
+    roleType: EClassType;
 
-    @Prop({ required: true, type: String, enum: eClassSubType, default: eClassSubType.HeavyMelee })
-    roleSubType: eClassSubType;
+    @Prop({ required: true, type: String, enum: EClassSubType, default: EClassSubType.HeavyMelee })
+    roleSubType: EClassSubType;
 
     @Prop()
     shortDesc: string;
@@ -26,7 +26,7 @@ export class Role {
     @Prop([
         raw({
             main: { type: String },
-            sex: { type: String, enum: eHeroGender, default: eHeroGender.M },
+            sex: { type: String, enum: EHeroGender, default: EHeroGender.M },
         }),
     ])
     images: [Record<string, any>];

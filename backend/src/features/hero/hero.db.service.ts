@@ -26,7 +26,7 @@ export class HeroDbService {
         return await anHero.save();
     }
 
-    async delete(id: string): Promise<HeroDocument> {
+    async delete(id: string) {
         return await this.heroModel.findByIdAndDelete(id).exec();
     }
 

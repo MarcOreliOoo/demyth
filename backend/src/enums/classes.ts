@@ -1,10 +1,10 @@
-export enum eClassType {
+export enum EClassType {
     Melee = "Melee",
     Ranged = "Ranged",
     Mage = "Mage",
 }
 
-export enum eClassSubType {
+export enum EClassSubType {
     LightMelee = "Light Melee",
     HeavyMelee = "Heavy Melee",
     SpecializedMelee = "Specialized Melee",
@@ -18,8 +18,8 @@ export enum eClassSubType {
     Diviners = "Diviners",
 }
 
-export type eClassTypeMap = {
-    [eClassType.Melee]: eClassSubType.HeavyMelee | eClassSubType.LightMelee | eClassSubType.SpecializedMelee;
-    [eClassType.Ranged]: eClassSubType.Archers | eClassSubType.Throwers | eClassSubType.Marksmen;
-    [eClassType.Mage]: eClassSubType.Elementalists | eClassSubType.Enchanters | eClassSubType.Diviners;
+export type TClassTypeMap = {
+    [EClassType.Melee]: EClassSubType.HeavyMelee | EClassSubType.LightMelee | EClassSubType.SpecializedMelee;
+    [EClassType.Ranged]: EClassSubType.Archers | EClassSubType.Throwers | EClassSubType.Marksmen;
+    [EClassType.Mage]: EClassSubType.Elementalists | EClassSubType.Enchanters | EClassSubType.Diviners;
 };

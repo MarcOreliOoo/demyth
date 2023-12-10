@@ -1,17 +1,17 @@
 import { IsString, IsEnum, IsMongoId, IsNumber, IsPositive, IsNotEmpty } from "class-validator";
 
-import { eClassSubType, eClassType } from "../../../enums";
+import { EClassSubType, EClassType } from "../../../enums";
 
 export class CreateCreatureDto {
     @IsNotEmpty()
     @IsString()
     name: string;
 
-    @IsEnum(eClassType)
-    unitType: eClassType;
+    @IsEnum(EClassType)
+    unitType: EClassType;
 
-    @IsEnum(eClassSubType)
-    subUnitType: eClassSubType;
+    @IsEnum(EClassSubType)
+    subUnitType: EClassSubType;
 
     @IsString()
     shortDesc: string;

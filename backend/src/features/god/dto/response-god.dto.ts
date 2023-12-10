@@ -1,5 +1,5 @@
 import { Type, Transform } from "class-transformer";
-import { eGods } from "../../../enums";
+import { EGods } from "../../../enums";
 import { ObjectId } from "mongoose";
 import { ImagesDto } from "./images-god.dto";
 import { ResponsePowersDto } from "./powers-god.dto";
@@ -11,7 +11,7 @@ export class ResponseCreaturesDto extends LambdaDto {}
 export class ResponseGodDto {
     @Transform((value) => value.obj._id.toString())
     _id: ObjectId;
-    name: eGods;
+    name: EGods;
     shortDesc?: string;
     longDesc?: string;
     @Type(() => ImagesDto)

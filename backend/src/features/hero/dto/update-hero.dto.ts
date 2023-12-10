@@ -3,15 +3,15 @@ import { Type } from "class-transformer";
 import { ImagesDto } from "./images-hero.dto";
 import { GodInfoDto } from "./godInfo-hero.dto";
 import { MythologyInfoDto } from "./mythologyInfo-hero.dto";
-import { eHeroGender } from "../../../enums";
+import { EHeroGender } from "../../../enums";
 
 export class UpdateHeroDto {
     @IsString()
     @IsNotEmpty()
     name: string;
 
-    @IsEnum(eHeroGender)
-    sex: eHeroGender;
+    @IsEnum(EHeroGender)
+    sex: EHeroGender;
 
     @IsString()
     role: string;

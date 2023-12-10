@@ -1,4 +1,4 @@
-export enum eGods {
+export enum EGods {
     Zeus = "Zeus",
     Athena = "Athena",
     Poseidon = "Poseidon",
