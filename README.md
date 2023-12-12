@@ -25,12 +25,12 @@ Welcome on the main repository for DeMyth's project.<br />
 12. ©️ [License](#license)
 13. ❤️ [Contributors](#contributors)
 
-## <a name="what-is-demyth">🔱 What is Demyth?</a>
+# <a name="what-is-demyth">🔱 What is Demyth?</a>
 
 Demyth is a strategy-based web3 browser game, inspired by mythology, where players compete to ascend the rankings.
 In addition to the game, this project aims to integrate a variety of common full-stack tools, as we will discuss further.
 
-## <a name="installation">🔨 Installation</a>
+# <a name="installation">🔨 Installation</a>
 
 First you need to fork/download the monorepo.
 Secondly, you need these:
@@ -47,7 +47,7 @@ Then, in the root of the monorepo project:
 yarn install
 ```
 
-## <a name="stack">⚙️ Stack</a>
+# <a name="stack">⚙️ Stack</a>
 
 ### Backend
 
@@ -58,7 +58,7 @@ yarn install
 
 ### Frontend
 
-![NEXT](https://img.shields.io/badge/-Next.Js-black?style=for-the-badge&logo=nextdotjs&color=black)<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" color="white" width="16" height="16"><title>shadcn/ui</title><path d="M22.219 11.784 11.784 22.219c-.407.407-.407 1.068 0 1.476.407.407 1.068.407 1.476 0L23.695 13.26c.407-.408.407-1.069 0-1.476-.408-.407-1.069-.407-1.476 0ZM20.132.305.305 20.132c-.407.407-.407 1.068 0 1.476.408.407 1.069.407 1.476 0L21.608 1.781c.407-.407.407-1.068 0-1.476-.408-.407-1.069-.407-1.476 0Z"/></svg>![SHADCNUI](https://img.shields.io/badge/Shadcn/Ui-black?style=for-the-badge)
+![NEXT](https://img.shields.io/badge/-Next.Js-black?style=for-the-badge&logo=nextdotjs&color=black)<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" color="white" width="16" height="16"><path d="M22.219 11.784 11.784 22.219c-.407.407-.407 1.068 0 1.476.407.407 1.068.407 1.476 0L23.695 13.26c.407-.408.407-1.069 0-1.476-.408-.407-1.069-.407-1.476 0ZM20.132.305.305 20.132c-.407.407-.407 1.068 0 1.476.408.407 1.069.407 1.476 0L21.608 1.781c.407-.407.407-1.068 0-1.476-.408-.407-1.069-.407-1.476 0Z"/></svg>![SHADCNUI](https://img.shields.io/badge/Shadcn/Ui-black?style=for-the-badge)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-black?style=for-the-badge&logoColor=white&logo=typescript&color=2F73BF)
 
 ### Blockchain
@@ -69,7 +69,7 @@ yarn install
 
 ![Docker](https://img.shields.io/badge/-Docker-black?style=for-the-badge&logoColor=white&logo=docker&color=004EA2)
 
-## <a name="build">🚀 Build</a>
+# <a name="build">🚀 Build</a>
 
 In order to build the app for production, in the root, run the following command:
 
@@ -81,7 +81,7 @@ yarn build
 yarn start:dev
 ```
 
-## <a name="docker">🐳 Docker</a>
+# <a name="docker">🐳 Docker</a>
 
 This app will be Docker ready soon!
 The Dockerfile will be available at the root of the project.
@@ -108,7 +108,7 @@ yarn build
 yarn start:prod
 ```
 
-## <a name="tests">💯 Tests</a>
+# <a name="tests">💯 Tests</a>
 
 ### 🧪 Unit and E2E tests
 
@@ -141,7 +141,7 @@ Then, run one of the following commands:
 #Soon
 ```
 
-## <a name="env-variables">🌿 Env variables</a>
+# <a name="env-variables">🌿 Env variables</a>
 
 Environnement files are available in the **[env directory](https://github.com/marcoreliooo/demyth)**.
 
