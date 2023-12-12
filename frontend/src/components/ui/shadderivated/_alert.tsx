@@ -19,6 +19,7 @@ export type TAlertProps = {
         name: string;
         href: string;
     };
+    children?: React.ReactNode;
 };
 
 export const alertMap = {
@@ -36,7 +37,7 @@ export const alertMap = {
     },
 };
 
-export function _Alert({ evariant, title, content, link }: TAlertProps) {
+export function _Alert({ evariant, title, content, link, children }: TAlertProps) {
     const { icon } = alertMap[evariant];
     return (
         <Alert variant={evariant}>
@@ -49,6 +50,7 @@ export function _Alert({ evariant, title, content, link }: TAlertProps) {
                         {link.name}
                     </Link>
                 )}
+                {children}
             </AlertDescription>
         </Alert>
     );

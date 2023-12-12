@@ -12,7 +12,7 @@ import { Button } from "../ui/button";
 
 const LoginLogoutButton = () => {
     const [mounted, setMounted] = useState(false);
-    const { address, isConnected } = useAccount();
+
     const { disconnectAsync } = useDisconnect();
     const { data: session } = useSession();
 

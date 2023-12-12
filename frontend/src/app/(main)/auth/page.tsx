@@ -4,10 +4,10 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { redirect, useSearchParams } from "next/navigation";
 
-import { signIn, getCsrfToken, useSession } from "next-auth/react";
+import { signIn, getCsrfToken, useSession, signOut } from "next-auth/react";
 import { SiweMessage } from "siwe";
 import { polygonMumbai } from "viem/chains";
-import { useAccount, useSignMessage } from "wagmi";
+import { useAccount, useDisconnect, useSignMessage } from "wagmi";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,8 @@ import { Icons } from "@/components/ui/icons";
 import { _Alert, EAlertVariant } from "@/components/ui/shadderivated/_alert";
 import { printAddress } from "@/lib/utils/address";
 import { UserRejectedRequestError } from "viem";
+import { Pencil1Icon } from "@radix-ui/react-icons";
+import { FiLogOut } from "react-icons/fi";
 
 const AuthPage = () => {
     //Hydratation error
@@ -30,6 +32,7 @@ const AuthPage = () => {
 
     const { address, isConnected } = useAccount();
     const { open } = useWeb3Modal();
+    const { disconnectAsync } = useDisconnect();
     const { signMessageAsync } = useSignMessage();
 
     const { data: session } = useSession();
@@ -38,11 +41,16 @@ const AuthPage = () => {
     useEffect(() => {
         setMounted(true);
     }, []);
+    useEffect(() => {
+        if (searchParams.get("error")) {
+            setError(searchParams.get("error"));
+        }
+        console.log("searchParams: ", searchParams);
+    }, [searchParams]);
     if (!mounted) return <></>;
     if (session) redirect("/home");
 
     const handleConnect = async () => {
-        setIsLoading(true);
         setIsWeb3Auth(true);
         if (!isConnected) open();
     };
@@ -90,6 +98,17 @@ const AuthPage = () => {
         }
     };
 
+    const handleError = () => {
+        setError(null);
+        setIsLoading(false);
+        setIsWeb3Auth(false);
+    };
+
+    const handleSignout = async () => {
+        await disconnectAsync();
+        await signOut({ callbackUrl: "/auth" });
+    };
+
     /*     async function onSubmit(event: React.SyntheticEvent) {
         event.preventDefault();
         setIsLoading(true);
@@ -98,8 +117,6 @@ const AuthPage = () => {
             setIsLoading(false);
         }, 3000);
     } */
-
-    // TODO: handle searchParams.get("Error") and error to update error state. Ad₫ an handler?
 
     return (
         <main className="section-min-height flex h-full scroll-mt-24 flex-col items-center justify-center">
@@ -115,8 +132,11 @@ const AuthPage = () => {
                                 evariant={EAlertVariant.DESTRUCTIVE}
                                 content={searchParams.get("Error") ?? error!}
                                 title="Something went wrong!"
-                                link={{ name: "Try again", href: "/auth" }}
-                            />
+                            >
+                                <Button onClick={handleError} variant={"link"}>
+                                    Try again
+                                </Button>
+                            </_Alert>
                         ) : (
                             <Card>
                                 {isConnected && !hasSigned ? (
@@ -136,9 +156,29 @@ const AuthPage = () => {
                                             Connect Wallet
                                         </Button>
                                     ) : (
-                                        <Button className="w-full flex-1" onClick={handleSign}>
-                                            Sign Message
-                                        </Button>
+                                        <div className="flex flex-row gap-4">
+                                            <Button
+                                                className="w-full flex-1"
+                                                variant={"outline"}
+                                                onClick={handleSignout}
+                                                disabled={isLoading}
+                                            >
+                                                {isLoading ? (
+                                                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                                                ) : (
+                                                    <FiLogOut className="mr-2 h-4 w-4" />
+                                                )}{" "}
+                                                Disconnect Wallet
+                                            </Button>
+                                            <Button className="w-full flex-1" disabled={isLoading} onClick={handleSign}>
+                                                {isLoading ? (
+                                                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                                                ) : (
+                                                    <Pencil1Icon className="mr-2 h-4 w-4" />
+                                                )}{" "}
+                                                Sign Message
+                                            </Button>
+                                        </div>
                                     )}
                                     {!isWeb3Auth && (
                                         <div className="space-y-4">
