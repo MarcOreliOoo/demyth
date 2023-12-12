@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 type ImagesDto = {
     main: string;
     miniature: string;
@@ -20,11 +22,10 @@ export type ResponseMythologyDto = {
     effects: ResponseEffectsDto[];
 };
 
-// TODO: check cache refresh
 async function getMyths(): Promise<ResponseMythologyDto[] | null> {
     let res: Response;
     try {
-        res = await fetch(`${process.env.HOST}/mythologies`);
+        res = await fetch(`${process.env.HOST}/mythologies`, { next: { revalidate: 3600 } });
     } catch (e: any) {
         console.log("getMyth > Error: ", e.message);
         return null; // new Error("Failed to fetch");
