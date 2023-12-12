@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useAccount, useDisconnect } from "wagmi";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 import Link from "next/link";
 
@@ -12,8 +12,9 @@ import { Button } from "../ui/button";
 
 const LoginLogoutButton = () => {
     const [mounted, setMounted] = useState(false);
-    const { address, isConnected } = useAccount();
+
     const { disconnectAsync } = useDisconnect();
+    const { data: session } = useSession();
 
     const handleSignout = async () => {
         await disconnectAsync();
@@ -25,9 +26,11 @@ const LoginLogoutButton = () => {
 
     return (
         <div className="flex items-center justify-center gap-4">
-            {isConnected && address ? (
+            {session ? (
                 <>
-                    <span className="font-base text-base text-gray-300">{printAddress(address)}</span>
+                    <span className="font-base text-base text-gray-300">
+                        {session.user.address ? printAddress(session.user.address) : session.user.email}
+                    </span>
                     <Button variant="outline" onClick={handleSignout}>
                         <FiLogOut className="mr-2 h-4 w-4" />
                         <span>Log Out</span>

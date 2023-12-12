@@ -38,36 +38,31 @@ export const authOptions: AuthOptions = {
                     return null;
                 }
 
-                try {
-                    const siwe = new SiweMessage(JSON.parse(credentials?.message));
-                    const result = await siwe.verify({
-                        signature: credentials.signedMessage,
-                        nonce: await getCsrfToken({ req: { headers: req.headers } }),
-                    });
+                const siwe = new SiweMessage(JSON.parse(credentials?.message));
+                const result = await siwe.verify({
+                    signature: credentials.signedMessage,
+                    nonce: await getCsrfToken({ req: { headers: req.headers } }),
+                });
 
-                    if (!result.success) throw new Error("Invalid Signature");
+                if (!result.success) throw new Error("Invalid Signature");
 
-                    if (result.data.statement !== process.env.NEXT_PUBLIC_SIGNIN_MESSAGE)
-                        throw new Error("Statement Mismatch");
+                if (result.data.statement !== process.env.NEXT_PUBLIC_SIGNIN_MESSAGE)
+                    throw new Error("Statement Mismatch");
 
-                    const res = await fetch(`${process.env.HOST}/auth/signin`, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({ address: siwe.address }),
-                    });
+                const res = await fetch(`${process.env.HOST}/auth/signin`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ address: siwe.address }),
+                });
 
-                    if (res.status != 200) {
-                        console.log("Error: ", await res.text());
-                        return null;
-                    }
-                    const user = await res.json();
-                    return user;
-                } catch (error) {
-                    console.log(error);
-                    return null;
+                if (res.status != 200) {
+                    console.log("Error: ", await res.text());
+                    throw new Error("Error signing in: " + res.status + " " + res.statusText);
                 }
+                const user = await res.json();
+                return user;
             },
         }),
     ],
@@ -95,5 +90,6 @@ export const authOptions: AuthOptions = {
     },
     pages: {
         signIn: "/auth",
+        error: "/auth",
     },
 };
