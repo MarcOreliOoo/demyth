@@ -30,8 +30,8 @@ Welcome on the main repository for DeMyth's project.<br />
 Demyth is a strategy-based web3 browser game, inspired by mythology, where players compete to ascend the rankings.
 In addition to the game, this project aims to integrate a variety of common full-stack tools, as we will discuss further.
 
-Frontend Demo: https://demyth-frontend.vercel.app/
-Backend API Demo: https://demyth-render-test.onrender.com
+-   Frontend Demo: https://demyth-frontend.vercel.app/
+-   Backend API Demo: https://demyth-render-test.onrender.com
 
 # <a name="installation">🔨 Installation</a>
 
@@ -180,6 +180,7 @@ Environment variables are:
 ### 🔍 Code linting & formatting
 
 ![ESLint](https://img.shields.io/badge/-ESLint-black?style=for-the-badge&logoColor=white&logo=eslint&color=341BAB)
+![Prettier](https://img.shields.io/badge/-Prettier-black?style=for-the-badge&logoColor=white&logo=prettier&color=F7B93E)
 
 <!--
 In order to keep the code clean, consistent and free of bad TS practices, more than **300 ESLint rules are activated** !
