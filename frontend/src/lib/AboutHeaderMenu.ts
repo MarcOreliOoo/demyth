@@ -16,3 +16,5 @@ export const links = [
         hash: "#contact",
     },
 ] as const;
+
+export type TLinks = typeof links;

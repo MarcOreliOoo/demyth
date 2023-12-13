@@ -1,12 +1,12 @@
 import { IsString, IsEnum, ValidateNested, IsArray, IsMongoId, IsOptional } from "class-validator";
-import { eGods } from "../../../enums";
+import { EGods } from "../../../enums";
 import { Type } from "class-transformer";
 import { ImagesDto } from "./images-god.dto";
 import { PowersDto } from "./powers-god.dto";
 
 export class CreateGodDto {
-    @IsEnum(eGods)
-    name: eGods;
+    @IsEnum(EGods)
+    name: EGods;
 
     @IsString()
     shortDesc: string;

@@ -2,13 +2,13 @@ import { Model } from "mongoose";
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Role, RoleDocument } from "./roles.schema";
-import { eClassSubType, eClassType } from "../../enums";
+import { EClassSubType, EClassType } from "../../enums";
 
 export interface FindRoleParams {
     _Id?: string;
     name?: string;
-    roleType?: eClassType;
-    roleSubType?: eClassSubType;
+    roleType?: EClassType;
+    roleSubType?: EClassSubType;
     mythology?: string;
     god?: string;
 }
@@ -21,7 +21,7 @@ export class RoleDbService {
         return await aRole.save();
     }
 
-    async delete(id: string): Promise<RoleDocument> {
+    async delete(id: string) {
         return await this.roleModel.findByIdAndDelete(id).exec();
     }
 

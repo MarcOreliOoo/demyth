@@ -1,5 +1,5 @@
 import { IsString, IsNotEmpty, IsEnum, ValidateNested, IsArray } from "class-validator";
-import { eHeroGender } from "../../../enums";
+import { EHeroGender } from "../../../enums";
 import { ImagesDto } from "./images-hero.dto";
 import { Type } from "class-transformer";
 import { MythologyInfoDto } from "./mythologyInfo-hero.dto";
@@ -10,8 +10,8 @@ export class CreateHeroDto {
     @IsNotEmpty()
     name: string;
 
-    @IsEnum(eHeroGender)
-    sex: eHeroGender;
+    @IsEnum(EHeroGender)
+    sex: EHeroGender;
 
     @IsString()
     role: string;

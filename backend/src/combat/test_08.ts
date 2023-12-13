@@ -1,4 +1,4 @@
-import { eClassSubType, eClassType } from "../enums";
+import { EClassSubType, EClassType } from "../enums";
 import {
     BASE_DAMAGE,
     BASE_DAMAGE_BONUS,
@@ -68,11 +68,11 @@ class Stats {
     public baseStats: tBaseStats;
     public derivedStats: tDerivedBaseStats;
 
-    constructor(baseStats: tBaseStats, classeType: eClassType, lvl: number) {
+    constructor(baseStats: tBaseStats, classeType: EClassType, lvl: number) {
         this.baseStats = baseStats;
 
-        if (classeType === eClassType.Melee) this.defineForMelee(lvl);
-        else if (classeType === eClassType.Ranged) this.defineForRanged(lvl);
+        if (classeType === EClassType.Melee) this.defineForMelee(lvl);
+        else if (classeType === EClassType.Ranged) this.defineForRanged(lvl);
         else this.defineForMage(lvl);
     }
 
@@ -136,8 +136,8 @@ class Stats {
 
 class UnitProfile extends GeneralUnit {
     public name: string;
-    public roleType: eClassType;
-    public roleSubType: eClassSubType;
+    public roleType: EClassType;
+    public roleSubType: EClassSubType;
 
     public level: number;
     public stats: Stats;

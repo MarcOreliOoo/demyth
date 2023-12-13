@@ -1,5 +1,5 @@
 import { Type, Transform } from "class-transformer";
-import { eClassSubType, eClassType } from "../../../enums";
+import { EClassSubType, EClassType } from "../../../enums";
 import { ObjectId } from "mongoose";
 import { ImagesDto } from "./images-role.dto";
 
@@ -7,8 +7,8 @@ export class ResponseRoleDto {
     @Transform((value) => value.obj._id.toString())
     _id: ObjectId;
     name: string;
-    roleType: eClassType;
-    roleSubType: eClassSubType;
+    roleType: EClassType;
+    roleSubType: EClassSubType;
     shortDesc: string;
     longDesc: string;
     @Type(() => ImagesDto)

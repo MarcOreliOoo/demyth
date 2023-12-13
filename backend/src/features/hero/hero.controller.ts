@@ -7,7 +7,7 @@ import { CreateHeroDto } from "./dto/create-hero.dto";
 import { ResponseHeroDto } from "./dto/response-hero.dto";
 import { UpdateHeroDto } from "./dto/update-hero.dto";
 import { User } from "../../decorators/user.decorators";
-import { JWTPayload } from "../../auth/interface-auth";
+import { JWTPayload } from "../../auth/interface.auth";
 
 @Controller("v0/heroes")
 export class HeroController {
@@ -16,7 +16,7 @@ export class HeroController {
     @Post()
     async create(@Body() createHeroDto: CreateHeroDto, @User() user: JWTPayload): Promise<ResponseHeroDto> {
         log("HeroController > create");
-        return await this.heroService.create(createHeroDto, user.sub);
+        return await this.heroService.create(createHeroDto, user.sub._id);
     }
 
     // TODO: add user guard
@@ -30,7 +30,7 @@ export class HeroController {
         @User() user: JWTPayload,
     ): Promise<ResponseHeroDto> {
         log("HeroController > update");
-        return await this.heroService.updateById(heroId, updateHeroDto, user.sub);
+        return await this.heroService.updateById(heroId, updateHeroDto, user.sub._id);
     }
 
     // TODO: add user guard
@@ -39,7 +39,7 @@ export class HeroController {
     @Delete(":heroId")
     async delete(@Param("heroId", new ParseObjectIdPipe()) heroId: string, @User() user: JWTPayload): Promise<void> {
         log("HeroController > delete");
-        return await this.heroService.deleteById(heroId, user.sub);
+        return await this.heroService.deleteById(heroId, user.sub._id);
     }
 
     @Get()

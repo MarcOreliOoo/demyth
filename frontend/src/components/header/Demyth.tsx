@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
+// TODO: create component for WIP
 const Demyth = () => {
     /* pb-3 because blanka is not well middle aligned */
     return (
