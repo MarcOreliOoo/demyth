@@ -30,6 +30,9 @@ Welcome on the main repository for DeMyth's project.<br />
 Demyth is a strategy-based web3 browser game, inspired by mythology, where players compete to ascend the rankings.
 In addition to the game, this project aims to integrate a variety of common full-stack tools, as we will discuss further.
 
+Frontend Demo: https://demyth-frontend.vercel.app/
+Backend API Demo: https://demyth-render-test.onrender.com
+
 # <a name="installation">🔨 Installation</a>
 
 First you need to fork/download the monorepo.
@@ -49,6 +52,19 @@ yarn install
 
 # <a name="stack">⚙️ Stack</a>
 
+### Frontend
+
+| What                                                                                                                              | Why                                                    |
+| --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| ![NEXT](https://img.shields.io/badge/-Next.Js-black?style=for-the-badge&logo=nextdotjs&color=black)                               |                                                        |
+| ![TypeScript](https://img.shields.io/badge/-TypeScript-black?style=for-the-badge&logoColor=white&logo=typescript&color=2F73BF)    |                                                        |
+| ![tailwindcss](https://img.shields.io/badge/-TailwindCSS-black?style=for-the-badge&logoColor=white&logo=tailwindcss&color=06B6D4) |                                                        |
+| ![SHADCNUI](https://img.shields.io/badge/Shadcn/Ui-black?style=for-the-badge)                                                     | Component library                                      |
+| ![web3Modal](https://img.shields.io/badge/-Wagmi-black?style=for-the-badge&logoColor=white&logo=walletconnect&color=3B99FC)       | All web3modal suff: wagmi, wallet connecct, viem, siwe |
+| ![framermotion](https://img.shields.io/badge/-FramerMotion-black?style=for-the-badge&logoColor=white&logo=framer&color=0055ff)    | Animation purpose                                      |
+| ![Tailwind Utility](https://img.shields.io/badge/-Utility-black?style=for-the-badge)                                              | twMerge, clsx, cva                                     |
+| ![Auth](https://img.shields.io/badge/-NextAuth-black?style=for-the-badge&logoColor=white&logo=nextauth&color=magenta)             | web2 & web3 login with jwt session                     |
+
 ### Backend
 
 ![NEST](https://img.shields.io/badge/-NestJs-black?style=for-the-badge&logo=nestjs&color=E0234D)
@@ -56,14 +72,10 @@ yarn install
 ![MONGODB](https://img.shields.io/badge/-MongoDB-black?style=for-the-badge&logoColor=white&logo=mongodb&color=127237)
 ![MONGOOSE](https://img.shields.io/badge/-Mongoose-black?style=for-the-badge&logoColor=white&logo=mongoose&color=880000)
 
-### Frontend
-
-![NEXT](https://img.shields.io/badge/-Next.Js-black?style=for-the-badge&logo=nextdotjs&color=black)<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" color="white" width="16" height="16"><path d="M22.219 11.784 11.784 22.219c-.407.407-.407 1.068 0 1.476.407.407 1.068.407 1.476 0L23.695 13.26c.407-.408.407-1.069 0-1.476-.408-.407-1.069-.407-1.476 0ZM20.132.305.305 20.132c-.407.407-.407 1.068 0 1.476.408.407 1.069.407 1.476 0L21.608 1.781c.407-.407.407-1.068 0-1.476-.408-.407-1.069-.407-1.476 0Z"/></svg>![SHADCNUI](https://img.shields.io/badge/Shadcn/Ui-black?style=for-the-badge)
-![TypeScript](https://img.shields.io/badge/-TypeScript-black?style=for-the-badge&logoColor=white&logo=typescript&color=2F73BF)
-
 ### Blockchain
 
-![Hardhat](https://img.shields.io/badge/-Hardhat-black?style=for-the-badge&logo=opensourcehardware&color=yellow)
+![Hardhat](https://img.shields.io/badge/-Hardhat-black?style=for-the-badge&color=yellow)
+![Solidity](https://img.shields.io/badge/-Solidity-black?style=for-the-badge&logo=solidity&color=363636)
 
 ### Soon - To come
 
@@ -130,7 +142,7 @@ yarn start:prod
 
 ![Cucumber](https://img.shields.io/badge/-Cucumber-black?style=for-the-badge&logoColor=white&logo=cucumber&color=169652)
 
-<!--[![Scenarios](https://byob.yarr.is/antoinezanardi/werewolves-assistant-api-next/scenarios)](https://byob.yarr.is/antoinezanardi/werewolves-assistant-api-next/scenarios)-->
+<!--[![Scenarios](https://byob.yarr.is/marcoreliooo/demyth/scenarios)](https://byob.yarr.is/marcoreliooo/demyth/scenarios)-->
 
 ### ▶️ Commands
 
@@ -149,16 +161,19 @@ You can create a `.env` file in this directory to override the default values wh
 
 Environment variables are:
 
-|        Name         |               Description               | Required | Default value |                   Limitations                    |
-| :-----------------: | :-------------------------------------: | :------: | :-----------: | :----------------------------------------------: |
-|       `HOST`        | Host on which the API will be available |    ❌    |  `127.0.0.1`  |          If set, can't be empty string           |
-|       `PORT`        | Port on which the API will be available |    ❌    |    `8080`     | If set, must be a number between `0` and `65535` |
-|   `ENVIRONNEMENT`   |  Environment in which the API will run  |    ✅    |      ❌       |  Must be `development`, `production` or `test`   |
-|   `DATABASE_HOST`   |        MongoDB database host URL        |    ✅    |      ❌       |              Can't be empty string               |
-|   `DATABASE_PORT`   |          MongoDB database port          |    ❌    |  `undefined`  | If set, must be a number between `0` and `65535` |
-|   `DATABASE_NAME`   |          MongoDB database name          |    ✅    |      ❌       |              Can't be empty string               |
-| `DATABASE_USERNAME` |          MongoDB database user          |    ✅    |      ❌       |              Can't be empty string               |
-| `DATABASE_PASSWORD` |        MongoDB database password        |    ✅    |      ❌       |              Can't be empty string               |
+|                 Name                  |                    Description                     | Required |         Example value         | Limitations |
+| :-----------------------------------: | :------------------------------------------------: | :------: | :---------------------------: | :---------: |
+|                `HOST`                 |      Host on which the API will be available       |    ✅    |    `http://localhost:3001`    |
+| `NEXT_PUBLIC_WALLETCONNECT_PROJECTID` |             Wallet connect project ID              |    ✅    | `25654aeff98f7aaac5b9fff6...` |
+|     `NEXT_PUBLIC_SIGNIN_MESSAGE`      | Message content to be sign when web3 login is used |    ✅    |              ❌               |
+|           `NEXTAUTH_SECRET`           |                Secret for NextAuth                 |    ✅    |              ❌               |
+|            `NEXTAUTH_URL`             |                  Url for NextAuth                  |    ✅    |    `http://localhost:3000`    |
+|             `MONGODB_URL`             |                 Atlas Mongodb URL                  |    ✅    |   ``mongodb+srv://....net/`   |
+|           `JSON_TOKEN_KEY`            |               Key for Jwt generation               |    ✅    |              ❌               |
+|          `JSON_TOKEN_EXPIRE`          |                Expire time for Jwt                 |    ✅    |             `1d`              |
+|        JSON_REFRESH_TOKEN_KEY         |               Key for Jwt generation               |    ✅    |              ❌               |
+|       JSON_REFRESH_TOKEN_EXPIRE       |                Expire time for Jwt                 |    ✅    |             `7d`              |
+|                 PORT                  |                  Port for backend                  |    ✅    |            `3001`             |
 
 ## <a name="code-analysis-and-consistency">☑️ Code analysis and consistency</a>
 
@@ -166,6 +181,7 @@ Environment variables are:
 
 ![ESLint](https://img.shields.io/badge/-ESLint-black?style=for-the-badge&logoColor=white&logo=eslint&color=341BAB)
 
+<!--
 In order to keep the code clean, consistent and free of bad TS practices, more than **300 ESLint rules are activated** !
 
 Complete list of all enabled rules is available in the **[.eslintrc.js file](https://github.com/antoinezanardi/werewolves-assistant-api-next/blob/master/.eslintrc.js)**.
@@ -223,51 +239,23 @@ Each change when a new release comes up is listed in the **<a href="https://gith
 
 Also, you can keep up with changes by watching releases via the **Watch GitHub button** at the top of this page.
 
-#### 🏷️ <a href="https://github.com/antoinezanardi/werewolves-assistant-api-next/releases" target="_blank">All releases for this project are available here</a>.
+#### 🏷️ <a href="https://github.com/antoinezanardi/werewolves-assistant-api-next/releases" target="_blank">All releases for this project are available here</a>. -->
 
 ## <a name="github-actions">🐙 GitHub Actions</a>
 
 This project uses **GitHub Actions** to automate some boring tasks.
 
-You can find all the workflows in the **[.github/workflows directory](https://github.com/antoinezanardi/werewolves-assistant-api-next/tree/main/.github/workflows).**
+You can find all the workflows in the **[.github/workflows directory](https://github.com/marcoreliooo/demyth/tree/main/.github/workflows).**
 
 ### 🎢 Workflows
 
-|                                                                             Name                                                                             |                                                                                                                                                                          Description & Status                                                                                                                                                                           |                      Triggered on                      |
-| :----------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------: |
-|                         **[⚙️ Build](https://github.com/antoinezanardi/werewolves-assistant-api-next/actions/workflows/build.yml)**                          |                                   Various checks for app health, code quality and tests coverage<br/><br/>[![⚙️ Build Workflow](https://github.com/antoinezanardi/werewolves-assistant-api-next/actions/workflows/build.yml/badge.svg)](https://github.com/antoinezanardi/werewolves-assistant-api-next/actions/workflows/build.yml)                                    | `push` on `develop` and all pull requests to `develop` |
-| **[🔃 Lint PR Name Into Develop Workflow](https://github.com/antoinezanardi/werewolves-assistant-api-next/actions/workflows/lint-pr-name-into-develop.yml)** |    Checks if pull request name respects `conventionnal-commit` rules<br/><br/>[![🔃 Lint PR Name Into Develop Workflow](https://github.com/antoinezanardi/werewolves-assistant-api-next/actions/workflows/lint-pr-name-into-develop.yml/badge.svg)](https://github.com/antoinezanardi/werewolves-assistant-api-next/actions/workflows/lint-pr-name-into-develop.yml)    |         `pull-request` `created` or `updated`          |
-|       **[⛵️ Push On Develop Branch Workflow](https://github.com/antoinezanardi/werewolves-assistant-api-next/actions/workflows/push-on-develop.yml)**        |                       Uploads app with `develop` version to `Docker Hub`<br/><br/>[![⛵️ Push On Develop Branch Workflow](https://github.com/antoinezanardi/werewolves-assistant-api-next/actions/workflows/push-on-develop.yml/badge.svg)](https://github.com/antoinezanardi/werewolves-assistant-api-next/actions/workflows/push-on-develop.yml)                       |                  `push` on `develop`                   |
-|        **[🔃️ Upsert PR Release Workflow](https://github.com/antoinezanardi/werewolves-assistant-api-next/actions/workflows/upsert-pr-release.yml)**         | Creates or updates pull request to `main` depending on commits on `develop` since last release<br/><br/>[![🔃️ Upsert PR Release Workflow](https://github.com/antoinezanardi/werewolves-assistant-api-next/actions/workflows/upsert-pr-release.yml/badge.svg)](https://github.com/antoinezanardi/werewolves-assistant-api-next/actions/workflows/upsert-pr-release.yml) |                  `push` on `develop`                   |
-|          **[🏷️ Release Creation Workflow](https://github.com/antoinezanardi/werewolves-assistant-api-next/actions/workflows/release-creation.yml)**          |           Creates a new release using `semantic-release` with tag and updated changelog<br/><br/>[![🏷️ Release Creation Workflow](https://github.com/antoinezanardi/werewolves-assistant-api-next/actions/workflows/release-creation.yml/badge.svg)](https://github.com/antoinezanardi/werewolves-assistant-api-next/actions/workflows/release-creation.yml)            |                    `push` on `main`                    |
-|      **[🚀 Deploy To Production Workflow](https://github.com/antoinezanardi/werewolves-assistant-api-next/actions/workflows/deploy-to-production.yml)**      |              Deploys app with last tag version to `Docker Hub` and `GCP`<br/><br/>[![🚀 Deploy To Production Workflow](https://github.com/antoinezanardi/werewolves-assistant-api-next/actions/workflows/deploy-to-production.yml/badge.svg)](https://github.com/antoinezanardi/werewolves-assistant-api-next/actions/workflows/deploy-to-production.yml)               |                     `tag-creation`                     |
+Workflows are onlky for frontend at the time.
+| Name | Description & Status | Triggered on |
+| :---------------------------------------------------------------------------------------------------: | :------------------------------------------------------------: | :----------------------------------------------------: |
+| **[⚙️ Preview Workflow](https://github.com/marcoreliooo/demyth/actions/workflows/preview.yml)** | Various checks for app health, code quality and tests coverage | `push` on `develop` and all pull requests to `develop` |
+| **[🚀 Production Workflow](https://github.com/marcoreliooo/demyth/actions/workflows/production.yml)** | Various checks for app health, code quality and tests coverage | `push` on `main` and all pull requests to `main` |
 
 ## <a name="misc-commands">✨ Misc commands</a>
-
-### 🌳 Animated tree visualisation of the project's evolution with **[Gource](https://gource.io/)**
-
-```shell
-# Please ensure that `gource` is installed on your system.
-npm run gource
-```
-
-### 🔀 Create git branch with a conventional name
-
-```shell
-npm run script:create-branch
-```
-
-### ⤴️ Create pull request against the `develop` branch from current branch
-
-```shell
-npm run script:create-pull-request
-```
-
-### 📣 To all IntelliJ IDEs users (IntelliJ, Webstorm, PHPStorm, etc.)
-
-All the above commands are available in the **.run directory** at the root of the project.
-
-You can add them as **run configurations** in your IDE.
 
 ## <a name="license">©️ License</a>
 
@@ -275,22 +263,4 @@ This project is licensed under the [MIT License](http://opensource.org/licenses/
 
 ## <a name="contributors">❤️ Contributors</a>
 
-There is no contributor yet. Want to be the first ?
-
-If you want to contribute to this project, please read the [**contribution guide**](https://github.com/antoinezanardi/werewolves-assistant-api-next/blob/master/CONTRIBUTING.md).
-
-# Start backend
-
--   `yarn workspace @demyth/backend start:dev`
-
-# Start frontend
-
--   `yarn workspace @demyth/frontend dev`
-
-# Deploying frontend on Vercel
-
--   https://demyth-frontend.vercel.app/
-
-# Deploying backend on Render
-
--   https://demyth-render-test.onrender.com
+There is no contributor yet. Want to be the first?
