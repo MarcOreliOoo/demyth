@@ -5,9 +5,9 @@ import { useState } from "react";
 import Link from "next/link";
 
 import { motion } from "framer-motion";
-import { TLinks } from "../../lib/AboutHeaderMenu";
 import { buttonVariants } from "../ui/button";
-import { cn } from "../../lib/utils";
+import { cn } from "@/lib/utils";
+import { TLinks } from "@/lib/data/AboutHeaderMenu";
 
 const Menu = ({ links }: { links: TLinks }) => {
     const [activeSection, setActiveSection] = useState("About");

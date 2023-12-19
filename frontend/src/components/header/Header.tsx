@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { links } from "../../lib/AboutHeaderMenu";
+import { links } from "../../lib/data/AboutHeaderMenu";
 import Demyth from "./Demyth";
 import ToggleMenu from "./ToggleMenu";
 import Menu from "./Menu";
@@ -11,7 +11,7 @@ const Header = () => {
             <nav
                 className={clsx(
                     "fixed left-1/2 top-0 flex w-full max-w-10xl -translate-x-1/2 flex-row flex-nowrap items-center justify-between gap-x-6 p-4",
-                    "bg-glassmorphism text-glassmorphism-foreground blur-saturate-glass hover:bg-glassmorphism-hover",
+                    "blur-saturate-glass bg-glassmorphism text-glassmorphism-foreground hover:bg-glassmorphism-hover",
                     "md:px-8",
                 )}
             >

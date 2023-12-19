@@ -7,7 +7,7 @@ import clsx from "clsx";
 import { motion } from "framer-motion";
 import { AiOutlineClose } from "react-icons/ai";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
-import { links } from "../../lib/AboutHeaderMenu";
+import { links } from "../../lib/data/AboutHeaderMenu";
 
 const ToggleMenu = () => {
     const [toggle, setToggle] = useState(false);
