@@ -25,14 +25,14 @@ async function refreshToken(token: JWT): Promise<JWT> {
 export const authOptions: AuthOptions = {
     providers: [
         CredentialsProvider({
-            id: "web3",
-            name: "web3",
+            id: "web3SignIn",
+            name: "web3SignIn",
             credentials: {
                 message: { label: "Message", type: "text" },
                 signedMessage: { label: "Signed Message", type: "text" }, //signature
             },
             async authorize(credentials, req) {
-                console.log("authorize > credentials: ", credentials);
+                console.log("signin > authorize > credentials: ", credentials);
 
                 if (!credentials?.signedMessage || !credentials?.message) {
                     return null;
@@ -60,6 +60,47 @@ export const authOptions: AuthOptions = {
                 if (res.status != 200) {
                     console.log("Error: ", await res.text());
                     throw new Error("Error signing in: " + res.status + " " + res.statusText);
+                }
+                const user = await res.json();
+                return user;
+            },
+        }),
+        CredentialsProvider({
+            id: "web3SignUp",
+            name: "web3SignUp",
+            credentials: {
+                message: { label: "Message", type: "text" },
+                signedMessage: { label: "Signed Message", type: "text" }, //signature
+            },
+            async authorize(credentials, req) {
+                console.log("signup > authorize > credentials: ", credentials);
+
+                if (!credentials?.signedMessage || !credentials?.message) {
+                    return null;
+                }
+
+                const siwe = new SiweMessage(JSON.parse(credentials?.message));
+                const result = await siwe.verify({
+                    signature: credentials.signedMessage,
+                    nonce: await getCsrfToken({ req: { headers: req.headers } }),
+                });
+
+                if (!result.success) throw new Error("Invalid Signature");
+
+                if (result.data.statement !== process.env.NEXT_PUBLIC_SIGNIN_MESSAGE)
+                    throw new Error("Statement Mismatch");
+
+                const res = await fetch(`${process.env.HOST}/auth/signup`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ address: siwe.address }),
+                });
+
+                if (res.status != 201) {
+                    console.log("Error: ", await res.text());
+                    throw new Error("Error signing up: " + res.status + " " + res.statusText);
                 }
                 const user = await res.json();
                 return user;
