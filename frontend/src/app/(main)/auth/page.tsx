@@ -4,8 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { redirect, useSearchParams } from "next/navigation";
 
-import { signIn, getCsrfToken, useSession, signOut } from "next-auth/react";
-import { SiweMessage } from "siwe";
+import { signIn, useSession, signOut } from "next-auth/react";
 import { polygonMumbai } from "viem/chains";
 import { useAccount, useDisconnect, useSignMessage } from "wagmi";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
@@ -21,6 +20,7 @@ import { printAddress } from "@/lib/utils/address";
 import { UserRejectedRequestError } from "viem";
 import { Pencil1Icon } from "@radix-ui/react-icons";
 import { FiLogOut } from "react-icons/fi";
+import { getSiweMessages } from "@/lib/utils/siwe";
 
 const AuthPage = () => {
     //Hydratation error
@@ -62,7 +62,13 @@ const AuthPage = () => {
         try {
             if (!isConnected) open();
 
-            const message = new SiweMessage({
+            const { message, signedMessage } = await getSiweMessages({
+                address,
+                id: polygonMumbai.id,
+                signMessageAsync,
+            });
+
+            /* const message = new SiweMessage({
                 domain: window.location.host,
                 uri: window.location.origin,
                 version: "1",
@@ -75,7 +81,7 @@ const AuthPage = () => {
             const signedMessage = await signMessageAsync({
                 message: message?.prepareMessage(),
             });
-
+ */
             setHasSigned(true);
 
             const response = await signIn("web3SignIn", {
@@ -116,23 +122,14 @@ const AuthPage = () => {
         try {
             if (!isConnected) open();
 
-            const message = new SiweMessage({
-                domain: window.location.host,
-                uri: window.location.origin,
-                version: "1",
-                address: address,
-                statement: process.env.NEXT_PUBLIC_SIGNIN_MESSAGE,
-                nonce: await getCsrfToken(),
-                chainId: polygonMumbai.id,
-            });
-
-            const signedMessage = await signMessageAsync({
-                message: message?.prepareMessage(),
+            const { message, signedMessage } = await getSiweMessages({
+                address,
+                id: polygonMumbai.id,
+                signMessageAsync,
             });
 
             setHasSigned(true);
 
-            //TODO: Add signup mutation
             const response = await signIn("web3SignUp", {
                 message: JSON.stringify(message),
                 signedMessage,
@@ -141,7 +138,6 @@ const AuthPage = () => {
             });
 
             if (response?.error) {
-                console.log("response.error: ", response.error);
                 throw new Error(response.error);
             }
         } catch (error) {

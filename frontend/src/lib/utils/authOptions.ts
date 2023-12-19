@@ -1,8 +1,7 @@
 import { AuthOptions } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { getCsrfToken } from "next-auth/react";
-import { SiweMessage } from "siwe";
+import { controlSignature } from "./siwe";
 
 async function refreshToken(token: JWT): Promise<JWT> {
     const res = await fetch(`${process.env.HOST}/auth/refresh`, {
@@ -11,11 +10,9 @@ async function refreshToken(token: JWT): Promise<JWT> {
             authorization: `Refresh ${token.backendTokens.refreshToken}`,
         },
     });
-
     console.log("nextauth > refreshToken > refreshed");
 
     const response = await res.json();
-
     return {
         ...token,
         backendTokens: response,
@@ -32,22 +29,10 @@ export const authOptions: AuthOptions = {
                 signedMessage: { label: "Signed Message", type: "text" }, //signature
             },
             async authorize(credentials, req) {
-                console.log("signin > authorize > credentials: ", credentials);
-
                 if (!credentials?.signedMessage || !credentials?.message) {
                     return null;
                 }
-
-                const siwe = new SiweMessage(JSON.parse(credentials?.message));
-                const result = await siwe.verify({
-                    signature: credentials.signedMessage,
-                    nonce: await getCsrfToken({ req: { headers: req.headers } }),
-                });
-
-                if (!result.success) throw new Error("Invalid Signature");
-
-                if (result.data.statement !== process.env.NEXT_PUBLIC_SIGNIN_MESSAGE)
-                    throw new Error("Statement Mismatch");
+                const siwe = await controlSignature({ credentials, req });
 
                 const res = await fetch(`${process.env.HOST}/auth/signin`, {
                     method: "POST",
@@ -73,22 +58,11 @@ export const authOptions: AuthOptions = {
                 signedMessage: { label: "Signed Message", type: "text" }, //signature
             },
             async authorize(credentials, req) {
-                console.log("signup > authorize > credentials: ", credentials);
-
                 if (!credentials?.signedMessage || !credentials?.message) {
                     return null;
                 }
 
-                const siwe = new SiweMessage(JSON.parse(credentials?.message));
-                const result = await siwe.verify({
-                    signature: credentials.signedMessage,
-                    nonce: await getCsrfToken({ req: { headers: req.headers } }),
-                });
-
-                if (!result.success) throw new Error("Invalid Signature");
-
-                if (result.data.statement !== process.env.NEXT_PUBLIC_SIGNIN_MESSAGE)
-                    throw new Error("Statement Mismatch");
+                const siwe = await controlSignature({ credentials, req });
 
                 const res = await fetch(`${process.env.HOST}/auth/signup`, {
                     method: "POST",
@@ -107,10 +81,6 @@ export const authOptions: AuthOptions = {
             },
         }),
     ],
-    //session: { strategy: "jwt" },
-    //debug: process.env.NODE_ENV === "development",
-    //secret: process.env.NEXTAUTH_SECRET,
-
     callbacks: {
         async jwt({ token, user }) {
             if (user) return { ...token, ...user };
