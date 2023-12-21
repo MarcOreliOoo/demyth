@@ -21,6 +21,8 @@ import { UserRejectedRequestError } from "viem";
 import { Pencil1Icon } from "@radix-ui/react-icons";
 import { FiLogOut } from "react-icons/fi";
 import { getSiweMessages } from "@/lib/utils/siwe";
+import { glassmorphism } from "../../../lib/utils/cssProperties";
+import { cn } from "../../../lib/utils";
 
 const AuthPage = () => {
     //Hydratation error
@@ -159,10 +161,10 @@ const AuthPage = () => {
     } */
 
     return (
-        <main className="section-min-height flex h-full scroll-mt-24 flex-col items-center justify-center">
+        <main className="section-min-height relative flex h-full scroll-mt-24 flex-col items-center justify-center">
             {(!isConnected || (isConnected && !hasSigned)) && (
                 <Tabs defaultValue="signin" className="container sm:w-[480px]">
-                    <TabsList className="grid w-full grid-cols-2">
+                    <TabsList className={cn(` grid w-full grid-cols-2`)}>
                         <TabsTrigger value="signin">Sign In</TabsTrigger>
                         <TabsTrigger value="signup">Sign Up</TabsTrigger>
                     </TabsList>
@@ -178,7 +180,7 @@ const AuthPage = () => {
                                 </Button>
                             </_Alert>
                         ) : (
-                            <Card>
+                            <Card className={cn(`${glassmorphism}`)}>
                                 {isConnected && !hasSigned ? (
                                     <CardHeader>
                                         <CardTitle>{printAddress(address ?? "")}</CardTitle>
@@ -222,14 +224,7 @@ const AuthPage = () => {
                                     )}
                                     {!isWeb3Auth && (
                                         <div className="space-y-4">
-                                            <div className="relative">
-                                                <div className="absolute inset-0 flex items-center">
-                                                    <span className="w-full border-t" />
-                                                </div>
-                                                <div className="relative flex justify-center text-xs uppercase">
-                                                    <span className="bg-background px-2 text-muted-foreground">Or</span>
-                                                </div>
-                                            </div>
+                                            <Separator />
                                             <div className="grid grid-cols-3 gap-2">
                                                 <Button variant="outline" type="button" disabled={isLoading}>
                                                     {isLoading ? (
@@ -256,14 +251,7 @@ const AuthPage = () => {
                                                     Twitter
                                                 </Button>
                                             </div>
-                                            <div className="relative">
-                                                <div className="absolute inset-0 flex items-center">
-                                                    <span className="w-full border-t" />
-                                                </div>
-                                                <div className="relative flex justify-center text-xs uppercase">
-                                                    <span className="bg-background px-2 text-muted-foreground">Or</span>
-                                                </div>
-                                            </div>
+                                            <Separator />
                                             <div className="space-y-2">
                                                 <Label className="sr-only" htmlFor="email">
                                                     Email
@@ -291,7 +279,7 @@ const AuthPage = () => {
                         )}
                     </TabsContent>
                     <TabsContent value="signup">
-                        <Card>
+                        <Card className={cn(`${glassmorphism}`)}>
                             {isConnected && !hasSigned ? (
                                 <CardHeader>
                                     <CardTitle>{printAddress(address ?? "")}</CardTitle>
@@ -335,14 +323,7 @@ const AuthPage = () => {
                                 )}
                                 {!isWeb3Auth && (
                                     <div className="space-y-4">
-                                        <div className="relative">
-                                            <div className="absolute inset-0 flex items-center">
-                                                <span className="w-full border-t" />
-                                            </div>
-                                            <div className="relative flex justify-center text-xs uppercase">
-                                                <span className="bg-background px-2 text-muted-foreground">Or</span>
-                                            </div>
-                                        </div>
+                                        <Separator />
                                         <div className="grid grid-cols-3 gap-2">
                                             <Button variant="outline" type="button" disabled={isLoading}>
                                                 {isLoading ? (
@@ -369,14 +350,7 @@ const AuthPage = () => {
                                                 Twitter
                                             </Button>
                                         </div>
-                                        <div className="relative">
-                                            <div className="absolute inset-0 flex items-center">
-                                                <span className="w-full border-t" />
-                                            </div>
-                                            <div className="relative flex justify-center text-xs uppercase">
-                                                <span className="bg-background px-2 text-muted-foreground">Or</span>
-                                            </div>
-                                        </div>
+                                        <Separator />
                                         <div className="space-y-2">
                                             <Label className="sr-only" htmlFor="email">
                                                 Email
@@ -423,6 +397,16 @@ const AuthPage = () => {
                 </Tabs>
             )}
         </main>
+    );
+};
+
+const Separator = () => {
+    return (
+        <div className="relative grid w-full grid-cols-5 grid-rows-1 place-content-center place-items-center">
+            <span className="col-span-2 w-full border-t" />
+            <span className={`-space-x-6 text-xs uppercase text-muted-foreground`}>Or</span>
+            <span className="col-span-2 w-full border-t" />
+        </div>
     );
 };
 

@@ -27,8 +27,8 @@
         --accent-foreground: 0 0% 98%;
         --destructive: 0 62.8% 30.6%;
         --destructive-foreground: 0 0% 98%;
-        --border: 0 0% 14.9%;
-        --input: 0 0% 14.9%;
+        --border: 0 0% 30.9%;
+        --input: 0 0% 30.9%;
         --ring: 0 0% 83.1%;
 
         --radius: 0.5rem;
@@ -98,6 +98,12 @@
     .black__gradient {
         background: rgb(04, 02, 03);
         background: radial-gradient(circle, rgba(04, 02, 03, 1) 25%, rgba(26, 40, 50, 1) 80%);
+        filter: blur(100px);
+    }
+
+    .blue__gradient {
+        background: rgb(18, 93, 122);
+        background: radial-gradient(circle, rgba(18, 93, 122, 1) 25%, rgba(26, 40, 50, 1) 80%);
         filter: blur(100px);
     }
 

@@ -1,173 +1,83 @@
-"use client";
-
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { sidebarLinks } from "@/lib/data/SidebarMenu";
 import Link from "next/link";
 
-export function Sidebar() {
-    const [isSidebarOpen, setSidebarOpen] = useState(true);
+type SidebarProps = {
+    isSidebarOpen: boolean;
+    setSidebarOpen: (open: boolean) => void;
+};
+// TODO: handle sidebar open/close properly with css property for seeing only icons cf youtube
+export function Sidebar({ isSidebarOpen, setSidebarOpen }: SidebarProps) {
     return (
-        <aside className={`fixed left-0 h-full transition-all duration-300 ${isSidebarOpen ? "w-64" : "w-20"}`}>
+        <aside
+            className={`absolute left-0 top-0 z-[998] h-full bg-opacity-100 backdrop-blur-2xl backdrop-filter transition-all duration-300 ${
+                isSidebarOpen ? "w-64" : "w-20"
+            } border border-red-500`}
+        >
             <div className={cn("pb-12")}>
                 <div className="space-y-4 py-4">
-                    <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="bg-blue-500 p-2 text-white">
-                        {isSidebarOpen ? "Reduce" : "Expand"}
-                    </button>
                     <div className="px-3 py-2">
-                        <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">Discover</h2>
-                        <div className="space-y-1">
-                            <Button variant="secondary" className="w-full justify-start">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="mr-2 h-4 w-4"
-                                >
-                                    <circle cx="12" cy="12" r="10" />
-                                    <polygon points="10 8 16 12 10 16 10 8" />
-                                </svg>
-                                Listen Now
-                            </Button>
-                            <Button variant="ghost" className="w-full justify-start">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="mr-2 h-4 w-4"
-                                >
-                                    <rect width="7" height="7" x="3" y="3" rx="1" />
-                                    <rect width="7" height="7" x="14" y="3" rx="1" />
-                                    <rect width="7" height="7" x="14" y="14" rx="1" />
-                                    <rect width="7" height="7" x="3" y="14" rx="1" />
-                                </svg>
-                                Browse
-                            </Button>
-                            <Button variant="ghost" className="w-full justify-start">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="mr-2 h-4 w-4"
-                                >
-                                    <path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9" />
-                                    <path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5" />
-                                    <circle cx="12" cy="12" r="2" />
-                                    <path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5" />
-                                    <path d="M19.1 4.9C23 8.8 23 15.1 19.1 19" />
-                                </svg>
-                                Radio
+                        <div className="flex flex-row items-center justify-between border border-violet-200">
+                            <h2 className="border border-violet-400 px-7 text-lg font-semibold tracking-tight">Home</h2>
+                            <Button
+                                onClick={() => setSidebarOpen(!isSidebarOpen)}
+                                variant="ghost"
+                                className="justify-start border border-yellow-300"
+                            >
+                                {isSidebarOpen ? (
+                                    <svg
+                                        width="15"
+                                        height="15"
+                                        viewBox="0 0 15 15"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M6.85355 3.85355C7.04882 3.65829 7.04882 3.34171 6.85355 3.14645C6.65829 2.95118 6.34171 2.95118 6.14645 3.14645L2.14645 7.14645C1.95118 7.34171 1.95118 7.65829 2.14645 7.85355L6.14645 11.8536C6.34171 12.0488 6.65829 12.0488 6.85355 11.8536C7.04882 11.6583 7.04882 11.3417 6.85355 11.1464L3.20711 7.5L6.85355 3.85355ZM12.8536 3.85355C13.0488 3.65829 13.0488 3.34171 12.8536 3.14645C12.6583 2.95118 12.3417 2.95118 12.1464 3.14645L8.14645 7.14645C7.95118 7.34171 7.95118 7.65829 8.14645 7.85355L12.1464 11.8536C12.3417 12.0488 12.6583 12.0488 12.8536 11.8536C13.0488 11.6583 13.0488 11.3417 12.8536 11.1464L9.20711 7.5L12.8536 3.85355Z"
+                                            fill="currentColor"
+                                            fill-rule="evenodd"
+                                            clip-rule="evenodd"
+                                        ></path>
+                                    </svg>
+                                ) : (
+                                    <svg
+                                        width="15"
+                                        height="15"
+                                        viewBox="0 0 15 15"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M2.14645 11.1464C1.95118 11.3417 1.95118 11.6583 2.14645 11.8536C2.34171 12.0488 2.65829 12.0488 2.85355 11.8536L6.85355 7.85355C7.04882 7.65829 7.04882 7.34171 6.85355 7.14645L2.85355 3.14645C2.65829 2.95118 2.34171 2.95118 2.14645 3.14645C1.95118 3.34171 1.95118 3.65829 2.14645 3.85355L5.79289 7.5L2.14645 11.1464ZM8.14645 11.1464C7.95118 11.3417 7.95118 11.6583 8.14645 11.8536C8.34171 12.0488 8.65829 12.0488 8.85355 11.8536L12.8536 7.85355C13.0488 7.65829 13.0488 7.34171 12.8536 7.14645L8.85355 3.14645C8.65829 2.95118 8.34171 2.95118 8.14645 3.14645C7.95118 3.34171 7.95118 3.65829 8.14645 3.85355L11.7929 7.5L8.14645 11.1464Z"
+                                            fill="currentColor"
+                                            fill-rule="evenodd"
+                                            clip-rule="evenodd"
+                                        ></path>
+                                    </svg>
+                                )}
                             </Button>
                         </div>
-                    </div>
-                    <div className="px-3 py-2">
-                        <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">Library</h2>
-                        <div className="space-y-1">
-                            <Button variant="ghost" className="w-full justify-start">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="mr-2 h-4 w-4"
-                                >
-                                    <path d="M21 15V6" />
-                                    <path d="M18.5 18a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
-                                    <path d="M12 12H3" />
-                                    <path d="M16 6H3" />
-                                    <path d="M12 18H3" />
-                                </svg>
-                                Playlists
-                            </Button>
-                            <Button variant="ghost" className="w-full justify-start">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="mr-2 h-4 w-4"
-                                >
-                                    <circle cx="8" cy="18" r="4" />
-                                    <path d="M12 18V2l7 4" />
-                                </svg>
-                                Songs
-                            </Button>
-                            <Button variant="ghost" className="w-full justify-start">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="mr-2 h-4 w-4"
-                                >
-                                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                                    <circle cx="12" cy="7" r="4" />
-                                </svg>
-                                Made for You
-                            </Button>
-                            <Button variant="ghost" className="w-full justify-start">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="mr-2 h-4 w-4"
-                                >
-                                    <path d="m12 8-9.04 9.06a2.82 2.82 0 1 0 3.98 3.98L16 12" />
-                                    <circle cx="17" cy="7" r="5" />
-                                </svg>
-                                Artists
-                            </Button>
-                            <Button variant="ghost" className="w-full justify-start">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="mr-2 h-4 w-4"
-                                >
-                                    <path d="m16 6 4 14" />
-                                    <path d="M12 6v14" />
-                                    <path d="M8 8v12" />
-                                    <path d="M4 4v16" />
-                                </svg>
-                                Albums
-                            </Button>
-                        </div>
-                    </div>
-                    <div className="py-2">
-                        <h2 className="relative px-7 text-lg font-semibold tracking-tight">Playlists</h2>
                         <ScrollArea className="h-[300px] px-1">
                             <div className="space-y-1 p-2">
+                                <Button variant="ghost" className="w-full justify-start">
+                                    <svg
+                                        width="15"
+                                        height="15"
+                                        viewBox="0 0 15 15"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M7.07926 0.222253C7.31275 -0.007434 7.6873 -0.007434 7.92079 0.222253L14.6708 6.86227C14.907 7.09465 14.9101 7.47453 14.6778 7.71076C14.4454 7.947 14.0655 7.95012 13.8293 7.71773L13 6.90201V12.5C13 12.7761 12.7762 13 12.5 13H2.50002C2.22388 13 2.00002 12.7761 2.00002 12.5V6.90201L1.17079 7.71773C0.934558 7.95012 0.554672 7.947 0.32229 7.71076C0.0899079 7.47453 0.0930283 7.09465 0.32926 6.86227L7.07926 0.222253ZM7.50002 1.49163L12 5.91831V12H10V8.49999C10 8.22385 9.77617 7.99999 9.50002 7.99999H6.50002C6.22388 7.99999 6.00002 8.22385 6.00002 8.49999V12H3.00002V5.91831L7.50002 1.49163ZM7.00002 12H9.00002V8.99999H7.00002V12Z"
+                                            fill="currentColor"
+                                            fill-rule="evenodd"
+                                            clip-rule="evenodd"
+                                        ></path>
+                                    </svg>
+                                    Albums
+                                </Button>
                                 {sidebarLinks?.map((sidebarLink, i) => (
                                     <Link key={`${sidebarLink.name}-${i}`} href={sidebarLink.href}>
                                         <Button variant="ghost" className="w-full justify-start font-normal">

@@ -1,7 +1,5 @@
-import CardGlassmorphism from "@/components/ui/GlassmorphismEx";
-
 const Home = () => {
-    return <CardGlassmorphism>blabla</CardGlassmorphism>;
+    return <></>;
 };
 
 export default Home;
