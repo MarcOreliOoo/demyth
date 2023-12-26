@@ -42,23 +42,14 @@ export class Hero {
         name: string;
     };
 
-    @Prop()
-    strength: number;
-
-    @Prop()
-    dexterity: number;
-
-    @Prop()
-    intelligence: number;
-
-    @Prop()
-    constitution: number;
-
-    @Prop()
-    luck: number;
-
-    @Prop()
-    armor: number;
+    @Prop({ type: Object })
+    stats: {
+        vigor: number;
+        dexterity: number;
+        mind: number;
+        energy: number;
+        initiative: number;
+    };
 
     @Prop()
     level: number;

@@ -162,8 +162,9 @@ const AuthPage = () => {
 
     return (
         <main className="section-min-height relative flex h-full scroll-mt-24 flex-col items-center justify-center">
+            <div className="brown__gradient absolute z-[0] h-[50%] w-[50%] bg-opacity-5" />
             {(!isConnected || (isConnected && !hasSigned)) && (
-                <Tabs defaultValue="signin" className="container sm:w-[480px]">
+                <Tabs defaultValue="signin" className="container relative z-[1] sm:w-[480px]">
                     <TabsList className={cn(` grid w-full grid-cols-2`)}>
                         <TabsTrigger value="signin">Sign In</TabsTrigger>
                         <TabsTrigger value="signup">Sign Up</TabsTrigger>

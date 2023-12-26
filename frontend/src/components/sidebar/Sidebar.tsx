@@ -12,9 +12,9 @@ type SidebarProps = {
 export function Sidebar({ isSidebarOpen, setSidebarOpen }: SidebarProps) {
     return (
         <aside
-            className={`absolute left-0 top-0 z-[998] h-full bg-opacity-100 backdrop-blur-2xl backdrop-filter transition-all duration-300 ${
+            className={`absolute left-0 top-0 z-[998] h-full transition-all duration-300 ${
                 isSidebarOpen ? "w-64" : "w-20"
-            } border-r`}
+            } rounded-xl border shadow`}
         >
             <div className={cn("pb-12")}>
                 <div className="space-y-4 py-4">

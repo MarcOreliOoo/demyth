@@ -7,17 +7,17 @@ import logo from "../../public/demyth_crop.gif";
 const Footer = () => {
     return (
         <section>
-            <div className="flex flex-row justify-center sm:justify-evenly align-middle gap-4 text-slate-200 text-2xl lg:text-3xl">
-                <Link className="text-slate-200 hover:text-50" href="https://www.youtube.com">
+            <div className="flex flex-row justify-center gap-4 align-middle text-2xl text-slate-200 sm:justify-evenly lg:text-3xl">
+                <Link className="hover:text-50 text-slate-200" href="https://www.youtube.com">
                     <FaYoutube />
                 </Link>
-                <Link className="text-slate-200 hover:text-50" href="https://twitter.com/">
+                <Link className="hover:text-50 text-slate-200" href="https://twitter.com/">
                     <FaTwitter />
                 </Link>
-                <Link className="text-slate-200 hover:text-50" href="https://github.com/">
+                <Link className="hover:text-50 text-slate-200" href="https://github.com/">
                     <FaGithub />
                 </Link>
-                <Link className="text-slate-200 hover:text-50" href="https://twitter.com/">
+                <Link className="hover:text-50 text-slate-200" href="https://twitter.com/">
                     <FaLinkedin />
                 </Link>
             </div>

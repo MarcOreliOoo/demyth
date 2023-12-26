@@ -7,12 +7,15 @@ import { plainToClass } from "class-transformer";
 import { ResponseHeroDto } from "./dto/response-hero.dto";
 import { FindHeroParams, HeroDbService } from "./hero.db.service";
 import { UpdateHeroDto } from "./dto/update-hero.dto";
+import { RoleService } from "../role/role.service";
+import { ResponsePopulatedRoleDto, ResponseRoleDto } from "../role/dto/response-role.dto";
 
 @Injectable()
 export class HeroService {
     constructor(
         @InjectModel(Hero.name) private heroModel: Model<Hero>,
         private readonly heroDbService: HeroDbService,
+        private readonly roleService: RoleService,
     ) {}
 
     getResponseDtoFrom(anHero: HeroDocument): ResponseHeroDto {
@@ -24,8 +27,47 @@ export class HeroService {
         if (existingHero) {
             throw new ConflictException(`${existingHero.name} already exists or ${userId} has already an hero`);
         }
-        const createdHero = await this.heroDbService.save(new this.heroModel(createHeroDto));
+
+        const fullHero = await this.completeHero(createHeroDto, userId);
+        console.log("fullHero: ", fullHero);
+
+        const createdHero = await this.heroDbService.save(new this.heroModel(fullHero));
         return this.getResponseDtoFrom(createdHero);
+    }
+
+    async completeHero(createHeroDto: CreateHeroDto, userId: string) {
+        console.log("createHeroDto.role", createHeroDto.role);
+        const roleDocument: ResponsePopulatedRoleDto = await this.roleService.findAndPopulateAll({
+            name: createHeroDto.role,
+        })[0];
+
+        console.log("roleDocument: ", roleDocument);
+
+        return {
+            ...createHeroDto,
+            user: userId,
+            roleInfo: {
+                _id: roleDocument._id,
+                name: roleDocument.name,
+            },
+            mythologyInfo: {
+                _id: roleDocument.mythology,
+                //name: roleDocument.mythology.name,
+            },
+            godInfo: {
+                _id: roleDocument.god,
+                //name: roleDocument.god.name,
+            },
+            level: 1,
+            xp: 0,
+            stats: {
+                vigor: roleDocument.stats.vigor,
+                dexterity: roleDocument.stats.dexterity,
+                mind: roleDocument.stats.mind,
+                energy: roleDocument.stats.energy,
+                initiative: roleDocument.stats.initiative,
+            },
+        };
     }
 
     async updateById(heroId: string, updateHero: UpdateHeroDto, userId: string): Promise<ResponseHeroDto> {

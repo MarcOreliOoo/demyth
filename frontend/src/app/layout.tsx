@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en" className={`${spaceGrotesk.variable} ${blanka.variable}`}>
-            <body className={`h-my-screen bg-background font-spaceGrotesk text-foreground`}>
+            <body className={`section-min-height bg-background font-spaceGrotesk text-foreground`}>
                 <Providers>{children}</Providers>
             </body>
         </html>

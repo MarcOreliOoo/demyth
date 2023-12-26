@@ -1,112 +1,119 @@
-"use client";
-import React from "react";
+/* "use client";
+import React from "react"; */
+import Image from "next/image";
+import egyptian1 from "@/../public/images/about/egyptian_1.jpg";
+
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { glassmorphism } from "@/lib/utils/cssProperties";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Hero = () => {
     return (
-        <section className="widescreen:section-min-height tallscreen:section-min-height relative flex scroll-mt-24 flex-row items-center justify-start gap-6 p-6">
-            <Card className={`${glassmorphism} `}>
+        <section className="relative flex flex-col items-center justify-start gap-6 px-6">
+            <div className="grid h-[150px] grid-cols-3 grid-rows-1 space-x-6 ">
+                <Myth />
+                <God />
+                <ClassType />
+            </div>
+            <div className="grid h-[586px] grid-cols-3 grid-rows-1 space-x-6 ">
+                <Image
+                    src={egyptian1}
+                    alt="egyptian1"
+                    priority={true}
+                    width={800}
+                    height={586}
+                    placeholder="blur"
+                    sizes="(min-width: 1520px) 682px, (min-width: 780px) 45.83vw, calc(100vw - 36px)"
+                    className="relative z-[5] mx-auto h-auto w-full rounded-xl border"
+                />
+                <HeroStats />
+            </div>
+        </section>
+    );
+};
+
+const Myth = () => {
+    return (
+        <Card className={`${glassmorphism}`}>
+            <ScrollArea className="h-full">
                 <CardHeader>
                     <CardTitle>MythologyName</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <ScrollArea className="h-[300px]">
-                        <CardDescription>PowerMythologyName</CardDescription>
-                        <p>
-                            Forge Unlikely Alliances In DEMYTH, the bonds you forge are as powerful as the weapons you
-                            wield. Assemble a fellowship with creatures from across all mythologies. Play as a pharaoh
-                            warrior of Ra and recruit the legendary Pegasus of Zeus, or enlist the fearsome Cerberus of
-                            Hades to aid you on your battles.
-                        </p>
-                        <br />
-                        <CardDescription>PowerMythologyName</CardDescription>
-                        <p>
-                            Forge Unlikely Alliances In DEMYTH, the bonds you forge are as powerful as the weapons you
-                            wield. Assemble a fellowship with creatures from across all mythologies. Play as a pharaoh
-                            warrior of Ra and recruit the legendary Pegasus of Zeus, or enlist the fearsome Cerberus of
-                            Hades to aid you on your battles.
-                        </p>
-                    </ScrollArea>
+                    <CardDescription>PowerMythologyName</CardDescription>
+                    <p>
+                        Forge Unlikely Alliances In DEMYTH, the bonds you forge are as powerful as the weapons you
+                        wield. Assemble a fellowship with creatures from across all mythologies.
+                    </p>
                 </CardContent>
                 <CardFooter>
                     <CardDescription className="flex w-full items-center justify-end">En savoir plus</CardDescription>
                 </CardFooter>
-            </Card>
-            <Card className="">
+            </ScrollArea>
+        </Card>
+    );
+};
+
+const God = () => {
+    return (
+        <Card className={`${glassmorphism}`}>
+            <ScrollArea className="h-full">
+                <CardHeader>
+                    <CardTitle>GodName</CardTitle>
+                </CardHeader>
                 <CardContent>
+                    <CardDescription>PowerGodName</CardDescription>
                     <p>
                         Forge Unlikely Alliances In DEMYTH, the bonds you forge are as powerful as the weapons you
-                        wield. Assemble a fellowship with creatures from across all mythologies. Play as a pharaoh
-                        warrior of Ra and recruit the legendary Pegasus of Zeus, or enlist the fearsome Cerberus of
-                        Hades to aid you on your battles.
-                    </p>
-                    <p>
-                        PvP and Resource Battles Engage in intense player-versus-player combat and strategic resource
-                        battles. Every victory earns you resources, paving the way for the evolution of your fellowship,
-                        the expansion of your domain, and the advancement of your hero.
-                    </p>
-                    <p>
-                        NFTs and Marketplace Experience true ownership with our unique NFT system. Your hero and
-                        creatures are yours to collect, trade, and showcase. Explore our integrated marketplace for
-                        exclusive items, creatures, and more.
-                    </p>
-                    <p>
-                        Join Us on this Epic Journey Embark on a legendary adventure like no other. [Your Games Name]
-                        invites you to become a part of a vibrant community of myth-makers, strategists, and conquerors.
+                        wield. Assemble a fellowship with creatures from across all mythologies.
                     </p>
                 </CardContent>
-            </Card>
-            <Card>
+                <CardFooter>
+                    <CardDescription className="flex w-full items-center justify-end">En savoir plus</CardDescription>
+                </CardFooter>
+            </ScrollArea>
+        </Card>
+    );
+};
+
+const ClassType = () => {
+    return (
+        <Card className={`${glassmorphism}`}>
+            <ScrollArea className="h-full">
+                <CardHeader>
+                    <CardTitle>ClassType</CardTitle>
+                </CardHeader>
                 <CardContent>
+                    <CardDescription>PowerClassType</CardDescription>
                     <p>
                         Forge Unlikely Alliances In DEMYTH, the bonds you forge are as powerful as the weapons you
-                        wield. Assemble a fellowship with creatures from across all mythologies. Play as a pharaoh
-                        warrior of Ra and recruit the legendary Pegasus of Zeus, or enlist the fearsome Cerberus of
-                        Hades to aid you on your battles.
-                    </p>
-                    <p>
-                        PvP and Resource Battles Engage in intense player-versus-player combat and strategic resource
-                        battles. Every victory earns you resources, paving the way for the evolution of your fellowship,
-                        the expansion of your domain, and the advancement of your hero.
-                    </p>
-                    <p>
-                        NFTs and Marketplace Experience true ownership with our unique NFT system. Your hero and
-                        creatures are yours to collect, trade, and showcase. Explore our integrated marketplace for
-                        exclusive items, creatures, and more.
-                    </p>
-                    <p>
-                        Join Us on this Epic Journey Embark on a legendary adventure like no other. [Your Games Name]
-                        invites you to become a part of a vibrant community of myth-makers, strategists, and conquerors.
+                        wield. Assemble a fellowship with creatures from across all mythologies.
                     </p>
                 </CardContent>
-            </Card>
-            <Card>
+                <CardFooter>
+                    <CardDescription className="flex w-full items-center justify-end">En savoir plus</CardDescription>
+                </CardFooter>
+            </ScrollArea>
+        </Card>
+    );
+};
+
+const HeroStats = () => {
+    return (
+        <Card className={`${glassmorphism} col-span-2`}>
+            <ScrollArea className="h-full">
+                <CardHeader>
+                    <CardTitle>HeroStats</CardTitle>
+                </CardHeader>
                 <CardContent>
-                    <p>
-                        Forge Unlikely Alliances In DEMYTH, the bonds you forge are as powerful as the weapons you
-                        wield. Assemble a fellowship with creatures from across all mythologies. Play as a pharaoh
-                        warrior of Ra and recruit the legendary Pegasus of Zeus, or enlist the fearsome Cerberus of
-                        Hades to aid you on your battles.
-                    </p>
-                    <p>
-                        PvP and Resource Battles Engage in intense player-versus-player combat and strategic resource
-                        battles. Every victory earns you resources, paving the way for the evolution of your fellowship,
-                        the expansion of your domain, and the advancement of your hero.
-                    </p>
-                    <p>
-                        NFTs and Marketplace Experience true ownership with our unique NFT system. Your hero and
-                        creatures are yours to collect, trade, and showcase. Explore our integrated marketplace for
-                        exclusive items, creatures, and more.
-                    </p>
-                    <p>
-                        Join Us on this Epic Journey Embark on a legendary adventure like no other. [Your Games Name]
-                        invites you to become a part of a vibrant community of myth-makers, strategists, and conquerors.
-                    </p>
+                    <CardDescription>HeroStats</CardDescription>
+                    <p>HexagonStats</p>
+                    <p>HexagonStats</p>
+                    <p>HexagonStats</p>
+                    <p>HexagonStats</p>
                 </CardContent>
-            </Card>
-        </section>
+            </ScrollArea>
+        </Card>
     );
 };
 
