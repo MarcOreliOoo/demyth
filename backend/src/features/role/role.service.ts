@@ -73,8 +73,7 @@ export class RoleService {
     async findAndPopulateAll(filter: FindRoleParams): Promise<ResponsePopulatedRoleDto[]> {
         const rolesDoc = await this.roleDbService.findAndPopulateAll(filter);
         if (rolesDoc.length == 0) throw new NotFoundException(`Wrong params provided.`);
-        const x = rolesDoc.map((role) => this.getResponsePopulatedDtoFrom(role));
-        console.log("x[0]", x[0]);
-        return x;
+        const someRoles = rolesDoc.map((role) => this.getResponsePopulatedDtoFrom(role));
+        return someRoles;
     }
 }

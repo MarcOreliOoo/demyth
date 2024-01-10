@@ -32,22 +32,13 @@ export class Role {
     images: [Record<string, any>];
 
     @Prop()
-    strength: number;
-
-    @Prop()
-    dexterity: number;
-
-    @Prop()
-    intelligence: number;
-
-    @Prop()
-    constitution: number;
-
-    @Prop()
-    luck: number;
-
-    @Prop()
-    armor: number;
+    stats: {
+        vigor: number;
+        dexterity: number;
+        mind: number;
+        energy: number;
+        initiative: number;
+    };
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Mythology" })
     mythology: Mythology;

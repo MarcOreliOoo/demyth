@@ -36,10 +36,11 @@ export class HeroService {
     }
 
     async completeHero(createHeroDto: CreateHeroDto, userId: string) {
-        console.log("createHeroDto.role", createHeroDto.role);
-        const roleDocument: ResponsePopulatedRoleDto = await this.roleService.findAndPopulateAll({
-            name: createHeroDto.role,
-        })[0];
+        const roleDocument: ResponsePopulatedRoleDto = (
+            await this.roleService.findAndPopulateAll({
+                name: createHeroDto.role,
+            })
+        )[0];
 
         console.log("roleDocument: ", roleDocument);
 
