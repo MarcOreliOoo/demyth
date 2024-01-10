@@ -8,7 +8,6 @@ import { log } from "../utils/debug.utils";
 import { EGods, EMythologies } from "../enums";
 import { Role, RoleDocument } from "../features/role/roles.schema";
 import { greekUnitsList } from "./rolesList";
-import { CreateRoleDto } from "../features/role/dto/create-role.dto";
 
 @Injectable()
 export class InitDbService {
@@ -198,15 +197,14 @@ export class InitDbService {
         if (!(await this.mythologyModel.exists({})) || !(await this.godModel.exists({}))) return false;
 
         let fullUnitsList: RoleDocument[] = [];
-        let unitListDto: CreateRoleDto = {} as unknown as CreateRoleDto;
         let unitListDtoUpdated: {};
         greekUnitsList.map((unit) => {
             unitListDtoUpdated = {
-                ...unitListDto,
+                ...unit,
                 mythology: this.mythologiesId[unit.mythology],
                 god: this.godsId[unit.god],
             };
-            fullUnitsList.push(new this.roleModel(unitListDto));
+            fullUnitsList.push(new this.roleModel(unitListDtoUpdated));
         });
 
         if ((await this.roleModel.bulkSave(fullUnitsList)).isOk()) {
