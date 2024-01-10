@@ -9,13 +9,13 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Hero = () => {
     return (
-        <section className="relative flex flex-col items-center justify-start gap-6 px-6">
-            <div className="grid h-[150px] grid-cols-3 grid-rows-1 space-x-6 ">
+        <section className="flex flex-col items-center justify-start gap-6 px-6">
+            <div className="grid grid-cols-1 gap-6 border border-green-200 md:grid-cols-2 lg:grid-cols-3">
                 <Myth />
                 <God />
                 <ClassType />
             </div>
-            <div className="grid h-[586px] grid-cols-3 grid-rows-1 space-x-6 ">
+            <div className="flex h-[586px] w-full flex-wrap items-stretch justify-start gap-6 border border-red-200">
                 <Image
                     src={egyptian1}
                     alt="egyptian1"
@@ -24,7 +24,7 @@ const Hero = () => {
                     height={586}
                     placeholder="blur"
                     sizes="(min-width: 1520px) 682px, (min-width: 780px) 45.83vw, calc(100vw - 36px)"
-                    className="relative z-[5] mx-auto h-auto w-full rounded-xl border"
+                    className="h-[586px] w-auto rounded-xl border sm:flex-none"
                 />
                 <HeroStats />
             </div>
@@ -34,7 +34,7 @@ const Hero = () => {
 
 const Myth = () => {
     return (
-        <Card className={`${glassmorphism}`}>
+        <Card className={`${glassmorphism} h-[150px]`}>
             <ScrollArea className="h-full">
                 <CardHeader>
                     <CardTitle>MythologyName</CardTitle>
@@ -56,7 +56,7 @@ const Myth = () => {
 
 const God = () => {
     return (
-        <Card className={`${glassmorphism}`}>
+        <Card className={`${glassmorphism} h-[150px]`}>
             <ScrollArea className="h-full">
                 <CardHeader>
                     <CardTitle>GodName</CardTitle>
@@ -78,7 +78,7 @@ const God = () => {
 
 const ClassType = () => {
     return (
-        <Card className={`${glassmorphism}`}>
+        <Card className={`${glassmorphism} h-[150px] `}>
             <ScrollArea className="h-full">
                 <CardHeader>
                     <CardTitle>ClassType</CardTitle>
@@ -100,7 +100,7 @@ const ClassType = () => {
 
 const HeroStats = () => {
     return (
-        <Card className={`${glassmorphism} col-span-2`}>
+        <Card className={`${glassmorphism} h-full flex-grow`}>
             <ScrollArea className="h-full">
                 <CardHeader>
                     <CardTitle>HeroStats</CardTitle>
