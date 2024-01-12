@@ -51,7 +51,7 @@ export class HeroController {
         @Query("mythId") mythologyId?: string,
         @Query("mythName") mythologyName?: string,
     ): Promise<ResponseHeroDto[]> {
-        log("HeroController > getGodForParams");
+        log("HeroController > getHeroForParams");
 
         // TODO: check for godInfo and mythologyInfo if it works with nested object
         const filters = {
