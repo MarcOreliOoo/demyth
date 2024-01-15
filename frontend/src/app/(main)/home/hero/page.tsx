@@ -125,8 +125,11 @@ const CustomTooltip = ({ active, payload, label }: any) => {
                         <CardTitle>{`${label} : ${payload[0].value}`}</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p>{`${label}:`}</p>
-                        <p className="">Represent the strength of your Hero in figth... blabla lorem ipseum</p>
+                        <CardDescription>PowerClassType</CardDescription>
+                        <p>
+                            Forge Unlikely Alliances In DEMYTH, the bonds you forge are as powerful as the weapons you
+                            wield. Assemble a fellowship with creatures from across all mythologies.
+                        </p>
                     </CardContent>
                 </ScrollArea>
             </Card>

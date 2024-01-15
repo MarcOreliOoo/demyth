@@ -34,7 +34,7 @@ export const authOptions: AuthOptions = {
                 }
                 const siwe = await controlSignature({ credentials, req });
 
-                const res = await fetch(`${process.env.HOST}/auth/signin`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/auth/signin`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
