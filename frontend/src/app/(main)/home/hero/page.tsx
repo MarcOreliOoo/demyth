@@ -1,13 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from "recharts";
 import Image from "next/image";
 import egyptian1 from "@/../public/images/about/egyptian_1.jpg";
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { glassmorphism } from "@/lib/utils/cssProperties";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import getHeroesForUserId, { ResponseHeroDto } from "@/lib/Hero";
+import getHeroesForUserId, { ResponseHeroDto, StatsDto } from "@/lib/Hero";
 import { useSession } from "next-auth/react";
 
 const Hero = () => {
@@ -29,19 +29,17 @@ const Hero = () => {
     if (heroData === null) return <div>loading...</div>;
     return (
         <section className="flex flex-col items-center justify-start gap-6 px-6">
-            <div className="grid grid-cols-1 gap-6 border border-green-200 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 <h1 className="text-4xl">{heroData?.name}</h1>
                 <Myth />
                 <God />
                 <ClassType />
             </div>
-            <div className="flex h-[586px] w-full flex-wrap items-stretch justify-start gap-6 border border-red-200">
+            <div className="flex h-[586px] w-full flex-wrap items-stretch justify-start gap-6">
                 <Image
                     src={egyptian1}
                     alt="egyptian1"
                     priority={true}
-                    width={800}
-                    height={586}
                     placeholder="blur"
                     sizes="(min-width: 1520px) 682px, (min-width: 780px) 45.83vw, calc(100vw - 36px)"
                     className="h-[586px] w-auto rounded-xl border sm:flex-none"
@@ -118,25 +116,59 @@ const ClassType = () => {
     );
 };
 
+const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+        return (
+            <Card className={`${glassmorphism} h-36 w-48`}>
+                <ScrollArea className="h-full">
+                    <CardHeader>
+                        <CardTitle>{`${label} : ${payload[0].value}`}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p>{`${label}:`}</p>
+                        <p className="">Represent the strength of your Hero in figth... blabla lorem ipseum</p>
+                    </CardContent>
+                </ScrollArea>
+            </Card>
+        );
+    }
+
+    return null;
+};
+
 type HeroStatsProps = {
     stats?: ResponseHeroDto["stats"];
 };
 
 const HeroStats = ({ stats }: HeroStatsProps) => {
-    const statsArray = Object.entries(stats || {});
+    const keys = Object.keys(stats || {}) as Array<keyof ResponseHeroDto["stats"]>;
+    const resultStats = keys.map((key) => ({
+        stat: key.charAt(0).toUpperCase() + key.slice(1),
+        value: stats?.[key] ?? 0,
+    }));
 
     return (
-        <Card className={`${glassmorphism} h-full flex-grow`}>
-            <ScrollArea className="h-full">
-                <CardHeader>
-                    <CardTitle>HeroStats</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <ul>
-                        {statsArray.map(([name, value], index) => (
-                            <li key={index}>{`${name}: ${value}`}</li>
-                        ))}
-                    </ul>
+        <Card className={`${glassmorphism} h-full min-w-[350px] flex-grow`}>
+            <CardHeader>
+                <CardTitle>Statistics</CardTitle>
+            </CardHeader>
+            <ScrollArea className="h-full border border-blue-300">
+                <CardContent className="flex flex-grow items-center justify-center border border-red-400 p-2">
+                    <ResponsiveContainer width="100%" height={350} className="border border-yellow-500 p-6">
+                        <RadarChart
+                            cx="50%"
+                            cy="55%"
+                            outerRadius="80%"
+                            data={resultStats}
+                            className="border border-green-500"
+                        >
+                            <PolarGrid />
+                            <PolarAngleAxis dataKey="stat" />
+                            <PolarRadiusAxis />
+                            <Radar name="stat" dataKey="value" stroke="#8884d8" fill="#8884d8" fillOpacity={0.4} />
+                            <Tooltip content={<CustomTooltip />} />
+                        </RadarChart>
+                    </ResponsiveContainer>
                 </CardContent>
             </ScrollArea>
         </Card>
