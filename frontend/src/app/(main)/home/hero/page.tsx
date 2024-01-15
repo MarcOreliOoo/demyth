@@ -26,7 +26,7 @@ const Hero = () => {
 
     // TODO: add suspense and fallback
     // TODO: add caching + get it in context hook
-    if (heroData === null) return <div>loading...</div>;
+    if (heroData === null || Object.keys(heroData).length === 0) return <div>loading...</div>;
     return (
         <section className="flex flex-col items-center justify-start gap-6 px-6">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -52,7 +52,7 @@ const Hero = () => {
 
 const Myth = () => {
     return (
-        <Card className={`${glassmorphism} h-[150px]`}>
+        <Card className={`h-[150px] ${glassmorphism}`}>
             <ScrollArea className="h-full">
                 <CardHeader>
                     <CardTitle>MythologyName</CardTitle>

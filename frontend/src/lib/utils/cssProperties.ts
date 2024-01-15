@@ -1,2 +1,2 @@
-const glassmorphism = "bg-white text-glassmorphism-foreground backdrop-blur-xl";
+const glassmorphism = "bg-white bg-opacity-10 backdrop-blur-sm backdrop-filter";
 export { glassmorphism };
