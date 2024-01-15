@@ -46,7 +46,7 @@ const Hero = () => {
                     sizes="(min-width: 1520px) 682px, (min-width: 780px) 45.83vw, calc(100vw - 36px)"
                     className="h-[586px] w-auto rounded-xl border sm:flex-none"
                 />
-                <HeroStats />
+                <HeroStats stats={heroData?.stats} />
             </div>
         </section>
     );
@@ -118,7 +118,13 @@ const ClassType = () => {
     );
 };
 
-const HeroStats = () => {
+type HeroStatsProps = {
+    stats?: ResponseHeroDto["stats"];
+};
+
+const HeroStats = ({ stats }: HeroStatsProps) => {
+    const statsArray = Object.entries(stats || {});
+
     return (
         <Card className={`${glassmorphism} h-full flex-grow`}>
             <ScrollArea className="h-full">
@@ -126,11 +132,11 @@ const HeroStats = () => {
                     <CardTitle>HeroStats</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <CardDescription>HeroStats</CardDescription>
-                    <p>HexagonStats</p>
-                    <p>HexagonStats</p>
-                    <p>HexagonStats</p>
-                    <p>HexagonStats</p>
+                    <ul>
+                        {statsArray.map(([name, value], index) => (
+                            <li key={index}>{`${name}: ${value}`}</li>
+                        ))}
+                    </ul>
                 </CardContent>
             </ScrollArea>
         </Card>

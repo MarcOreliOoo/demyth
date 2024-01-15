@@ -1,3 +1,4 @@
+import { Stats } from "fs";
 import { ResponseMythologyDto } from "./codex/Mythologies";
 
 type ImagesDto = {
@@ -24,13 +25,25 @@ export type ResponseGodDto = {
     roles?: string[];
     creatures?: string[];
 };
+export type RoleDto = {
+    _id: string;
+    name: string;
+};
+export type StatsDto = {
+    vigor: number;
+    dexterity: number;
+    mind: number;
+    energy: number;
+    initiative: number;
+};
 
 export type ResponseHeroDto = {
     _id: string;
     user: string;
     name: string;
     sex: string;
-    role: string;
+    roleInfo: RoleDto;
+    stats: StatsDto;
     images: ImagesDto[];
     mythologyInfo: ResponseMythologyDto;
     godInfo: ResponseGodDto;
