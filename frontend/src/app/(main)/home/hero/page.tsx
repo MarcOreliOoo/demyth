@@ -7,7 +7,7 @@ import egyptian1 from "@/../public/images/about/egyptian_1.jpg";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { glassmorphism } from "@/lib/utils/cssProperties";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import getHeroesForUserId, { ResponseHeroDto, StatsDto } from "@/lib/Hero";
+import getHeroesForUserId, { ResponseHeroDto, ResponseHeroMythologyDto, StatsDto } from "@/lib/Hero";
 import { useSession } from "next-auth/react";
 import { ResponseEffectsDto, ResponseMythologyDto } from "@/lib/codex/Mythologies";
 
@@ -29,12 +29,12 @@ const Hero = () => {
     // TODO: add suspense and fallback
     // TODO: add caching + get it in context hook
     if (heroData === null || Object.keys(heroData).length === 0) return <div>loading...</div>;
-    //console.log("heroData.mythologyInfo : ", JSON.stringify(heroData.mythologyInfo, null, 2));
+
     return (
         <section className="flex flex-col items-center justify-start gap-6 px-6">
             <h1 className="text-4xl">{heroData?.name}</h1>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                <Myth myth={heroData?.mythologyInfo} />
+                <Myth myth={heroData?.mythologyInfo.mythology} />
                 <God />
                 <ClassType />
             </div>
@@ -57,10 +57,11 @@ type MythProps = {
     myth: ResponseMythologyDto;
 };
 const Myth = ({ myth }: MythProps) => {
-    //console.log("Myth : ", JSON.stringify(myth, null, 2));
-
     let iconMythPath = undefined;
     let effects: ResponseEffectsDto[] = [];
+
+    /* const [mythology, setMythology] = useState<ResponseMythologyDto | null>({} as ResponseMythologyDto); */
+    if (!myth) return null;
 
     if (myth.images?.icon)
         iconMythPath = `/images/mythologies/${myth.name.toLowerCase()}/${myth.images?.icon.toLowerCase()}`;
@@ -81,7 +82,7 @@ const Myth = ({ myth }: MythProps) => {
                 <CardHeader>
                     <CardTitle>{myth.name}</CardTitle>
                 </CardHeader>
-                {effects.map((effect) => (
+                {/* {effects.map((effect) => (
                     <CardContent key={effect._id}>
                         <CardDescription>{effect.name}</CardDescription>
                         <div className="flex flex-row gap-x-4">
@@ -89,7 +90,7 @@ const Myth = ({ myth }: MythProps) => {
                             <p>{effect.shortDesc}</p>
                         </div>
                     </CardContent>
-                ))}
+                ))} */}
                 <CardFooter>
                     <CardDescription className="flex w-full items-center justify-end">En savoir plus</CardDescription>
                 </CardFooter>

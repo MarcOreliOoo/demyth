@@ -1,5 +1,6 @@
 import { Stats } from "fs";
 import { ResponseMythologyDto } from "./codex/Mythologies";
+import { ResponseGodDto } from "./codex/Gods";
 
 type ImagesDto = {
     main: string;
@@ -7,28 +8,21 @@ type ImagesDto = {
     icon: string;
 };
 
-type ResponseEffectsDto = {
+export type ResponseHeroGodDto = {
     _id: string;
-    name: string;
-    shortDesc: string;
-    icon: string;
+    god: ResponseGodDto;
 };
 
-export type ResponseGodDto = {
+export type ResponseHeroMythologyDto = {
     _id: string;
-    name: string;
-    shortDesc?: string;
-    longDesc?: string;
-    images?: ImagesDto[];
-    powers?: ResponseEffectsDto[];
-    mythology: string;
-    roles?: string[];
-    creatures?: string[];
+    mythology: ResponseMythologyDto;
 };
+
 export type RoleDto = {
     _id: string;
     name: string;
 };
+
 export type StatsDto = {
     vigor: number;
     dexterity: number;
@@ -45,8 +39,8 @@ export type ResponseHeroDto = {
     roleInfo: RoleDto;
     stats: StatsDto;
     images: ImagesDto[];
-    mythologyInfo: ResponseMythologyDto;
-    godInfo: ResponseGodDto;
+    mythologyInfo: ResponseHeroMythologyDto;
+    godInfo: ResponseHeroGodDto;
     level: number;
     xp: number;
 };
