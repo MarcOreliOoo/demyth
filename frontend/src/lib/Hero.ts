@@ -47,6 +47,8 @@ export type ResponseHeroDto = {
     images: ImagesDto[];
     mythologyInfo: ResponseMythologyDto;
     godInfo: ResponseGodDto;
+    level: number;
+    xp: number;
 };
 
 async function getHeroesForUserId(userId: string): Promise<ResponseHeroDto[] | null> {

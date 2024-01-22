@@ -88,6 +88,7 @@ export class HeroService {
 
     async findAll(filter: FindHeroParams): Promise<ResponseHeroDto[]> {
         const heroesDoc = await this.heroDbService.findAll(filter);
+        console.log("heroesDoc: ", JSON.stringify(heroesDoc, null, 2));
         if (heroesDoc.length == 0) throw new NotFoundException(`Wrong params provided.`);
         return heroesDoc.map((hero) => this.getResponseDtoFrom(hero));
     }

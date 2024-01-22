@@ -9,6 +9,7 @@ import { glassmorphism } from "@/lib/utils/cssProperties";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import getHeroesForUserId, { ResponseHeroDto, StatsDto } from "@/lib/Hero";
 import { useSession } from "next-auth/react";
+import { ResponseEffectsDto, ResponseMythologyDto } from "@/lib/codex/Mythologies";
 
 const Hero = () => {
     const { data: session } = useSession();
@@ -19,6 +20,7 @@ const Hero = () => {
             if (!session?.user?._id) return;
             const heroes = await getHeroesForUserId(session?.user?._id);
             if (heroes && heroes.length > 0) {
+                console.log("heroes : ", JSON.stringify(heroes[0], null, 2));
                 setHeroData(heroes[0]);
             }
         })();
@@ -27,11 +29,12 @@ const Hero = () => {
     // TODO: add suspense and fallback
     // TODO: add caching + get it in context hook
     if (heroData === null || Object.keys(heroData).length === 0) return <div>loading...</div>;
+    //console.log("heroData.mythologyInfo : ", JSON.stringify(heroData.mythologyInfo, null, 2));
     return (
         <section className="flex flex-col items-center justify-start gap-6 px-6">
+            <h1 className="text-4xl">{heroData?.name}</h1>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                <h1 className="text-4xl">{heroData?.name}</h1>
-                <Myth />
+                <Myth myth={heroData?.mythologyInfo} />
                 <God />
                 <ClassType />
             </div>
@@ -50,20 +53,43 @@ const Hero = () => {
     );
 };
 
-const Myth = () => {
+type MythProps = {
+    myth: ResponseMythologyDto;
+};
+const Myth = ({ myth }: MythProps) => {
+    //console.log("Myth : ", JSON.stringify(myth, null, 2));
+
+    let iconMythPath = undefined;
+    let effects: ResponseEffectsDto[] = [];
+
+    if (myth.images?.icon)
+        iconMythPath = `/images/mythologies/${myth.name.toLowerCase()}/${myth.images?.icon.toLowerCase()}`;
+
+    if (myth.effects?.length > 0)
+        myth.effects.map((effect) =>
+            effects.push({
+                _id: effect._id,
+                name: effect.name,
+                shortDesc: effect.shortDesc,
+                icon: `/images/mythologies/${myth.name.toLowerCase()}/${effect.icon.toLowerCase()}`,
+            }),
+        );
+
     return (
         <Card className={`h-[150px] ${glassmorphism}`}>
             <ScrollArea className="h-full">
                 <CardHeader>
-                    <CardTitle>MythologyName</CardTitle>
+                    <CardTitle>{myth.name}</CardTitle>
                 </CardHeader>
-                <CardContent>
-                    <CardDescription>PowerMythologyName</CardDescription>
-                    <p>
-                        Forge Unlikely Alliances In DEMYTH, the bonds you forge are as powerful as the weapons you
-                        wield. Assemble a fellowship with creatures from across all mythologies.
-                    </p>
-                </CardContent>
+                {effects.map((effect) => (
+                    <CardContent key={effect._id}>
+                        <CardDescription>{effect.name}</CardDescription>
+                        <div className="flex flex-row gap-x-4">
+                            <Image src={effect.icon} width={32} height={32} alt={`${effect.name} - ${myth.name}`} />
+                            <p>{effect.shortDesc}</p>
+                        </div>
+                    </CardContent>
+                ))}
                 <CardFooter>
                     <CardDescription className="flex w-full items-center justify-end">En savoir plus</CardDescription>
                 </CardFooter>
@@ -143,6 +169,7 @@ type HeroStatsProps = {
     stats?: ResponseHeroDto["stats"];
 };
 
+// TODO: Change stat Name by icon
 const HeroStats = ({ stats }: HeroStatsProps) => {
     const keys = Object.keys(stats || {}) as Array<keyof ResponseHeroDto["stats"]>;
     const resultStats = keys.map((key) => ({
@@ -155,16 +182,10 @@ const HeroStats = ({ stats }: HeroStatsProps) => {
             <CardHeader>
                 <CardTitle>Statistics</CardTitle>
             </CardHeader>
-            <ScrollArea className="h-full border border-blue-300">
-                <CardContent className="flex flex-grow items-center justify-center border border-red-400 p-2">
-                    <ResponsiveContainer width="100%" height={350} className="border border-yellow-500 p-6">
-                        <RadarChart
-                            cx="50%"
-                            cy="55%"
-                            outerRadius="80%"
-                            data={resultStats}
-                            className="border border-green-500"
-                        >
+            <ScrollArea className="flex h-full items-center justify-center border border-blue-300">
+                <CardContent className="flex h-[calc(100%-64px)] flex-col items-center justify-center border border-red-400 p-2">
+                    <ResponsiveContainer width="100%" height={350}>
+                        <RadarChart cx="50%" cy="55%" outerRadius="70%" data={resultStats}>
                             <PolarGrid />
                             <PolarAngleAxis dataKey="stat" />
                             <PolarRadiusAxis />

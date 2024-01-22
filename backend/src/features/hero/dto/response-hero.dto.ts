@@ -7,6 +7,7 @@ import { GodInfoDto } from "./godInfo-hero.dto";
 import { StatsDto } from "./stats-hero.dto";
 import { RoleInfoDto } from "./roleinfo-hero.dto";
 
+// TODO: add ImagesDto in Db
 export class ResponseHeroDto {
     @Transform((value) => value.obj._id.toString())
     _id: ObjectId;
@@ -24,4 +25,6 @@ export class ResponseHeroDto {
     mythologyInfo: MythologyInfoDto;
     @Type(() => GodInfoDto)
     godInfo: GodInfoDto;
+    level: number;
+    xp: number;
 }

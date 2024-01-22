@@ -4,7 +4,7 @@ type ImagesDto = {
     icon: string;
 };
 
-type ResponseEffectsDto = {
+export type ResponseEffectsDto = {
     _id: string;
     name: string;
     shortDesc: string;
