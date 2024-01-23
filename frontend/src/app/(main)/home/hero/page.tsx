@@ -115,7 +115,7 @@ const God = ({ god }: { god: ResponseGodDto }) => {
         );
 
     return (
-        <Card className={`${glassmorphism} h-[150px]`}>
+        <Card className={`h-[150px] ${glassmorphism}`}>
             <ScrollArea className="h-full">
                 <CardHeader>
                     <CardTitle>{god.name}</CardTitle>
@@ -139,7 +139,7 @@ const God = ({ god }: { god: ResponseGodDto }) => {
 
 const ClassType = () => {
     return (
-        <Card className={`${glassmorphism} h-[150px] `}>
+        <Card className={`h-[150px] ${glassmorphism}`}>
             <ScrollArea className="h-full">
                 <CardHeader>
                     <CardTitle>ClassType</CardTitle>
@@ -195,7 +195,7 @@ const HeroStats = ({ stats }: HeroStatsProps) => {
     }));
 
     return (
-        <Card className={`${glassmorphism} h-full min-w-[350px] flex-grow`}>
+        <Card className={`h-full min-w-[350px] flex-grow ${glassmorphism}`}>
             <CardHeader>
                 <CardTitle>Statistics</CardTitle>
             </CardHeader>

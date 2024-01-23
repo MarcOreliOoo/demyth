@@ -70,20 +70,6 @@ const AuthPage = () => {
                 signMessageAsync,
             });
 
-            /* const message = new SiweMessage({
-                domain: window.location.host,
-                uri: window.location.origin,
-                version: "1",
-                address: address,
-                statement: process.env.NEXT_PUBLIC_SIGNIN_MESSAGE,
-                nonce: await getCsrfToken(),
-                chainId: polygonMumbai.id,
-            });
-
-            const signedMessage = await signMessageAsync({
-                message: message?.prepareMessage(),
-            });
- */
             setHasSigned(true);
 
             const response = await signIn("web3SignIn", {
@@ -150,15 +136,6 @@ const AuthPage = () => {
             }
         }
     };
-
-    /*     async function onSubmit(event: React.SyntheticEvent) {
-        event.preventDefault();
-        setIsLoading(true);
-
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 3000);
-    } */
 
     return (
         <main className="section-min-height relative flex h-full scroll-mt-24 flex-col items-center justify-center">
