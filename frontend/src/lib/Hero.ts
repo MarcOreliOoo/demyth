@@ -9,13 +9,11 @@ type ImagesDto = {
 };
 
 export type ResponseHeroGodDto = {
-    _id: string;
-    god: ResponseGodDto;
+    _id: ResponseGodDto;
 };
 
 export type ResponseHeroMythologyDto = {
-    _id: string;
-    mythology: ResponseMythologyDto;
+    _id: ResponseMythologyDto;
 };
 
 export type RoleDto = {

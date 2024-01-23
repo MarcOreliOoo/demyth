@@ -16,8 +16,8 @@ export type ResponseGodDto = {
     name: string;
     shortDesc?: string;
     longDesc?: string;
-    images?: ImagesDto[];
-    powers?: ResponseEffectsDto[];
+    images?: ImagesDto;
+    powers: ResponseEffectsDto[];
     mythology: string;
     roles?: string[];
     creatures?: string[];

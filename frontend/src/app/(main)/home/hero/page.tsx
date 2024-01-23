@@ -10,6 +10,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import getHeroesForUserId, { ResponseHeroDto, ResponseHeroMythologyDto, StatsDto } from "@/lib/Hero";
 import { useSession } from "next-auth/react";
 import { ResponseEffectsDto, ResponseMythologyDto } from "@/lib/codex/Mythologies";
+import { ResponseGodDto } from "@/lib/codex/Gods";
 
 const Hero = () => {
     const { data: session } = useSession();
@@ -34,8 +35,8 @@ const Hero = () => {
         <section className="flex flex-col items-center justify-start gap-6 px-6">
             <h1 className="text-4xl">{heroData?.name}</h1>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                <Myth myth={heroData?.mythologyInfo.mythology} />
-                <God />
+                <Myth myth={heroData?.mythologyInfo._id} />
+                <God god={heroData?.godInfo._id} />
                 <ClassType />
             </div>
             <div className="flex h-[586px] w-full flex-wrap items-stretch justify-start gap-6">
@@ -53,14 +54,10 @@ const Hero = () => {
     );
 };
 
-type MythProps = {
-    myth: ResponseMythologyDto;
-};
-const Myth = ({ myth }: MythProps) => {
+const Myth = ({ myth }: { myth: ResponseMythologyDto }) => {
     let iconMythPath = undefined;
     let effects: ResponseEffectsDto[] = [];
 
-    /* const [mythology, setMythology] = useState<ResponseMythologyDto | null>({} as ResponseMythologyDto); */
     if (!myth) return null;
 
     if (myth.images?.icon)
@@ -81,8 +78,9 @@ const Myth = ({ myth }: MythProps) => {
             <ScrollArea className="h-full">
                 <CardHeader>
                     <CardTitle>{myth.name}</CardTitle>
+                    {iconMythPath && <Image src={iconMythPath} width={32} height={32} alt={`${myth.name}`} />}
                 </CardHeader>
-                {/* {effects.map((effect) => (
+                {effects.map((effect) => (
                     <CardContent key={effect._id}>
                         <CardDescription>{effect.name}</CardDescription>
                         <div className="flex flex-row gap-x-4">
@@ -90,7 +88,7 @@ const Myth = ({ myth }: MythProps) => {
                             <p>{effect.shortDesc}</p>
                         </div>
                     </CardContent>
-                ))} */}
+                ))}
                 <CardFooter>
                     <CardDescription className="flex w-full items-center justify-end">En savoir plus</CardDescription>
                 </CardFooter>
@@ -99,20 +97,38 @@ const Myth = ({ myth }: MythProps) => {
     );
 };
 
-const God = () => {
+const God = ({ god }: { god: ResponseGodDto }) => {
+    let iconGodPath = undefined;
+    let effects: ResponseEffectsDto[] = [];
+
+    if (!god) return null;
+    if (god.images?.icon) iconGodPath = `/images/gods/${god.name.toLowerCase()}/${god.images?.icon.toLowerCase()}`;
+
+    if (god.powers.length > 0)
+        god.powers.map((effect) =>
+            effects.push({
+                _id: effect._id,
+                name: effect.name,
+                shortDesc: effect.shortDesc,
+                icon: `/images/gods/${god.name.toLowerCase()}/${effect.icon.toLowerCase()}`,
+            }),
+        );
+
     return (
         <Card className={`${glassmorphism} h-[150px]`}>
             <ScrollArea className="h-full">
                 <CardHeader>
-                    <CardTitle>GodName</CardTitle>
+                    <CardTitle>{god.name}</CardTitle>
                 </CardHeader>
-                <CardContent>
-                    <CardDescription>PowerGodName</CardDescription>
-                    <p>
-                        Forge Unlikely Alliances In DEMYTH, the bonds you forge are as powerful as the weapons you
-                        wield. Assemble a fellowship with creatures from across all mythologies.
-                    </p>
-                </CardContent>
+                {effects.map((effect) => (
+                    <CardContent key={effect._id}>
+                        <CardDescription>{effect.name}</CardDescription>
+                        <div className="flex flex-row gap-x-4">
+                            <Image src={effect.icon} width={32} height={32} alt={`${effect.name} - ${god.name}`} />
+                            <p>{effect.shortDesc}</p>
+                        </div>
+                    </CardContent>
+                ))}
                 <CardFooter>
                     <CardDescription className="flex w-full items-center justify-end">En savoir plus</CardDescription>
                 </CardFooter>
