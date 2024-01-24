@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import egyptian1 from "../../../public/images/about/egyptian_1.jpg";
+import egyptian1 from "../../../public/images/about/hero2.png";
 
 // TODO: do again the hero section: text larger, on the left
 // TODO: on medium device image too small
