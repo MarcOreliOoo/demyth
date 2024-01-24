@@ -21,8 +21,6 @@ export class HeroController {
 
     // TODO: add user guard
     // TODO: test
-
-    // How could I have a param inside an authguard: my user_id can do actions on that hero_id ssi user_id == hero.user_id
     @Put(":heroId")
     async update(
         @Param("heroId", new ParseObjectIdPipe()) heroId: string,
@@ -53,7 +51,7 @@ export class HeroController {
         @Query("mythId") mythologyId?: string,
         @Query("mythName") mythologyName?: string,
     ): Promise<ResponseHeroDto[]> {
-        log("HeroController > getGodForParams");
+        log("HeroController > getHeroForParams");
 
         // TODO: check for godInfo and mythologyInfo if it works with nested object
         const filters = {

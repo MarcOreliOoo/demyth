@@ -1,16 +1,8 @@
-import {
-    IsOptional,
-    IsString,
-    IsEnum,
-    ValidateNested,
-    IsArray,
-    IsMongoId,
-    IsNumber,
-    IsPositive,
-} from "class-validator";
+import { IsOptional, IsString, IsEnum, ValidateNested, IsArray, IsMongoId } from "class-validator";
 import { EClassSubType, EClassType } from "../../../enums";
 import { Type } from "class-transformer";
 import { ImagesDto } from "./images-role.dto";
+import { StatsRoleDto } from "./stats-role.dto";
 
 export class UpdateRoleDto {
     @IsOptional()
@@ -40,29 +32,8 @@ export class UpdateRoleDto {
     images?: ImagesDto[];
 
     @IsOptional()
-    @IsPositive()
-    @IsNumber()
-    strength?: number;
-    @IsOptional()
-    @IsPositive()
-    @IsNumber()
-    dexterity?: number;
-    @IsOptional()
-    @IsPositive()
-    @IsNumber()
-    intelligence?: number;
-    @IsOptional()
-    @IsPositive()
-    @IsNumber()
-    constitution?: number;
-    @IsOptional()
-    @IsPositive()
-    @IsNumber()
-    luck?: number;
-    @IsOptional()
-    @IsPositive()
-    @IsNumber()
-    armor?: number;
+    @Type(() => StatsRoleDto)
+    stats?: StatsRoleDto;
 
     @IsOptional()
     @IsMongoId()

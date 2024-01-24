@@ -3,7 +3,7 @@ import { Injectable, NotFoundException, ConflictException, UnprocessableEntityEx
 import { InjectModel } from "@nestjs/mongoose";
 import { Role, RoleDocument } from "./roles.schema";
 import { CreateRoleDto } from "./dto/create-role.dto";
-import { ResponseRoleDto } from "./dto/response-role.dto";
+import { ResponsePopulatedRoleDto, ResponseRoleDto } from "./dto/response-role.dto";
 import { plainToClass } from "class-transformer";
 import { FindRoleParams, RoleDbService } from "./role.db.service";
 import { UpdateRoleDto } from "./dto/update-role.dto";
@@ -21,6 +21,10 @@ export class RoleService {
 
     getResponseDtoFrom(aRole: RoleDocument): ResponseRoleDto {
         return plainToClass(ResponseRoleDto, aRole.toJSON());
+    }
+
+    getResponsePopulatedDtoFrom(aRole: RoleDocument): ResponsePopulatedRoleDto {
+        return plainToClass(ResponsePopulatedRoleDto, aRole.toJSON());
     }
 
     async create(createRoleDto: CreateRoleDto): Promise<ResponseRoleDto> {
@@ -64,5 +68,12 @@ export class RoleService {
         const rolesDoc = await this.roleDbService.findAll(filter);
         if (rolesDoc.length == 0) throw new NotFoundException(`Wrong params provided.`);
         return rolesDoc.map((role) => this.getResponseDtoFrom(role));
+    }
+
+    async findAndPopulateAll(filter: FindRoleParams): Promise<ResponsePopulatedRoleDto[]> {
+        const rolesDoc = await this.roleDbService.findAndPopulateAll(filter);
+        if (rolesDoc.length == 0) throw new NotFoundException(`Wrong params provided.`);
+        const someRoles = rolesDoc.map((role) => this.getResponsePopulatedDtoFrom(role));
+        return someRoles;
     }
 }

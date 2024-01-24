@@ -4,7 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { controlSignature } from "./siwe";
 
 async function refreshToken(token: JWT): Promise<JWT> {
-    const res = await fetch(`${process.env.HOST}/auth/refresh`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/auth/refresh`, {
         method: "POST",
         headers: {
             authorization: `Refresh ${token.backendTokens.refreshToken}`,
@@ -34,7 +34,7 @@ export const authOptions: AuthOptions = {
                 }
                 const siwe = await controlSignature({ credentials, req });
 
-                const res = await fetch(`${process.env.HOST}/auth/signin`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/auth/signin`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

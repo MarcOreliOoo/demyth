@@ -4,28 +4,31 @@ type ImagesDto = {
     icon: string;
 };
 
-export type ResponseEffectsDto = {
+type ResponseEffectsDto = {
     _id: string;
     name: string;
     shortDesc: string;
     icon: string;
 };
 
-export type ResponseMythologyDto = {
+export type ResponseGodDto = {
     _id: string;
     name: string;
     shortDesc?: string;
     longDesc?: string;
     images?: ImagesDto;
-    effects: ResponseEffectsDto[];
+    powers: ResponseEffectsDto[];
+    mythology: string;
+    roles?: string[];
+    creatures?: string[];
 };
 
-async function getMyths(): Promise<ResponseMythologyDto[] | null> {
+async function getGods(): Promise<ResponseGodDto[] | null> {
     let res: Response;
     try {
-        res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/mythologies`, { next: { revalidate: 3600 } });
+        res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/gods`, { next: { revalidate: 3600 } });
     } catch (e: any) {
-        console.log("getMyth > Error: ", e.message);
+        console.log("getGods > Error: ", e.message);
         return null; // new Error("Failed to fetch");
     }
     if (!res.ok) {
@@ -34,4 +37,4 @@ async function getMyths(): Promise<ResponseMythologyDto[] | null> {
     return res.json();
 }
 
-export default getMyths;
+export default getGods;

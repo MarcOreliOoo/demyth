@@ -4,9 +4,10 @@ import { HeroController } from "./hero.controller";
 import { Hero, HeroSchema } from "./heroes.schema";
 import { HeroService } from "./hero.service";
 import { HeroDbService } from "./hero.db.service";
+import { RoleModule } from "../role/role.module";
 
 @Module({
-    imports: [MongooseModule.forFeature([{ name: Hero.name, schema: HeroSchema }])],
+    imports: [MongooseModule.forFeature([{ name: Hero.name, schema: HeroSchema }]), RoleModule],
     controllers: [HeroController],
     providers: [HeroService, HeroDbService],
     exports: [HeroService, HeroDbService],
